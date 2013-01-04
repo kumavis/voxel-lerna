@@ -28,6 +28,7 @@ Chunker.prototype.generateMissingChunks = function(position) {
           mesh.createWireMesh()
           mesh.setPosition(low[0] * size, low[1] * size, low[2] * size)
           mesh.addToScene(this.game.scene)
+          applyTextures(mesh.geometry)
         }
       }
     }
@@ -44,3 +45,7 @@ Chunker.prototype.chunkAtPosition = function(position) {
     Math.floor(position.z / cubeSize / chunkSize + 0.5)
   ]
 };
+
+function applyTextures (geom) {
+    console.dir(geom.faces)
+}
