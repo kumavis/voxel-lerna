@@ -4,7 +4,7 @@ var EventEmitter = require('events').EventEmitter;
 module.exports = function (game, opts) {
     if (!opts) opts = {};
     if (!opts.limit) opts.limit = function () { return false };
-    if (!opts.yield) opts.yield = function () { return 1 };
+    if (!opts.yield) opts.yield = function () { return 4 };
     if (!opts.expire) opts.expire = {};
     if (typeof opts.expire === 'number') {
         opts.expire = { start : opts.expire, end : opts.expire };
