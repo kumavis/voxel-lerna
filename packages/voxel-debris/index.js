@@ -11,6 +11,7 @@ module.exports = function (game, opts) {
     }
     if (!opts.expire.start) opts.expire.start = 15 * 1000;
     if (!opts.expire.end) opts.expire.end = 30 * 1000;
+    if (!opts.power) opts.power = 1
     
     game.on('collision', function (item) {
         if (!item._debris) return;
@@ -30,9 +31,9 @@ module.exports = function (game, opts) {
         for (var i = 0; i < opts.yield(value); i++) {
             var item = createDebris(game, pos, value);
             item.velocity = {
-                x: (Math.random() * 2 - 1) * 0.05,
-                y: (Math.random() * 2 - 1) * 0.05,
-                z: (Math.random() * 2 - 1) * 0.05
+                x: (Math.random() * 2 - 1) * 0.05 * opts.power,
+                y: (Math.random() * 2 - 1) * 0.05 * opts.power,
+                z: (Math.random() * 2 - 1) * 0.05 * opts.power
             };
             game.addItem(item);
             

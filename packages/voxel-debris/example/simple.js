@@ -9,7 +9,7 @@ var game = createEngine({
 });
 game.appendTo('#container');
 
-var explode = require('../')(game);
+var explode = require('../')(game, { power : 1.5 });
 
 explode.on('collect', function (item) {
     console.log(game.materials[item.value - 1]);

@@ -21,7 +21,7 @@ var game = createEngine({
 });
 game.appendTo('#container');
 
-var explode = require('voxel-debris')(game);
+var explode = require('voxel-debris')(game, { power : 1.5 });
 
 explode.on('collect', function (item) {
     console.log(game.materials[item.value - 1]);
@@ -62,6 +62,8 @@ items are created for the voxel data `value`.
 in the game world in milliseconds. A timeout will be chosen uniformly randomly
 between start and end.
 When `opts.expire` is a number, its value will be used for both start and end.
+
+`opts.power` influcences the velocity of the debris. Default value: 1.
 
 ## explode(pos)
 
