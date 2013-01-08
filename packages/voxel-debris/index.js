@@ -5,18 +5,19 @@ module.exports = function (game, opts) {
     if (!opts) opts = {};
     if (!opts.limit) opts.limit = function () { return false };
     if (!opts.yield) opts.yield = function () { return 1 };
-    if (!opts.fade) opts.fade = {};
-    if (typeof opts.fade === 'number') {
-        opts.fade = { start : opts.fade, end : opts.fade };
+    if (!opts.expire) opts.expire = {};
+    if (typeof opts.expire === 'number') {
+        opts.expire = { start : opts.expire, end : opts.expire };
     }
-    if (!opts.fade.start) opts.fade.start = 15 * 1000;
-    if (!opts.fade.end) opts.fade.end = 30 * 1000;
+    if (!opts.expire.start) opts.expire.start = 15 * 1000;
+    if (!opts.expire.end) opts.expire.end = 30 * 1000;
     
     game.on('collision', function (item) {
         if (!item._debris) return;
         if (opts.limit && opts.limit(item)) return;
         
         game.removeItem(item);
+        item._collected = true;
         em.emit('collect', item);
     });
     
@@ -33,11 +34,12 @@ module.exports = function (game, opts) {
             };
             game.addItem(item);
             
-            var time = opts.fade.start + Math.random()
-                * (opts.fade.end - opts.fade.start);
+            var time = opts.expire.start + Math.random()
+                * (opts.expire.end - opts.expire.start);
             
             setTimeout(function (item) {
                 game.removeItem(item);
+                if (!item._collected) em.emit('expire', item);
             }, time, item);
         }
     });
