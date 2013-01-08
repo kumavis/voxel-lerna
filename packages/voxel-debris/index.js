@@ -25,6 +25,8 @@ module.exports = function (game, opts) {
     return funstance(em, function (pos) {
         var value = game.getBlock(pos);
         if (value === 0) return;
+        game.setBlock(pos, 0);
+        
         for (var i = 0; i < opts.yield(value); i++) {
             var item = createDebris(game, pos, value);
             item.velocity = {
