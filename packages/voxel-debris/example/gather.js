@@ -2,9 +2,10 @@ var createEngine = require('voxel-engine')
 var game = createEngine({
     generate: function(x, y, z) {
         var d = Math.sqrt(x*x + y*y + z*z);
-        if (d > 20) return 0;
-        if (y < 18) return 0;
-        return Math.floor(Math.random() * 4) + 1;
+        var r = Math.floor(Math.random() * 4) + 1;
+        if (y < -10) return 0;
+        if (y < 4) return r * (x*x + z*z <= 40*40);
+        return r * (d <= 20);
     },
     texturePath: './',
     materials: [ 'dirt', 'grass', 'crate', 'brick' ]
