@@ -1,0 +1,30 @@
+{
+    "name" : "voxel-debris",
+    "version" : "0.0.0",
+    "description" : "create and collect voxel debris from exploded voxels",
+    "main" : "index.js",
+    "dependencies" : {
+        "funstance" : "~0.0.2"
+    },
+    "devDependencies" : {
+        "browserify" : "~1.17.1",
+        "voxel-engine" : "git://github.com/substack/voxel-engine.git"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/substack/voxel-debris.git"
+    },
+    "homepage" : "https://github.com/substack/voxel-debris",
+    "keywords" : [
+        "voxel",
+        "game",
+        "terrain",
+        "explode"
+    ],
+    "author" : {
+        "name" : "James Halliday",
+        "email" : "mail@substack.net",
+        "url" : "http://substack.net"
+    },
+    "license" : "MIT"
+}
