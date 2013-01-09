@@ -2,9 +2,6 @@
 
 create and collect voxel debris from exploded voxels
 
-Note: use [my build of voxel-engine](http://github.com/substack/voxel-engine)
-until the `game.THREE = THREE` patch lands in the version on npm.
-
 # example
 
 [View this example.](http://substack.net/projects/voxel-debris/).

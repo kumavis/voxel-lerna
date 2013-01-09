@@ -1,6 +1,6 @@
 {
     "name" : "voxel-debris",
-    "version" : "0.0.2",
+    "version" : "0.0.3",
     "description" : "create and collect voxel debris from exploded voxels",
     "main" : "index.js",
     "dependencies" : {
@@ -8,7 +8,7 @@
     },
     "devDependencies" : {
         "browserify" : "~1.17.1",
-        "voxel-engine" : "git://github.com/substack/voxel-engine.git"
+        "voxel-engine" : "~0.1.9"
     },
     "repository" : {
         "type" : "git",
