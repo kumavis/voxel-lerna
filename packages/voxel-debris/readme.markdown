@@ -53,7 +53,8 @@ If `opts.limit(item)` is specified, when it returns true, `item` will not be
 collected by the player when they pass within the collision radius.
 
 If `opts.yield(value)` is specified, its return value will be how many debris
-items are created for the voxel data `value`.
+items are created for the voxel data `value`. `opts.yield` can be a function or
+just a number.
 
 `opts.expire.start` and `opts.expire.end` control how long debris should persist
 in the game world in milliseconds. A timeout will be chosen uniformly randomly

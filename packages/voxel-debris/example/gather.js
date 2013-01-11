@@ -11,6 +11,7 @@ var game = createEngine({
     materials: [ 'dirt', 'grass', 'crate', 'brick' ]
 });
 game.appendTo('#container');
+game.controls.pitchObject.rotation.x = -1.5;
 
 var explode = require('../')(game, {
     yield: function (value) {
