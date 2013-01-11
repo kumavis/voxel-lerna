@@ -1,6 +1,6 @@
 {
     "name" : "voxel-debris",
-    "version" : "0.0.3",
+    "version" : "0.0.4",
     "description" : "create and collect voxel debris from exploded voxels",
     "main" : "index.js",
     "dependencies" : {
