@@ -1,0 +1,33 @@
+{
+    "name": "voxel-player",
+    "version": "0.0.0",
+    "description": "create a skinnable player with physics enabled",
+    "main": "index.js",
+    "dependencies": {
+        "minecraft-skin": "~0.0.3"
+    },
+    "devDependencies": {
+        "voxel": "~0.1.3",
+        "voxel-engine": "~0.5.7",
+        "ecstatic": "~0.3.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/substack/voxel-player.git"
+    },
+    "homepage": "https://github.com/substack/voxel-player",
+    "keywords": [
+        "voxel",
+        "player",
+        "physics",
+        "engine",
+        "skin",
+        "browser"
+    ],
+    "author": {
+        "name": "James Halliday",
+        "email": "mail@substack.net",
+        "url": "http://substack.net"
+    },
+    "license": "MIT"
+}
