@@ -11,7 +11,7 @@ var engine = require('voxel-engine')
 var texturePath = require('painterly-textures')(__dirname)
 var voxel = require('voxel')
 
-module.exports = function(settings) {
+module.exports = handleErrors(function(settings) {
   
   // these settings will be used to create an in-memory
   // world on the server and will be sent to all
@@ -65,45 +65,45 @@ module.exports = function(settings) {
     broadcast(false, 'update', update)
   }
 
-  setInterval(sendUpdate, 1000/22) // 45ms
+  setInterval(handleErrors(sendUpdate), 1000/22) // 45ms
 
-  wss.on('connection', function(ws) {
+  wss.on('connection', handleErrors(function(ws) {
     // turn 'raw' websocket into a stream
     var stream = websocket(ws)
 
     var emitter = duplexEmitter(stream)
   
-    emitter.on('clientSettings', function(clientSettings) {
-    // Enables a client to reset the settings to enable loading new clientSettings
-    if (clientSettings != null) {
-      if (clientSettings.resetSettings != null) {
-        console.log("resetSettings:true")
-        usingClientSettings = null
-        if (game != null) game.destroy()
-        game = null
-        chunkCache = {}
+    emitter.on('clientSettings', handleErrors(function(clientSettings) {
+      // Enables a client to reset the settings to enable loading new clientSettings
+      if (clientSettings != null) {
+        if (clientSettings.resetSettings != null) {
+          console.log("resetSettings:true")
+          usingClientSettings = null
+          if (game != null) game.destroy()
+          game = null
+          chunkCache = {}
+        }
       }
-    }
-    
-    if (clientSettings != null && usingClientSettings == null) {
-      usingClientSettings = true
-      // Use the correct path for textures url
-        clientSettings.texturePath = texturePath
-      //deserialise the voxel.generator function.
-      if (clientSettings.generatorToString != null) {
-        clientSettings.generate = eval("(" + clientSettings.generatorToString + ")")
-      }
-      settings = clientSettings
-        console.log("Using settings from client to create game.")
-      game = engine(settings)
-    } else {
-      if (usingClientSettings != null) {
-        console.log("Sending current settings to new client.")
+      
+      if (clientSettings != null && usingClientSettings == null) {
+        usingClientSettings = true
+        // Use the correct path for textures url
+          clientSettings.texturePath = texturePath
+        //deserialise the voxel.generator function.
+        if (clientSettings.generatorToString != null) {
+          clientSettings.generate = eval("(" + clientSettings.generatorToString + ")")
+        }
+        settings = clientSettings
+          console.log("Using settings from client to create game.")
+        game = engine(settings)
       } else {
-        console.log("Sending default settings to new client.")
+        if (usingClientSettings != null) {
+          console.log("Sending current settings to new client.")
+        } else {
+          console.log("Sending default settings to new client.")
+        }
       }
-    }
-    })
+    }))
 
     var id = uuid()
     clients[id] = emitter
@@ -118,54 +118,65 @@ module.exports = function(settings) {
     broadcast(id, 'join', id)
     stream.once('end', leave)
     stream.once('error', leave)
+    
     function leave() {
       delete clients[id]
       console.log(id, 'left')
       broadcast(id, 'leave', id)
     }
 
-    emitter.on('message', function(message) {
-      if (!message.text) return
-      if (message.text.length > 140) message.text = message.text.substr(0, 140)
-      if (message.text.length === 0) return
-      console.log('chat', message)
-      broadcast(null, 'message', message)
-    })
+    emitter.on('message', handleErrors(function(message) {
+      try {
+        if (!message.text) return
+        if (message.text.length > 140) message.text = message.text.substr(0, 140)
+        if (message.text.length === 0) return
+        console.log('chat', message)
+        broadcast(null, 'message', message)
+      } catch (error) {
+        console.dir('error caught in event `message`')
+        console.dir(error.stack)
+      }
+    }))
 
     // give the user the initial game settings
-  if (settings.generate != null) {
-      settings.generatorToString = settings.generate.toString()
-  }
+    if (settings.generate != null) {
+        settings.generatorToString = settings.generate.toString()
+    }
     emitter.emit('settings', settings)
 
     // fires when the user tells us they are
     // ready for chunks to be sent
-    emitter.on('created', function() {
+    emitter.on('created', handleErrors(function() {
       sendInitialChunks(emitter)
       // fires when client sends us new input state
-      emitter.on('state', function(state) {
-        emitter.player.rotation.x = state.rotation.x
-        emitter.player.rotation.y = state.rotation.y
-        var pos = emitter.player.position
-        var distance = pos.distanceTo(state.position)
-        if (distance > 20) {
-          var before = pos.clone()
-          pos.lerp(state.position, 0.1)
-          return
+      emitter.on('state', handleErrors(function(state) {
+        try {
+          emitter.player.rotation.x = state.rotation.x
+          emitter.player.rotation.y = state.rotation.y
+          var pos = emitter.player.position
+          var distance = pos.distanceTo(state.position)
+          if (distance > 20) {
+            var before = pos.clone()
+            pos.lerp(state.position, 0.1)
+            return
+          }
+          pos.copy(state.position)
+        } catch (error) {
+          console.dir('error caught in event `state`')
+          console.dir(error.stack)
         }
-        pos.copy(state.position)
-      })
-    })
+      }))
+    }))
 
-    emitter.on('set', function(pos, val) {
+    emitter.on('set', handleErrors(function(pos, val) {
       game.setBlock(pos, val)
       var chunkPos = game.voxels.chunkAtPosition(pos)
       var chunkID = chunkPos.join('|')
       if (chunkCache[chunkID]) delete chunkCache[chunkID]
       broadcast(null, 'set', pos, val)
-    })
+    }))
 
-  })
+  }))
 
   function sendInitialChunks(emitter) {
     Object.keys(game.voxels.chunks).map(function(chunkID) {
@@ -185,4 +196,16 @@ module.exports = function(settings) {
   }
   
   return server
+})
+
+// returns the provided function wrapped in a try-catch
+// logs the errors to standard out
+function handleErrors(func) {
+  return function(){
+    try {
+      return func.apply(this,arguments)
+    } catch (error) {
+      console.log(error.stack)
+    }
+  }
 }
