@@ -37,7 +37,7 @@ module.exports = handleErrors(function(settings) {
   var server = {}
   var game = server.game = engine(settings)
   var httpServer = server.http = http.createServer(ecstatic(path.join(__dirname, 'www')))
-  server.listen = httpServer.listen
+  server.listen = httpServer.listen.bind(httpServer)
   var wss = server.wss = new WebSocketServer({server: httpServer})
   var clients = server.clients = {}
   var chunkCache = server.chunkCache = {}
