@@ -1,6 +1,7 @@
 var http = require('http')
 var extend = require('extend')
 var ecstatic = require('ecstatic')
+var EventEmitter = require('events').EventEmitter
 var WebSocketServer = require('ws').Server
 var websocket = require('websocket-stream')
 var duplexEmitter = require('duplex-emitter')
@@ -34,7 +35,7 @@ module.exports = handleErrors(function(settings) {
   settings = extend({}, defaults, settings)
   
   // prepare a server object to return
-  var server = {}
+  var server = extend({}, new EventEmitter())
   var game = server.game = engine(settings)
   var httpServer = server.http = http.createServer(ecstatic(path.join(__dirname, 'www')))
   server.listen = httpServer.listen.bind(httpServer)
@@ -45,6 +46,7 @@ module.exports = handleErrors(function(settings) {
 
   // simple version of socket.io's sockets.emit
   function broadcast(id, cmd, arg1, arg2, arg3) {
+    server.emit(cmd,id,arg1,arg2,arg3)
     Object.keys(clients).map(function(client) {
       if (client === id) return
       clients[client].emit(cmd, arg1, arg2, arg3)
@@ -208,6 +210,7 @@ function handleErrors(func) {
     try {
       return func.apply(this,arguments)
     } catch (error) {
+      console.log('error - error caught by `handleErrors`:')
       console.log(error.stack)
     }
   }
