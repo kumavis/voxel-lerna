@@ -33,11 +33,14 @@ module.exports = handleErrors(function(settings) {
 
   settings = extend({}, defaults, settings)
   
-  var game = engine(settings)
-  var server = http.createServer(ecstatic(path.join(__dirname, 'www')))
-  var wss = new WebSocketServer({server: server})
-  var clients = {}
-  var chunkCache = {}
+  // prepare a server object to return
+  var server = {}
+  var game = server.game = engine(settings)
+  var httpServer = server.http = http.createServer(ecstatic(path.join(__dirname, 'www')))
+  server.listen = httpServer.listen
+  var wss = server.wss = new WebSocketServer({server: httpServer})
+  var clients = server.clients = {}
+  var chunkCache = server.chunkCache = {}
   var usingClientSettings
 
   // simple version of socket.io's sockets.emit

@@ -1,7 +1,7 @@
 {
   "name": "voxel-server",
   "subdomain": "voxel",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "minecraft-skin": "0.0.3",
     "voxel-walk": "0.0.1",
