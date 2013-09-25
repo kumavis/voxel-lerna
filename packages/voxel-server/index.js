@@ -1,3 +1,4 @@
+// dependencies
 var http = require('http')
 var extend = require('extend')
 var ecstatic = require('ecstatic')
@@ -7,15 +8,16 @@ var websocket = require('websocket-stream')
 var duplexEmitter = require('duplex-emitter')
 var path = require('path')
 var uuid = require('hat')
+// voxel dependencies
+var voxel = require('voxel')
 var crunch = require('voxel-crunch')
 var engine = require('voxel-engine')
 var texturePath = require('painterly-textures')(__dirname)
-var voxel = require('voxel')
 
-module.exports = handleErrors(function(settings) {
+module.exports = function(settings) {
   
-  // these settings will be used to create an in-memory
-  // world on the server and will be sent to all
+  // server game settings are used to create a
+  // world on the server and are sent to all
   // new clients when they connect
   var defaults = {
     generate: voxel.generator['Valley'],
@@ -31,8 +33,8 @@ module.exports = handleErrors(function(settings) {
     controls: { discreteFire: true },
     avatarInitialPosition: [2, 20, 2],
   }
-
   settings = extend({}, defaults, settings)
+  if (settings.generate) settings.generatorToString = settings.generate.toString()
   
   // prepare a server object to return
   var server = extend({}, new EventEmitter())
@@ -42,137 +44,78 @@ module.exports = handleErrors(function(settings) {
   var wss = server.wss = new WebSocketServer({server: httpServer})
   var clients = server.clients = {}
   var chunkCache = server.chunkCache = {}
-  var usingClientSettings
 
-  // simple version of socket.io's sockets.emit
-  function broadcast(id, cmd, arg1, arg2, arg3) {
-    server.emit(cmd,id,arg1,arg2,arg3)
-    Object.keys(clients).map(function(client) {
-      if (client === id) return
-      clients[client].emit(cmd, arg1, arg2, arg3)
-    })
-  }
-
-  function sendUpdate() {
-    var clientKeys = Object.keys(clients)
-    if (clientKeys.length === 0) return
-    var update = {positions:{}, date: +new Date()}
-    clientKeys.map(function(key) {
-      var emitter = clients[key]
-      update.positions[key] = {
-        position: emitter.player.position,
-        rotation: {
-          x: emitter.player.rotation.x,
-          y: emitter.player.rotation.y
-        }
-      }
-    })
-    broadcast(false, 'update', update)
-  }
-
+  // send player position/rotation updates
   setInterval(handleErrors(sendUpdate), 1000/22) // 45ms
 
-  wss.on('connection', handleErrors(function(ws) {
+  // websocket connect established
+  wss.on('connection', handleErrors(configureClient))
+
+  // Setup the client connection - register events, etc
+  function configureClient(ws) {
     // turn 'raw' websocket into a stream
     var stream = websocket(ws)
-
+    // setup two way communication with the client
     var emitter = duplexEmitter(stream)
-  
-    emitter.on('clientSettings', handleErrors(function(clientSettings) {
-      // Enables a client to reset the settings to enable loading new clientSettings
-      if (clientSettings != null) {
-        if (clientSettings.resetSettings != null) {
-          console.log("resetSettings:true")
-          usingClientSettings = null
-          if (game != null) game.destroy()
-          game = null
-          chunkCache = {}
-        }
-      }
-      
-      if (clientSettings != null && usingClientSettings == null) {
-        usingClientSettings = true
-        // Use the correct path for textures url
-          clientSettings.texturePath = texturePath
-        //deserialise the voxel.generator function.
-        if (clientSettings.generatorToString != null) {
-          clientSettings.generate = eval("(" + clientSettings.generatorToString + ")")
-        }
-        settings = clientSettings
-          console.log("Using settings from client to create game.")
-        game = engine(settings)
-      } else {
-        if (usingClientSettings != null) {
-          console.log("Sending current settings to new client.")
-        } else {
-          console.log("Sending default settings to new client.")
-        }
-      }
-    }))
 
+    // register client id 
     var id = uuid()
-    clients[id] = emitter
-
-    emitter.player = {
-      rotation: new game.THREE.Vector3(),
-      position: new game.THREE.Vector3()
-    }
-
-    console.log(id, 'joined')
     emitter.emit('id', id)
     broadcast(id, 'join', id)
-    stream.once('end', leave)
-    stream.once('error', leave)
-    
-    function leave() {
-      delete clients[id]
-      console.log(id, 'left')
-      broadcast(id, 'leave', id)
+    console.log(id, 'joined')
+    var client = clients[id] = {
+      emitter: emitter,
+      player: {
+        rotation: new game.THREE.Vector3(),
+        position: new game.THREE.Vector3()
+      },
     }
 
-    emitter.on('message', handleErrors(function(message) {
-      try {
-        if (!message.text) return
-        if (message.text.length > 140) message.text = message.text.substr(0, 140)
-        if (message.text.length === 0) return
-        console.log('chat', message)
-        broadcast(null, 'message', message)
-      } catch (error) {
-        console.dir('error caught in event `message`')
-        console.dir(error.stack)
-      }
-    }))
-
-    // give the user the initial game settings
-    if (settings.generate != null) {
-        settings.generatorToString = settings.generate.toString()
-    }
+    // send initial game settings
     emitter.emit('settings', settings)
 
-    // fires when the user tells us they are
-    // ready for chunks to be sent
-    emitter.on('created', handleErrors(function() {
-      sendInitialChunks(emitter)
-      // fires when client sends us new input state
-      emitter.on('state', handleErrors(function(state) {
-        try {
-          emitter.player.rotation.x = state.rotation.x
-          emitter.player.rotation.y = state.rotation.y
-          var pos = emitter.player.position
-          var distance = pos.distanceTo(state.position)
-          if (distance > 20) {
-            var before = pos.clone()
-            pos.lerp(state.position, 0.1)
-            return
-          }
-          pos.copy(state.position)
-        } catch (error) {
-          console.dir('error caught in event `state`')
-          console.dir(error.stack)
-        }
-      }))
+    //
+    // Handle client-sent events
+    //
+
+    // connection end/error
+    stream.once('end', removeClient)
+    stream.once('error', removeClient)
+    function removeClient() {
+      delete clients[id]
+      broadcast(id, 'leave', id)
+      console.log(id, 'left')
+    }
+
+    // forward chat message
+    emitter.on('message', handleErrors(function(message) {
+      if (!message.text) return
+      if (message.text.length > 140) message.text = message.text.substr(0, 140)
+      broadcast(null, 'message', message)
+      console.log('chat', message)
     }))
 
+    // when user ready ( game created, etc )
+    emitter.on('created', handleErrors(function() {
+      // send initial world payload
+      sendInitialChunks(emitter)
+    }))
+
+    // client sends new position, rotation
+    emitter.on('state', handleErrors(function(state) {
+      client.player.rotation.x = state.rotation.x
+      client.player.rotation.y = state.rotation.y
+      var pos = client.player.position
+      var distance = pos.distanceTo(state.position)
+      if (distance > 20) {
+        var before = pos.clone()
+        pos.lerp(state.position, 0.1)
+        return
+      }
+      pos.copy(state.position)
+    }))
+
+    // client modifies a block
     emitter.on('set', handleErrors(function(pos, val) {
       game.setBlock(pos, val)
       var chunkPos = game.voxels.chunkAtPosition(pos)
@@ -181,8 +124,36 @@ module.exports = handleErrors(function(settings) {
       broadcast(null, 'set', pos, val)
     }))
 
-  }))
+  }
 
+  // send message to all clients
+  function broadcast(id, cmd, arg1, arg2, arg3) {
+    server.emit(cmd,id,arg1,arg2,arg3)
+    Object.keys(clients).map(function(clientId) {
+      if (clientId === id) return
+      clients[clientId].emitter.emit(cmd, arg1, arg2, arg3)
+    })
+  }
+
+  // broadcast position, rotation updates for each player
+  function sendUpdate() {
+    var clientIds = Object.keys(clients)
+    if (clientIds.length === 0) return
+    var update = {positions:{}, date: +new Date()}
+    clientIds.map(function(id) {
+      var client = clients[id]
+      update.positions[id] = {
+        position: client.player.position,
+        rotation: {
+          x: client.player.rotation.x,
+          y: client.player.rotation.y,
+        },
+      }
+    })
+    broadcast(null, 'update', update)
+  }
+
+  // send all the game chunks
   function sendInitialChunks(emitter) {
     Object.keys(game.voxels.chunks).map(function(chunkID) {
       var chunk = game.voxels.chunks[chunkID]
@@ -200,9 +171,13 @@ module.exports = handleErrors(function(settings) {
     emitter.emit('noMoreChunks', true)
   }
   
+  // return the server object so module consumers can
+  // subscribe to events and extend functionality
   return server
-})
 
+}
+
+// utility function
 // returns the provided function wrapped in a try-catch
 // logs the errors to standard out
 function handleErrors(func) {
