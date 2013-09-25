@@ -19,8 +19,38 @@ Run the start script:
 ```
 npm start
 ```
-
 This gets the server running on port 8080.
+
+## Using as a module
+The returned server object implements [EventEmitter2](https://github.com/hij1nx/EventEmitter2)
+
+```javascript
+var createServer = require('voxel-server')
+
+var settings = {
+  generateChunks: false,
+  chunkDistance: 2,
+  materials: [
+    ['grass', 'dirt', 'grass_dirt'],
+    'dirt',
+    'plank',
+    'cobblestone',
+    'brick',
+  ],
+  avatarInitialPosition: [2, 20, 2],
+}
+
+var server = createServer(settings)
+
+server.on('missingChunk', function(chunk){ ... })
+server.on('client.join', function(client){
+  server.on(['client', client.id, 'leave'], function(client){ ... })
+  server.on(['client', client.id, 'state'], function(state){ ... })
+})
+server.on('message', function(message, authorClient){ ... })
+server.on('set', function(pos, val, client){ ... })
+server.on('error', function(error){ ... })
+```
 
 ## explanation
 
