@@ -1,7 +1,7 @@
 {
   "name": "voxel-client",
   "description": "multiplayer client for voxel-server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "voxel-engine": "~0.18.0",
     "websocket-stream": "0.0.5",
