@@ -34,7 +34,6 @@ module.exports = function(settings) {
     avatarInitialPosition: [2, 20, 2],
   }
   settings = extend({}, defaults, settings)
-  if (settings.generate) settings.generatorToString = settings.generate.toString()
   
   // prepare a server object to return
   var server = extend({}, new EventEmitter2({ wildcard: true }))
