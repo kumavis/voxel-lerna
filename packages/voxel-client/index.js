@@ -1,81 +1,89 @@
 // dependencies
-var url = require('url')
-var websocket = require('websocket-stream')
-var duplexEmitter = require('duplex-emitter')
-var toolbar = require('toolbar')
+var EventEmitter = require('events').EventEmitter
+var extend = require('extend')
 // voxel dependencies
 var skin = require('minecraft-skin')
 var crunch = require('voxel-crunch')
-var highlight = require('voxel-highlight')
-var player = require('voxel-player')
+var voxelPlayer = require('voxel-player')
 var engine = require('voxel-engine')
 // local dependencies
-var randomName = require('./randomname')
+var randomName = require('./randomname.js')
 
 module.exports = Client
 
 function Client(opts) {
-  var self = this
   // force instantiation via `new` keyword 
   if(!(this instanceof Client)) { return new Client(opts) }
+  this.initialize(opts)
+}
+
+Client.prototype.initialize = function(opts) {
+  var self = this
   // allow module consumers to listen to ee2 events
   // set initial values
+  self.opts = opts
   self.playerID
   self.game
   self.texturePath = opts.texturePath || '/textures/'
-  self.lastProcessedSeq = 0
-  self.localInputs = []
-  self.connected = false
-  self.currentMaterial = 1
+  self.playerTexture = opts.playerTexture || 'player.png'
   self.lerpPercent = 0.1
-  self.server = opts.server || 'ws://'+document.domain+':8000/'
   self.remoteClients = {}
-  self.connect(self.server)
-}
-
-Client.prototype.connect = function(server) {
-  var self = this
-  var socket = websocket(server)
-  socket.on('end', function() { self.connected = false })
-  self.socket = socket
-  self.bindEvents(socket)
-}
-
-Client.prototype.bindEvents = function(socket) {
-  var self = this
-  // setup two way communication with the server
-  var emitter = self.emitter = duplexEmitter(socket)
+  self.connection = opts.connection
   // expose emitter methods on client
-  self.on = emitter.on.bind(emitter)
-  self.emit = emitter.emit.bind(emitter)
-  self.connected = true
+  extend(self,new EventEmitter())
+  // setup server event handlers
+  self.bindEvents(self.connection)
+}
+
+Client.prototype.bindEvents = function(connection) {
+  var self = this
 
   // receive id from server 
-  self.on('id', function(id) {
-    console.log('got id', id)
+  connection.on('id', function(id) {
     self.playerID = id
   })
   
   // receive initial game settings
-  self.on('settings', function(settings) {
+  connection.on('settings', function(settings) {
     settings.texturePath = self.texturePath
     settings.generateChunks = false
     settings.controlsDisabled = false
     self.game = self.createGame(settings)
     // tell server we're ready
-    self.emit('created')
+    connection.emit('created')
   })
 
   // load in chunks from the server
-  self.on('chunk', function(encoded, chunk) {
+  connection.on('chunk', function(encoded, chunk) {
     var voxels = crunch.decode(encoded, chunk.length)
     chunk.voxels = voxels
     self.game.showChunk(chunk)
   })
 
+  // after all chunks loaded
+  connection.on('noMoreChunks', function() {
+    var game = self.game
+    
+    // if not capable, throw error
+    if (game.notCapable()) {
+      try{ throw 'game not capable' }
+      catch(err) { self.emit('error',err) }
+    }
+
+    // create the player from a minecraft skin file and tell the
+    // game to use it as the main player
+    var createPlayer = voxelPlayer(game)
+    var avatar = self.avatar = createPlayer(self.playerTexture)
+    avatar.possess()
+    var position = game.settings.avatarInitialPosition
+    avatar.position.set(position[0],position[1],position[2])
+    
+    // tell modules consumers we're ready
+    self.emit('loadComplete')
+  })
+
   // fires when server sends us voxel edits
-  self.on('set', function(pos, val) {
-    self.emit('set', pos, val)
+  connection.on('set', function(pos, val) {
     self.game.setBlock(pos, val)
   })
 
@@ -83,7 +91,7 @@ Client.prototype.bindEvents = function(socket) {
 
 Client.prototype.createGame = function(settings) {
   var self = this
-  var emitter = self.emitter
+  var connection = self.connection
   self.game = engine(settings)
   self.game.settings = settings
 
@@ -94,6 +102,7 @@ Client.prototype.createGame = function(settings) {
     name = randomName()
     localStorage.setItem('name', name)
   }
+  self.name = name
 
   // handle controls
   self.game.controls.on('data', function(state) {
@@ -107,18 +116,17 @@ Client.prototype.createGame = function(settings) {
   // handle server updates
   // delay is because three.js seems to throw errors if you add stuff too soon
   setTimeout(function() {
-    emitter.on('update', serverUpdate)
+    connection.on('update', serverUpdate)
   }, 1000)
 
   // handle removing clients that leave
-  emitter.on('leave', removeClient)
+  connection.on('leave', removeClient)
   
   // return the game object
   return self.game
 
   // send player state to server, mostly avatar info (position, rotation, etc.)
   function sendState() {
-    if (!self.connected) return
     var player = self.game.controls.target()
     var state = {
       position: player.yaw.position,
@@ -127,7 +135,7 @@ Client.prototype.createGame = function(settings) {
         x: player.pitch.rotation.x
       }
     }
-    emitter.emit('state', state)
+    connection.emit('state', state)
   }
 
   // unregister a remote client
@@ -141,6 +149,7 @@ Client.prototype.createGame = function(settings) {
   function serverUpdate(updates) {      
     Object.keys(updates.positions).map(function(player) {
       var update = updates.positions[player]
+
       // local player
       if (player === self.playerID) {
         self.onServerUpdate(update)
@@ -154,10 +163,12 @@ Client.prototype.createGame = function(settings) {
 }
 
 Client.prototype.onServerUpdate = function(update) {
+  var self = this
   // todo use server sent location
 }
 
 Client.prototype.lerpMe = function(position) {
+  var self = this
   var to = new this.game.THREE.Vector3()
   to.copy(position)
   var from = this.game.controls.target().yaw.position
@@ -169,7 +180,7 @@ Client.prototype.updatePlayerPosition = function(id, update) {
   var pos = update.position
   var player = self.remoteClients[id]
   if (!player) {
-    var playerSkin = skin(self.game.THREE, 'player.png', {
+    var playerSkin = skin(self.game.THREE, self.playerTexture, {
       scale: new self.game.THREE.Vector3(0.04, 0.04, 0.04)
     })
     var playerMesh = playerSkin.mesh
