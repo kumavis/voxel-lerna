@@ -132,14 +132,34 @@ Server.prototype.bindClientEvents = function(client) {
     self.broadcast(null, 'set', pos, val)
   }))
 
+  // forward custom events
+  self.settings.forwardEvents.map(function(eventName) {
+    connection.on(eventName,function() {
+      var args = [].slice.apply(arguments)
+      // add event name
+      args.unshift(eventName)
+      // add client id
+      args.unshift(id)
+      self.broadcast.apply(self,args)
+    })
+  })
+
 }
 
 // send message to all clients
-Server.prototype.broadcast = function(id, cmd, arg1, arg2, arg3) {
+Server.prototype.broadcast = function(id, event) {
   var self = this
+  // normalize arguments
+  var args = [].slice.apply(arguments)
+  // remove client `id` argument
+  args.shift()
+  // emit on self
+  self.emit.apply(self,args)
   Object.keys(self.clients).map(function(clientId) {
     if (clientId === id) return
-    self.clients[clientId].connection.emit(cmd, arg1, arg2, arg3)
+    var connection = self.clients[clientId].connection
+    // emit over connection
+    connection.emit.apply(connection,args)
   })
 }
 
