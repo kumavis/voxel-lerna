@@ -59,7 +59,6 @@ Server.prototype.connectClient = function(connection) {
   var game = self.game
   // register client id 
   var id = connection.id = uuid()
-  connection.emit('id', id)
   self.broadcast(id, 'join', id)
   var client = self.clients[id] = {
     id: id,
@@ -69,12 +68,17 @@ Server.prototype.connectClient = function(connection) {
       position: new game.THREE.Vector3()
     },
   }
-  self.emit(['client','join'],client)
 
-  // send initial game settings
+  // setup client response handlers
+  self.bindClientEvents(client)
+
+  // send client id and initial game settings
+  connection.emit('id', id)
   connection.emit('settings', settings)
 
-  self.bindClientEvents(client)
+  // emit client.join for module consumers
+  self.emit(['client','join'],client)
+
 }
 
 Server.prototype.removeClient = function(connection) {
