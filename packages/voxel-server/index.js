@@ -108,6 +108,8 @@ Server.prototype.bindClientEvents = function(client) {
   connection.on('created', self.handleErrors(function() {
     // send initial world payload
     self.sendInitialChunks(connection)
+    // emit client.created for module consumers
+    self.emit(['client','created'],client)
   }))
 
   // client sends new position, rotation
