@@ -22,6 +22,7 @@ Server.prototype.initialize = function(opts) {
   // server game settings are sent to all
   // new clients when they connect
   var defaults = {
+    isClient: false,
     chunkDistance: 2,
     materials: [
       ['grass', 'dirt', 'grass_dirt'],
