@@ -45,6 +45,8 @@ Client.prototype.bindEvents = function(connection) {
   
   // receive initial game settings
   connection.on('settings', function(settings) {
+    // set client-specific settings
+    settings.isClient = true
     settings.texturePath = self.texturePath
     settings.generateChunks = false
     settings.controlsDisabled = false
