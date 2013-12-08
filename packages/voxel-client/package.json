@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "dependencies": {
     "voxel-engine": "git://github.com/kumavis/voxel-engine.git#1cbb81dc714fd9320e0c15805a07deaf9fd9cd16",
-    "voxel-crunch": "~0.1.1",
+    "voxel-crunch": "0.1.1",
     "minecraft-skin": "0.1.2",
     "voxel-player": "0.1.0",
     "extend": "1.1.3"
