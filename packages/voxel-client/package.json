@@ -1,7 +1,7 @@
 {
   "name": "voxel-client",
   "description": "multiplayer client for voxel-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "voxel-engine": "git://github.com/kumavis/voxel-engine.git#1cbb81dc714fd9320e0c15805a07deaf9fd9cd16",
     "voxel-crunch": "0.1.1",
