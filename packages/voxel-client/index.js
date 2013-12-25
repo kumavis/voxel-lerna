@@ -57,6 +57,12 @@ Client.prototype.bindEvents = function(connection) {
 
   // load in chunks from the server
   connection.on('chunk', function(encoded, chunk) {
+    // ensure `encoded` survived transmission as an array
+    // JSON stringifies Uint8Arrays as objects
+    if (encoded.length === undefined) {
+      var lastIndex = Math.max.apply(null,Object.keys(encoded).map(Number))
+      encoded.length = lastIndex+1
+    }
     var voxels = crunch.decode(encoded, chunk.length)
     chunk.voxels = voxels
     self.game.showChunk(chunk)
