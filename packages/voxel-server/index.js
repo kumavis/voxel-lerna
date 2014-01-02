@@ -161,7 +161,7 @@ Server.prototype.broadcast = function(id, event) {
   // remove client `id` argument
   args.shift()
   // emit on self
-  self.emit.apply(self,args)
+  if (id !== 'server') self.emit.apply(self,args)
   Object.keys(self.clients).map(function(clientId) {
     if (clientId === id) return
     var connection = self.clients[clientId].connection
