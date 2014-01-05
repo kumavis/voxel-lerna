@@ -33,11 +33,13 @@ Server.prototype.initialize = function(opts) {
     worldOrigin: [0, 0, 0],
     controls: { discreteFire: true },
     avatarInitialPosition: [2, 20, 2],
+    forwardEvents: ['chat'],
   }
   var settings = self.settings = extend({}, defaults, opts)
   
   // prepare a server object to return
   extend(self, new EventEmitter())
+  self.forwardEvents = settings.forwardEvents
   var game = self.game = engine(settings)
   var clients = self.clients = {}
   var chunkCache = self.chunkCache = {}
@@ -139,7 +141,7 @@ Server.prototype.bindClientEvents = function(client) {
   }))
 
   // forward custom events
-  self.settings.forwardEvents.map(function(eventName) {
+  self.forwardEvents.map(function(eventName) {
     connection.on(eventName,function() {
       var args = [].slice.apply(arguments)
       // add event name
