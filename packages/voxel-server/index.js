@@ -1,6 +1,6 @@
 // dependencies
 var extend = require('extend')
-var EventEmitter2 = require('eventemitter2').EventEmitter2
+var EventEmitter = require('events').EventEmitter
 var path = require('path')
 var uuid = require('hat')
 // voxel dependencies
@@ -38,7 +38,7 @@ Server.prototype.initialize = function(opts) {
   var settings = self.settings = extend({}, defaults, opts)
   
   // prepare a server object to return
-  extend(self, new EventEmitter2({ wildcard: true }))
+  extend(self, new EventEmitter())
   var game = self.game = engine(settings)
   var clients = self.clients = {}
   var chunkCache = self.chunkCache = {}
