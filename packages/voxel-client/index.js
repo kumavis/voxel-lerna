@@ -1,5 +1,6 @@
 // dependencies
 var EventEmitter = require('events').EventEmitter
+var DuplexEmitter = require('duplex-emitter')
 var extend = require('extend')
 // voxel dependencies
 var skin = require('minecraft-skin')
@@ -28,9 +29,12 @@ Client.prototype.initialize = function(opts) {
   self.playerTexture = opts.playerTexture || 'player.png'
   self.lerpPercent = 0.1
   self.remoteClients = {}
-  self.connection = opts.connection
+  self.serverStream = opts.serverStream
   // expose emitter methods on client
   extend(self,new EventEmitter())
+
+  // create 'connection' remote event emitter from duplex stream
+  self.connection = DuplexEmitter(opts.serverStream)
   // setup server event handlers
   self.bindEvents(self.connection)
 }
