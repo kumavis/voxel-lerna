@@ -2,59 +2,45 @@
 
 multiplayer server for [voxel-engine](http://github.com/maxogden/voxel-engine)
 
-Use with [voxel-client](https://github.com/maxogden/voxel-client)
+Use with [voxel-client](https://github.com/kumavis/voxel-client)
 
-If the client sends an object with a settings property, it will use those settings when creating its game instance and will send those instances to other clients that connect.
-
-If the client settings have the property "resetSettings", the server will switch to those. It deletes any game instance and clears the chunkCache.
-
-## Get it running on your machine
-
-```
-npm install
-```
-
-Run the start script:
-
-```
-npm start
-```
-This gets the server running on port 8080.
 
 ## Using as a module
-The returned server object implements [EventEmitter2](https://github.com/hij1nx/EventEmitter2)
+The returned server object implements EventEmitter
 
 ```javascript
-var createServer = require('voxel-server')
+var Server = require('voxel-server')
 
 var settings = {
-  generateChunks: false,
-  chunkDistance: 2,
-  materials: [
-    ['grass', 'dirt', 'grass_dirt'],
-    'dirt',
-    'plank',
-    'cobblestone',
-    'brick',
-  ],
   avatarInitialPosition: [2, 20, 2],
 }
 
-var server = createServer(settings)
+// create server
+var server = Server(settings)
 
+// bind events
 server.on('missingChunk', function(chunk){ ... })
-server.on('client.join', function(client){
-  server.on(['client', client.id, 'leave'], function(client){ ... })
-  server.on(['client', client.id, 'state'], function(state){ ... })
-})
-server.on('message', function(message, authorClient){ ... })
+server.on('client.join', function(client){ ... })
+server.on('client.leave', function(client){ ... })
+server.on('client.state', function(state){ ... })
+server.on('chat', function(message){ ... })
 server.on('set', function(pos, val, client){ ... })
 server.on('error', function(error){ ... })
+
+// connect a client
+var duplexStream = SomeTransportSteam()
+server.connectClient(duplexStream)
 ```
 
-## explanation
+#### transport streams
 
-background research:
+websockets: [websocket-stream](https://github.com/maxogden/websocket-stream)
+
+webRTC: [rtc-data-stream](https://github.com/kumavis/rtc-data-stream)
+
+
+
+## further reading:
 
 - http://buildnewgames.com/real-time-multiplayer/
 - https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
