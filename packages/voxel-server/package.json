@@ -1,7 +1,7 @@
 {
   "name": "voxel-server",
   "subdomain": "voxel",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kumavis/voxel-server.git"
