@@ -7,7 +7,6 @@ var uuid = require('hat')
 var voxel = require('voxel')
 var crunch = require('voxel-crunch')
 var engine = require('voxel-engine')
-var texturePath = require('painterly-textures')(__dirname)
 
 module.exports = Server
 
@@ -30,7 +29,6 @@ Server.prototype.initialize = function(opts) {
       'brick',
       'grass'
     ],
-    texturePath: texturePath,
     worldOrigin: [0, 0, 0],
     controls: { discreteFire: true },
     avatarInitialPosition: [2, 20, 2],
