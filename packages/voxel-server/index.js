@@ -60,7 +60,8 @@ Server.prototype.connectClient = function(duplexStream) {
   // create 'connection' remote event emitter from duplex stream
   var connection = DuplexEmitter(duplexStream)
   // register client id
-  var id = connection.id = uuid()
+  var id = uuid()
+  connection.id = duplexStream.id = id
   self.broadcast(id, 'join', id)
   var client = self.clients[id] = {
     id: id,
@@ -80,9 +81,9 @@ Server.prototype.connectClient = function(duplexStream) {
 
 }
 
-Server.prototype.removeClient = function(connection) {
+Server.prototype.removeClient = function(duplexStream) {
   var self = this
-  var id = connection.id
+  var id = duplexStream.id
   var client = self.clients[id]
   delete self.clients[id]
   self.broadcast(id, 'leave', id)
@@ -123,7 +124,7 @@ Server.prototype.bindClientEvents = function(client) {
       return
     }
     pos.copy(state.position)
-    self.emit('client.state'],client,state)
+    self.emit('client.state',client,state)
   }))
 
   // client modifies a block
