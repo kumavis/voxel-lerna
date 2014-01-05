@@ -12,10 +12,6 @@ The returned server object implements EventEmitter
 var Server = require('voxel-server')
 
 var settings = {
-  // name of the world you want to load
-  worldId: worldName,
-  // reference to [voxel-level](https://github.com/maxogden/voxel-level) instance
-  voxelDb: voxelDb,
   // various [voxel-engine]() settings to be sent to the clients
   avatarInitialPosition: [2, 20, 2],
   // list of incomming custom events to forward to all clients
