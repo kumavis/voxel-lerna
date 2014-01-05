@@ -33,7 +33,7 @@ Server.prototype.initialize = function(opts) {
     worldOrigin: [0, 0, 0],
     controls: { discreteFire: true },
     avatarInitialPosition: [2, 20, 2],
-    forwardEvents: ['chat'],
+    forwardEvents: [],
   }
   var settings = self.settings = extend({}, defaults, opts)
   
