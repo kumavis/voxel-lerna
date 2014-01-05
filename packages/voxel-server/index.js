@@ -58,7 +58,7 @@ Server.prototype.connectClient = function(duplexStream) {
   var settings = self.settings
   var game = self.game
   // create 'connection' remote event emitter from duplex stream
-  var connection = self.connection = DuplexEmitter(duplexStream)
+  var connection = DuplexEmitter(duplexStream)
   // register client id
   var id = connection.id = uuid()
   self.broadcast(id, 'join', id)
@@ -67,7 +67,7 @@ Server.prototype.connectClient = function(duplexStream) {
     connection: connection,
     player: {
       rotation: new game.THREE.Vector3(),
-      position: new game.THREE.Vector3()
+      position: new game.THREE.Vector3(),
     },
   }
 
@@ -78,9 +78,6 @@ Server.prototype.connectClient = function(duplexStream) {
   connection.emit('id', id)
   connection.emit('settings', settings)
 
-  // emit client.join for module consumers
-  self.emit(['client','join'],client)
-
 }
 
 Server.prototype.removeClient = function(connection) {
@@ -88,7 +85,6 @@ Server.prototype.removeClient = function(connection) {
   var id = connection.id
   var client = self.clients[id]
   delete self.clients[id]
-  self.emit(['client',id,'leave'],client)
   self.broadcast(id, 'leave', id)
 }
 
@@ -100,9 +96,10 @@ Server.prototype.bindClientEvents = function(client) {
 
   // forward chat message
   connection.on('chat', self.handleErrors(function(message) {
+    // ignore if no message provided
     if (!message.text) return
+    // limit chat message length
     if (message.text.length > 140) message.text = message.text.substr(0, 140)
-    self.emit(['chat'],message,client)
     self.broadcast(null, 'chat', message)
   }))
 
@@ -111,12 +108,11 @@ Server.prototype.bindClientEvents = function(client) {
     // send initial world payload
     self.sendInitialChunks(connection)
     // emit client.created for module consumers
-    self.emit(['client','created'],client)
+    self.emit('client.created',client)
   }))
 
   // client sends new position, rotation
   connection.on('state', self.handleErrors(function(state) {
-    self.emit(['client',id,'state'],state)
     client.player.rotation.x = state.rotation.x
     client.player.rotation.y = state.rotation.y
     var pos = client.player.position
@@ -127,17 +123,18 @@ Server.prototype.bindClientEvents = function(client) {
       return
     }
     pos.copy(state.position)
+    self.emit('client.state'],client,state)
   }))
 
   // client modifies a block
   var chunkCache = self.chunkCache
   connection.on('set', self.handleErrors(function(pos, val) {
-    self.emit(['set'],pos,val,client)
     game.setBlock(pos, val)
     var chunkPos = game.voxels.chunkAtPosition(pos)
     var chunkID = chunkPos.join('|')
     if (chunkCache[chunkID]) delete chunkCache[chunkID]
-    self.broadcast(null, 'set', pos, val)
+    // broadcast 'set' to all players
+    self.broadcast(null, 'set', pos, val, client.id)
   }))
 
   // forward custom events
@@ -161,7 +158,7 @@ Server.prototype.broadcast = function(id, event) {
   var args = [].slice.apply(arguments)
   // remove client `id` argument
   args.shift()
-  // emit on self
+  // emit on self for module consumers, unless specified not to
   if (id !== 'server') self.emit.apply(self,args)
   Object.keys(self.clients).map(function(clientId) {
     if (clientId === id) return
@@ -220,7 +217,7 @@ Server.prototype.handleErrors = function(func) {
     try {
       return func.apply(this,arguments)
     } catch (error) {
-      self.emit(['error'],error)
+      self.emit('error',error)
     }
   }
 }
