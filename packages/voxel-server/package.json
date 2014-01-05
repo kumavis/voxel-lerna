@@ -2,15 +2,19 @@
   "name": "voxel-server",
   "subdomain": "voxel",
   "version": "1.0.4",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kumavis/voxel-server.git"
+  },
   "dependencies": {
     "toolbar": "0.0.5",
-    "voxel-engine": "git://github.com/kumavis/voxel-engine.git#1cbb81dc714fd9320e0c15805a07deaf9fd9cd16",
+    "voxel-engine": "0.20.0",
     "voxel-crunch": "0.1.1",
     "hat": "0.0.3",
     "painterly-textures": "0.0.3",
     "voxel": "0.3.1",
-    "extend": "~1.2.1",
-    "eventemitter2": "~0.4.13"
+    "extend": "1.2.1",
+    "eventemitter2": "0.4.13"
   },
   "engines": {
     "node": "0.10.20"
