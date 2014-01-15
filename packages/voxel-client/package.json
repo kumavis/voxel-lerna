@@ -7,7 +7,7 @@
     "url": "git@github.com:kumavis/voxel-server.git"
   },
   "dependencies": {
-    "voxel-engine": "0.19.0",
+    "voxel-engine": "0.20.0",
     "voxel-crunch": "0.1.1",
     "minecraft-skin": "0.1.2",
     "voxel-player": "0.1.0",
