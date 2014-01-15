@@ -1,7 +1,7 @@
 {
   "name": "voxel-client",
   "description": "multiplayer client for voxel-server",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kumavis/voxel-server.git"
