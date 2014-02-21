@@ -45,9 +45,7 @@ Server.prototype.initialize = function(opts) {
   var chunkCache = self.chunkCache = {}
 
   // send player position/rotation updates
-  setInterval(self.handleErrors(function() {
-    self.sendUpdate()
-  }), 1000/22) // every 45ms
+  setInterval(self.sendUpdate.bind(self), 1000/22) // every 45ms
 
   // forward some events to module consumer
   game.voxels.on('missingChunk', function(chunk){ self.emit('missingChunk',chunk) })
@@ -83,9 +81,8 @@ Server.prototype.connectClient = function(duplexStream, id) {
 
 }
 
-Server.prototype.removeClient = function(duplexStream) {
+Server.prototype.removeClient = function(id) {
   var self = this
-  var id = duplexStream.id
   var client = self.clients[id]
   delete self.clients[id]
   self.broadcast(id, 'leave', id)
@@ -167,7 +164,12 @@ Server.prototype.broadcast = function(id, event) {
     if (clientId === id) return
     var connection = self.clients[clientId].connection
     // emit over connection
-    connection.emit.apply(connection,args)
+    try {
+      connection.emit.apply(connection,args)
+    } catch (err) {
+      console.log('removing erroring client',clientId,err)
+      self.removeClient(clientId)
+    }
   })
 }
 
