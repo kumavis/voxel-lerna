@@ -55,14 +55,14 @@ Server.prototype.initialize = function(opts) {
 }
 
 // Setup the client connection - register events, etc
-Server.prototype.connectClient = function(duplexStream) {
+Server.prototype.connectClient = function(duplexStream, id) {
   var self = this
   var settings = self.settings
   var game = self.game
   // create 'connection' remote event emitter from duplex stream
   var connection = DuplexEmitter(duplexStream)
   // register client id
-  var id = uuid()
+  id = id || uuid()
   connection.id = duplexStream.id = id
   self.broadcast(id, 'join', id)
   var client = self.clients[id] = {
