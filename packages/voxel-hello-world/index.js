@@ -11,8 +11,15 @@ module.exports = function(opts, setup) {
   var defaults = {
     generate: voxel.generator['Valley'],
     chunkDistance: 2,
-    materials: ['#fff', '#000'],
-    materialFlatColor: true,
+    // materials: ['#fff', '#000'],
+    materials: [
+      ['grass', 'dirt', 'grass_dirt'],
+      // 'obsidian',
+      // 'brick',
+      // 'grass',
+      // 'plank'
+    ],
+    // materialFlatColor: true,
     worldOrigin: [0, 0, 0],
     controls: { discreteFire: true }
   }
@@ -33,50 +40,50 @@ module.exports = function(opts, setup) {
   avatar.possess()
   avatar.yaw.position.set(2, 14, 4)
 
-  setup(game, avatar)
+  setup(game, avatar, defaultSetup)
   
   return game
 }
 
 function defaultSetup(game, avatar) {
   
-  var makeFly = fly(game)
-  var target = game.controls.target()
-  game.flyer = makeFly(target)
+  // var makeFly = fly(game)
+  // var target = game.controls.target()
+  // game.flyer = makeFly(target)
   
-  // highlight blocks when you look at them, hold <Ctrl> for block placement
-  var blockPosPlace, blockPosErase
-  var hl = game.highlighter = highlight(game, { color: 0xff0000 })
-  hl.on('highlight', function (voxelPos) { blockPosErase = voxelPos })
-  hl.on('remove', function (voxelPos) { blockPosErase = null })
-  hl.on('highlight-adjacent', function (voxelPos) { blockPosPlace = voxelPos })
-  hl.on('remove-adjacent', function (voxelPos) { blockPosPlace = null })
+  // // highlight blocks when you look at them, hold <Ctrl> for block placement
+  // var blockPosPlace, blockPosErase
+  // var hl = game.highlighter = highlight(game, { color: 0xff0000 })
+  // hl.on('highlight', function (voxelPos) { blockPosErase = voxelPos })
+  // hl.on('remove', function (voxelPos) { blockPosErase = null })
+  // hl.on('highlight-adjacent', function (voxelPos) { blockPosPlace = voxelPos })
+  // hl.on('remove-adjacent', function (voxelPos) { blockPosPlace = null })
 
-  // toggle between first and third person modes
-  window.addEventListener('keydown', function (ev) {
-    if (ev.keyCode === 'R'.charCodeAt(0)) avatar.toggle()
-  })
+  // // toggle between first and third person modes
+  // window.addEventListener('keydown', function (ev) {
+  //   if (ev.keyCode === 'R'.charCodeAt(0)) avatar.toggle()
+  // })
 
-  // block interaction stuff, uses highlight data
-  var currentMaterial = 1
+  // // block interaction stuff, uses highlight data
+  // var currentMaterial = 1
 
-  game.on('fire', function (target, state) {
-    var position = blockPosPlace
-    if (position) {
-      game.createBlock(position, currentMaterial)
-    }
-    else {
-      position = blockPosErase
-      if (position) game.setBlock(position, 0)
-    }
-  })
+  // game.on('fire', function (target, state) {
+  //   var position = blockPosPlace
+  //   if (position) {
+  //     game.createBlock(position, currentMaterial)
+  //   }
+  //   else {
+  //     position = blockPosErase
+  //     if (position) game.setBlock(position, 0)
+  //   }
+  // })
 
-  game.on('tick', function() {
-    walk.render(target.playerSkin)
-    var vx = Math.abs(target.velocity.x)
-    var vz = Math.abs(target.velocity.z)
-    if (vx > 0.001 || vz > 0.001) walk.stopWalking()
-    else walk.startWalking()
-  })
+  // game.on('tick', function() {
+  //   walk.render(target.playerSkin)
+  //   var vx = Math.abs(target.velocity.x)
+  //   var vz = Math.abs(target.velocity.z)
+  //   if (vx > 0.001 || vz > 0.001) walk.stopWalking()
+  //   else walk.startWalking()
+  // })
 
 }
