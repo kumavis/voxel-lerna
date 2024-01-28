@@ -10,9 +10,9 @@
     "bit-twiddle": "0.0.2"
   },
   "devDependencies": {
-    "tap": "~0.4.0",
+    "dup": "0.0.0",
     "iota-array": "0.0.0",
-    "dup": "0.0.0"
+    "tap": "~0.4.0"
   },
   "scripts": {
     "test": "tap test/*.js"
