@@ -9,18 +9,16 @@
   "author": "Max Ogden <max@maxogden.com>",
   "license": "BSD",
   "peerDependencies": {
-    "voxel-engine": ">=0.15.0"
+    "voxel-engine": "^0.20.1"
   },
   "devDependencies": {
-    "beefy": "0.0.11",
-    "browserify": "~2.8.1",
-    "voxel-hello-world": "0.2.0"
+    "voxel-hello-world": "^0.6.0"
   },
   "scripts": {
     "start": "beefy test.js"
   },
   "dependencies": {
-    "vkey": "0.0.2",
-    "ever": "0.0.3"
+    "ever": "0.0.3",
+    "vkey": "0.0.2"
   }
 }

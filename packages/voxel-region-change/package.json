@@ -3,7 +3,7 @@
   "description": "get events when the player changes voxels or chunks",
   "version": "0.1.0",
   "repository": {
-    "type":"git",
+    "type": "git",
     "url": "git@github.com:maxogden/voxel-region-change.git"
   },
   "dependencies": {
