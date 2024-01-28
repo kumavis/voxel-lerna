@@ -3,14 +3,17 @@ require('./')(null, (game, avatar, defaultSetup) => {
   game.on('renderChunk', (chunk) => {
     const chunkIndex = chunk.position.join('|')
     console.log('renderChunk', chunkIndex)
+    // manage a cute "mini mesh" clone of each chunk
     if (miniMeshes[chunkIndex]) {
       game.scene.remove(miniMeshes[chunkIndex])
     }
     const mesh = game.voxels.meshes[chunkIndex]
     const miniMesh = mesh.surfaceMesh.clone()
     miniMeshes[chunkIndex] = miniMesh
-    miniMesh.scale.set(0.1, 0.1, 0.1)
-    miniMesh.position.y += 4
+    // im not sure why the scale is like this
+    const scale = 1/32
+    miniMesh.scale.set(scale, scale, scale)
+    miniMesh.position.y += 2
     game.scene.add(miniMesh)
   })
   defaultSetup(game, avatar)
