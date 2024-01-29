@@ -4,40 +4,40 @@ module.exports = function (game, opts) {
     if (opts.leaves === undefined) opts.leaves = 2;
     if (!opts.height) opts.height = Math.random() * 16 + 4;
     if (opts.base === undefined) opts.base = opts.height / 3;
-    
+
     var voxels = game.voxels;
     var bounds = boundingChunks(voxels.chunks);
     var step = voxels.chunkSize * voxels.cubeSize;
     if (!opts.position) {
         var chunk = voxels.chunks[randomChunk(bounds)];
-        opts.position = {
-            x: (chunk.position[0] + Math.random()) * step,
-            y: (chunk.position[1] + Math.random()) * step,
-            z: (chunk.position[2] + Math.random()) * step
-        };
+        opts.position = [
+            (chunk.position[0] + Math.random()) * step,
+            (chunk.position[1] + Math.random()) * step,
+            (chunk.position[2] + Math.random()) * step,
+        ];
     }
     
-    var pos_ = { x: opts.position.x, y: opts.position.y, z: opts.position.z };
+    var pos_ = [...opts.position];
     function position () {
-        return { x: pos_.x, y: pos_.y, z: pos_.z };
+        return [...pos_];
     }
     
     var ymax = bounds.y.max * step;
     var ymin = bounds.y.min * step;
-    if (occupied(pos_.y)) {
-        for (var y = pos_.y; occupied(y); y += voxels.cubeSize);
+    if (occupied(pos_[1])) {
+        for (var y = pos_[1]; occupied(y); y += voxels.cubeSize);
         if (y >= ymax) return false;
-        pos_.y = y;
+        pos_[1] = y;
     }
     else {
-        for (var y = pos_.y; !occupied(y); y -= voxels.cubeSize);
+        for (var y = pos_[1]; !occupied(y); y -= voxels.cubeSize);
         if (y <= ymin) return false;
-        pos_.y = y + voxels.cubeSize;
+        pos_[1] = y + voxels.cubeSize;
     }
     function occupied (y) {
         var pos = position();
-        pos.y = y;
-        return y <= ymax && y >= ymin && voxels.voxelAtPosition(pos);
+        pos[1] = y;
+        return voxels.voxelAtPosition(pos);
     }
     
     var updated = {};
@@ -46,18 +46,19 @@ module.exports = function (game, opts) {
         [ 1, 1 ], [ 1, 0 ], [ 1, -1 ],
         [ -1, 1 ], [ -1, 0 ], [ -1, -1 ]
     ];
+
     for (var y = 0; y < opts.height - 1; y++) {
         var pos = position();
-        pos.y += y * voxels.cubeSize;
+        pos[1] += y * voxels.cubeSize;
         if (set(pos, opts.bark)) break;
         if (y < opts.base) continue;
         around.forEach(function (offset) {
             if (Math.random() > 0.5) return;
             var x = offset[0] * voxels.cubeSize;
             var z = offset[1] * voxels.cubeSize;
-            pos.x += x; pos.z += z;
+            pos[0] += x; pos[2] += z;
             set(pos, opts.leaves);
-            pos.x -= x; pos.z -= z;
+            pos[0] -= x; pos[2] -= z;
         });
     }
     
