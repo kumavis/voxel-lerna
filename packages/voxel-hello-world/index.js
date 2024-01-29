@@ -5,15 +5,22 @@ var voxel = require('voxel')
 var extend = require('extend')
 var fly = require('voxel-fly')
 var walk = require('voxel-walk')
+var createTree = require('voxel-forest');
+
+const generateGentleHills = (i,j,k) => {
+  return (j + 2 * Math.sin(i/13) + 3 * Math.sin(k/17)) < 0 ? 1 : 0
+}
 
 module.exports = function(opts, setup) {
   setup = setup || defaultSetup
   var defaults = {
-    generate: voxel.generator['Valley'],
+    generate: generateGentleHills,
     chunkDistance: 2,
     // materials: ['#fff', '#000'],
     materials: [
       ['grass', 'dirt', 'grass_dirt'],
+      'tree_side',
+      'leaves_opaque',
       // 'obsidian',
       // 'brick',
       // 'grass',
@@ -39,6 +46,10 @@ module.exports = function(opts, setup) {
   var avatar = createPlayer(opts.playerSkin || 'player.png')
   avatar.possess()
   avatar.yaw.position.set(2, 14, 4)
+
+  // for (var i = 0; i < 250; i++) {
+  //   createTree(game, { bark: 2, leaves: 3 });
+  // }
 
   setup(game, avatar, defaultSetup)
   
@@ -68,14 +79,22 @@ function defaultSetup(game, avatar) {
   var currentMaterial = 1
 
   game.on('fire', function (target, state) {
-    var position = blockPosPlace
-    if (position) {
-      game.createBlock(position, currentMaterial)
+    
+    // make tree
+    if (!blockPosPlace && blockPosErase) {
+      const position = blockPosErase
+      console.log('createTree', position)
+      createTree(game, { bark: 2, leaves: 3, position });
     }
-    else {
-      position = blockPosErase
-      if (position) game.setBlock(position, 0)
-    }
+
+    // var position = blockPosPlace
+    // if (position) {
+    //   game.createBlock(position, currentMaterial)
+    // }
+    // else {
+    //   position = blockPosErase
+    //   if (position) game.setBlock(position, 0)
+    // }
   })
 
   game.on('tick', function() {

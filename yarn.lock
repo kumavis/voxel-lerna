@@ -9996,7 +9996,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-forest@npm:0.0.0, voxel-forest@workspace:packages/voxel-forest":
+"voxel-forest@npm:^0.0.1, voxel-forest@workspace:packages/voxel-forest":
   version: 0.0.0-use.local
   resolution: "voxel-forest@workspace:packages/voxel-forest"
   dependencies:
@@ -10017,7 +10017,7 @@ __metadata:
     voxel: "npm:^0.5.0"
     voxel-engine: "npm:^0.20.1"
     voxel-fly: "npm:^0.1.2"
-    voxel-forest: "npm:0.0.0"
+    voxel-forest: "npm:^0.0.1"
     voxel-highlight: "npm:0.0.10"
     voxel-player: "npm:^0.1.0"
     voxel-rescue: "npm:0.0.2"
