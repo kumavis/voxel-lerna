@@ -9910,7 +9910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel-engine@npm:^0.20.0, voxel-engine@npm:^0.20.1, voxel-engine@workspace:packages/voxel-engine":
+"voxel-engine@npm:^0.20.0, voxel-engine@npm:^0.20.1, voxel-engine@workspace:^, voxel-engine@workspace:packages/voxel-engine":
   version: 0.0.0-use.local
   resolution: "voxel-engine@workspace:packages/voxel-engine"
   dependencies:
@@ -9984,7 +9984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel-fly@npm:^0.1.2, voxel-fly@workspace:packages/voxel-fly":
+"voxel-fly@workspace:^, voxel-fly@workspace:packages/voxel-fly":
   version: 0.0.0-use.local
   resolution: "voxel-fly@workspace:packages/voxel-fly"
   dependencies:
@@ -9996,7 +9996,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-forest@npm:^0.0.1, voxel-forest@workspace:packages/voxel-forest":
+"voxel-forest@workspace:^, voxel-forest@workspace:packages/voxel-forest":
   version: 0.0.0-use.local
   resolution: "voxel-forest@workspace:packages/voxel-forest"
   dependencies:
@@ -10014,10 +10014,10 @@ __metadata:
     beefy: "npm:^2.1.8"
     browserify: "npm:^17.0.0"
     extend: "npm:^3.0.0"
-    voxel: "npm:^0.5.0"
-    voxel-engine: "npm:^0.20.1"
-    voxel-fly: "npm:^0.1.2"
-    voxel-forest: "npm:^0.0.1"
+    voxel: "workspace:^"
+    voxel-engine: "workspace:^"
+    voxel-fly: "workspace:^"
+    voxel-forest: "workspace:^"
     voxel-highlight: "npm:0.0.10"
     voxel-player: "npm:^0.1.0"
     voxel-rescue: "npm:0.0.2"
@@ -10335,7 +10335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel@npm:^0.5.0, voxel@workspace:packages/voxel":
+"voxel@workspace:^, voxel@workspace:packages/voxel":
   version: 0.0.0-use.local
   resolution: "voxel@workspace:packages/voxel"
   dependencies:
