@@ -11,7 +11,7 @@
     "voxel-engine": "workspace:^",
     "voxel-fly": "workspace:^",
     "voxel-forest": "workspace:^",
-    "voxel-highlight": "0.0.10",
+    "voxel-highlight": "workspace:^",
     "voxel-player": "^0.1.0",
     "voxel-rescue": "0.0.2",
     "voxel-walk": "0.0.5"
