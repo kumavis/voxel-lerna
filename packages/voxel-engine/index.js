@@ -533,7 +533,11 @@ Game.prototype.loadPendingChunks = function(count) {
   for (var i = 0; i < count; i += 1) {
     var chunkPos = pendingChunks[i].split('|')
     var chunk = this.voxels.generateChunk(chunkPos[0]|0, chunkPos[1]|0, chunkPos[2]|0)
-
+    // Schema patch for voxel-mesh which expects (voxel@^0.3.0)
+    if (chunk.data && chunk.shape) {
+      chunk.voxels = chunk.data
+      chunk.dims = chunk.shape
+    }
     if (this.isClient) this.showChunk(chunk)
   }
 
@@ -727,7 +731,10 @@ Game.prototype.hookupControls = function(buttons, opts) {
 Game.prototype.handleChunkGeneration = function() {
   var self = this
   this.voxels.on('missingChunk', function(chunkPos) {
-    self.pendingChunks.push(chunkPos.join('|'))
+    const chunkKey = chunkPos.join('|')
+    // if chunk is already pending, ignore it
+    if (self.pendingChunks.indexOf(chunkKey) > -1) return
+    self.pendingChunks.push(chunkKey)
   })
   this.voxels.requestMissingChunks(this.worldOrigin)
   this.loadPendingChunks(this.pendingChunks.length)
