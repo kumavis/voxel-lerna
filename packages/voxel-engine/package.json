@@ -25,12 +25,12 @@
     "three": "0.56.0",
     "tic": "0.2.1",
     "voxel": "workspace:^",
-    "voxel-control": "0.0.7",
+    "voxel-control": "workspace:^",
     "voxel-mesh": "workspace:^",
     "voxel-physical": "workspace:^",
     "voxel-raycast": "workspace:^",
-    "voxel-region-change": "0.1.0",
-    "voxel-texture": "0.5.6",
+    "voxel-region-change": "workspace:^",
+    "voxel-texture": "workspace:^",
     "voxel-view": "workspace:^"
   },
   "devDependencies": {

@@ -1608,7 +1608,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"atlaspack@npm:~0.2.4, atlaspack@npm:~0.2.5":
+"atlaspack@npm:~0.2.5":
   version: 0.2.7
   resolution: "atlaspack@npm:0.2.7"
   checksum: ed90512a573114ebd44c31cad2a8b76444afc009dca1ccbc4b3bce0d16c58172d7126fe0fb0ec0278ace94c8a1ef15bbd467d05ea6b48640a98b4f67d27bfe5a
@@ -9330,7 +9330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tic@npm:0.2.1, tic@npm:~0.2.0, tic@npm:~0.2.1":
+"tic@npm:0.2.1, tic@npm:~0.2.1":
   version: 0.2.1
   resolution: "tic@npm:0.2.1"
   checksum: d773c2f750f9689d7fdffa7b16e455f61623758e50840f81a7dc9b05d5e606e3730b38b3389d1de62ef204dc14aef5c5a697caac5d69472d1f6c8480bb1ca684
@@ -9899,14 +9899,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-control@npm:0.0.7":
-  version: 0.0.7
-  resolution: "voxel-control@npm:0.0.7"
-  checksum: 9fed676aa5a9d2e0616b4a7f3f0813368f1347d88581909a8f994699943a550c69cacb14eba5bad50ffb77264cacf4d8c73e94db04558961d9bbc58a1b5ab38c
-  languageName: node
-  linkType: hard
-
-"voxel-control@workspace:packages/voxel-control":
+"voxel-control@workspace:^, voxel-control@workspace:packages/voxel-control":
   version: 0.0.0-use.local
   resolution: "voxel-control@workspace:packages/voxel-control"
   languageName: unknown
@@ -9960,12 +9953,12 @@ __metadata:
     three: "npm:0.56.0"
     tic: "npm:0.2.1"
     voxel: "workspace:^"
-    voxel-control: "npm:0.0.7"
+    voxel-control: "workspace:^"
     voxel-mesh: "workspace:^"
     voxel-physical: "workspace:^"
     voxel-raycast: "workspace:^"
-    voxel-region-change: "npm:0.1.0"
-    voxel-texture: "npm:0.5.6"
+    voxel-region-change: "workspace:^"
+    voxel-texture: "workspace:^"
     voxel-view: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -10013,8 +10006,8 @@ __metadata:
     voxel-forest: "workspace:^"
     voxel-highlight: "workspace:^"
     voxel-player: "workspace:^"
-    voxel-rescue: "npm:0.0.2"
-    voxel-walk: "npm:0.0.5"
+    voxel-rescue: "workspace:^"
+    voxel-walk: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10076,7 +10069,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-region-change@npm:0.1.0, voxel-region-change@workspace:packages/voxel-region-change":
+"voxel-region-change@workspace:^, voxel-region-change@workspace:packages/voxel-region-change":
   version: 0.0.0-use.local
   resolution: "voxel-region-change@workspace:packages/voxel-region-change"
   dependencies:
@@ -10087,7 +10080,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-rescue@npm:0.0.2, voxel-rescue@workspace:packages/voxel-rescue":
+"voxel-rescue@workspace:^, voxel-rescue@workspace:packages/voxel-rescue":
   version: 0.0.0-use.local
   resolution: "voxel-rescue@workspace:packages/voxel-rescue"
   dependencies:
@@ -10112,17 +10105,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-texture@npm:0.5.6":
-  version: 0.5.6
-  resolution: "voxel-texture@npm:0.5.6"
-  dependencies:
-    atlaspack: "npm:~0.2.4"
-    tic: "npm:~0.2.0"
-  checksum: 596fa9c76c8309aff00ff599d3b9b924baedfbb5639d20e004eaa5adb09b177a5dedf40709f7042bceb095cb57aecb94d81601ea145e507b7772bb42b2ab5f9e
-  languageName: node
-  linkType: hard
-
-"voxel-texture@workspace:packages/voxel-texture":
+"voxel-texture@workspace:^, voxel-texture@workspace:packages/voxel-texture":
   version: 0.0.0-use.local
   resolution: "voxel-texture@workspace:packages/voxel-texture"
   dependencies:
@@ -10142,7 +10125,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-walk@npm:0.0.5, voxel-walk@workspace:^, voxel-walk@workspace:packages/voxel-walk":
+"voxel-walk@workspace:^, voxel-walk@workspace:packages/voxel-walk":
   version: 0.0.0-use.local
   resolution: "voxel-walk@workspace:packages/voxel-walk"
   dependencies:

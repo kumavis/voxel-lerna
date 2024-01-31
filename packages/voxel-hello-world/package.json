@@ -13,8 +13,8 @@
     "voxel-forest": "workspace:^",
     "voxel-highlight": "workspace:^",
     "voxel-player": "workspace:^",
-    "voxel-rescue": "0.0.2",
-    "voxel-walk": "0.0.5"
+    "voxel-rescue": "workspace:^",
+    "voxel-walk": "workspace:^"
   },
   "devDependencies": {
     "beefy": "^2.1.8",
