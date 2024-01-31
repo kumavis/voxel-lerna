@@ -8,8 +8,8 @@
     },
     "devDependencies": {
         "ecstatic": "~0.3.0",
-        "voxel": "~0.1.3",
-        "voxel-engine": "~0.5.7"
+        "voxel": "workspace:^",
+        "voxel-engine": "workspace:^"
     },
     "repository": {
         "type": "git",

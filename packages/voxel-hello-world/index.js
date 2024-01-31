@@ -15,7 +15,7 @@ module.exports = function(opts, setup) {
   setup = setup || defaultSetup
   var defaults = {
     generate: generateGentleHills,
-    chunkDistance: 2,
+        chunkDistance: 2,
     // materials: ['#fff', '#000'],
     materials: [
       ['grass', 'dirt', 'grass_dirt'],

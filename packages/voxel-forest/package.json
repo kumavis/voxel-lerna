@@ -6,7 +6,7 @@
     "devDependencies": {
         "ecstatic": "~0.3.0",
         "voxel-debris": "~0.0.2",
-        "voxel-engine": "~0.1.8",
+        "voxel-engine": "workspace:^",
         "voxel-perlin-terrain": "~0.0.2"
     },
     "repository": {

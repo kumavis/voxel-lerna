@@ -9,7 +9,7 @@
   "author": "Max Ogden <max@maxogden.com>",
   "license": "BSD",
   "peerDependencies": {
-    "voxel-engine": "^0.20.1"
+    "voxel-engine": "workspace:^"
   },
   "devDependencies": {
     "voxel-hello-world": "^0.6.0"

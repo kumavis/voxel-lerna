@@ -4814,13 +4814,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:~1.0.0":
-  version: 1.0.2
-  resolution: "inherits@npm:1.0.2"
-  checksum: fae9f5d59f2f24b25e04e84cf5fc025517f39f20246044bb82f9fbfefe804d47c361e87bebad46488b61c275b2cceab17f704eb9d1e76c183b0a5c1f2bbcea97
-  languageName: node
-  linkType: hard
-
 "ini@npm:^1.3.2, ini@npm:^1.3.8":
   version: 1.3.8
   resolution: "ini@npm:1.3.8"
@@ -5569,16 +5562,6 @@ __metadata:
   version: 1.3.1
   resolution: "jsonparse@npm:1.3.1"
   checksum: 89bc68080cd0a0e276d4b5ab1b79cacd68f562467008d176dc23e16e97d4efec9e21741d92ba5087a8433526a45a7e6a9d5ef25408696c402ca1cfbc01a90bf0
-  languageName: node
-  linkType: hard
-
-"kb-controls@npm:0.0.1":
-  version: 0.0.1
-  resolution: "kb-controls@npm:0.0.1"
-  dependencies:
-    ever: "npm:X.X.X"
-    vkey: "npm:X.X.X"
-  checksum: 8a55bda4ea70e47e191bdc2ba5165dd45eea9f2bccf0f4b9be649a7480384d9bfa6003bcbd254b04f735530d424483fbd97a1faac5e444b7251dbfb3258c56b9
   languageName: node
   linkType: hard
 
@@ -7581,26 +7564,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"player-physics@npm:0.0.11":
-  version: 0.0.11
-  resolution: "player-physics@npm:0.0.11"
-  dependencies:
-    inherits: "npm:1.0.0"
-    three: "npm:0.54.0"
-  checksum: a2bc64baaebfb18099babb3ee70e4c9c450548d424f1796634001c642b8363fabd6f1ec576d8062743daaa50087ca82d16dfd5da41ed571d3b53a95645cd062f
-  languageName: node
-  linkType: hard
-
-"player-physics@npm:0.1.0":
-  version: 0.1.0
-  resolution: "player-physics@npm:0.1.0"
-  dependencies:
-    inherits: "npm:1.0.0"
-    three: "npm:0.54.0"
-  checksum: a17045995cec467aa68b9296f0b6df6b81f2d466e1458738a8de2c5535753b54f6d726683e309c1f6b94718425fc8f6448df643c89ca73623f23c1dfc13533a1
-  languageName: node
-  linkType: hard
-
 "pointer-lock@npm:0.0.3":
   version: 0.0.3
   resolution: "pointer-lock@npm:0.0.3"
@@ -8744,15 +8707,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spatial-events@npm:0.0.0":
-  version: 0.0.0
-  resolution: "spatial-events@npm:0.0.0"
-  dependencies:
-    aabb-3d: "npm:0.X.X"
-  checksum: 7f8960c6547d934e66484ac0d9dfc191edac5ccc2481b2149ebd20fd4f01ed05a30b279494a6d76bd3d2cdcc259681c344f72d6827244d999de473feeb126782
-  languageName: node
-  linkType: hard
-
 "spatial-events@npm:0.0.1":
   version: 0.0.1
   resolution: "spatial-events@npm:0.0.1"
@@ -9298,20 +9252,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three@npm:0.54.0":
-  version: 0.54.0
-  resolution: "three@npm:0.54.0"
-  checksum: f7443ed672e0263853fd2370280f43907084b4d079042451e013b19af6c57ab0de24c6ca82ed4a12cd4e2f918459588b0009fe839b1412f4c2a735bd7ef32c70
-  languageName: node
-  linkType: hard
-
-"three@npm:0.54.5-dev":
-  version: 0.54.5-dev
-  resolution: "three@npm:0.54.5-dev"
-  checksum: 1512b574f8ee0d084caeb4a0e71daa912878f40de14c74013b7b459912e621c89708215b6381a4f293552ccc80c7dd998c81a548042fab6506b363d43c072828
-  languageName: node
-  linkType: hard
-
 "three@npm:0.56.0":
   version: 0.56.0
   resolution: "three@npm:0.56.0"
@@ -9323,13 +9263,6 @@ __metadata:
   version: 0.160.1
   resolution: "three@npm:0.160.1"
   checksum: b14b54a8b0799bc337ea2a841a1f01322dc50198d8a438ff4fbdf83ad95a15bd405ba43bd398c05b1ffc2e40a7685b73481a048c288389acb949cea5510269ea
-  languageName: node
-  linkType: hard
-
-"three@npm:~0.55.0":
-  version: 0.55.0
-  resolution: "three@npm:0.55.0"
-  checksum: 9e4c50c4239185e0fa12dd73bbca262a8e8c2addb0439ba7b16a410fd800eac2bbe07bc2f28e8b270b8096bc598d695592e5a0404f2158202afb1e480cddb080
   languageName: node
   linkType: hard
 
@@ -9479,15 +9412,6 @@ __metadata:
   version: 0.0.1
   resolution: "to-utf8@npm:0.0.1"
   checksum: f04e6fa701ad56f103c575d20d4a6a5b65ea52449b7c0846382c4219b8017541fecbec8c49bf4563fb10700d9a23cb03d4857d8de91de00baabb0b4d4b8f9c46
-  languageName: node
-  linkType: hard
-
-"toolbar@npm:0.0.2":
-  version: 0.0.2
-  resolution: "toolbar@npm:0.0.2"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: e80df53fab6ae7cf6c424f2415a236044233bff97a6bafb34dbff1d3bb20331a4290e5095b2453261fa068681fe6d004844b24286c6b09f9e930e5325c240446
   languageName: node
   linkType: hard
 
@@ -9966,17 +9890,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel-chunks@npm:0.0.2":
-  version: 0.0.2
-  resolution: "voxel-chunks@npm:0.0.2"
-  dependencies:
-    inherits: "npm:~1.0.0"
-    voxel: "npm:~0.1.1"
-    voxel-mesh: "npm:~0.1.0"
-  checksum: 8e68c84be81da60f699fcb676fb7382b4a6ccc74cd9f11aa12d36c22188aa3b2b329496805f3caaea1c61adb5ee978567c2d2625d65ecca9432f96c17a576bae
-  languageName: node
-  linkType: hard
-
 "voxel-client@workspace:packages/voxel-client":
   version: 0.0.0-use.local
   resolution: "voxel-client@workspace:packages/voxel-client"
@@ -9985,17 +9898,10 @@ __metadata:
     extend: "npm:^1.1.3"
     minecraft-skin: "npm:^0.1.2"
     voxel-crunch: "npm:^0.2.1"
-    voxel-engine: "npm:^0.20.0"
+    voxel-engine: "workspace:^"
     voxel-player: "npm:^0.1.0"
   languageName: unknown
   linkType: soft
-
-"voxel-control@npm:0.0.6":
-  version: 0.0.6
-  resolution: "voxel-control@npm:0.0.6"
-  checksum: e1d9241d8bda64b6fb38e6885fbf3e78bb124e4b80021e2115d98af8cb53f4fdba22baa800da4de14c934c70f3d19aa9945bad72d4e184796efb7f78ed2c5cc8
-  languageName: node
-  linkType: hard
 
 "voxel-control@npm:0.0.7":
   version: 0.0.7
@@ -10036,78 +9942,11 @@ __metadata:
   dependencies:
     browserify: "npm:~1.17.1"
     funstance: "npm:~0.0.2"
-    voxel-engine: "npm:~0.1.9"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
-"voxel-engine@npm:0.3.6":
-  version: 0.3.6
-  resolution: "voxel-engine@npm:0.3.6"
-  dependencies:
-    aabb-3d: "npm:0.0.0"
-    collide-3d-tilemap: "npm:0.0.1"
-    inherits: "npm:1.0.0"
-    interact: "npm:0.0.2"
-    player-physics: "npm:0.0.11"
-    raf: "npm:0.0.1"
-    spatial-events: "npm:0.0.0"
-    spatial-trigger: "npm:0.0.0"
-    three: "npm:0.54.0"
-    toolbar: "npm:0.0.2"
-    voxel: "npm:0.1.1"
-    voxel-mesh: "npm:0.1.0"
-    voxel-texture: "npm:0.2.2"
-  checksum: 7ed413cea9bf0980d7bc840e60e59ec24fceba3c6583449f5b18fea81a13b832925ce30a03f8480f7b9f8f90de7c3102a4ed1dd14e1e70eaf251bc745610451b
-  languageName: node
-  linkType: hard
-
-"voxel-engine@npm:0.4.3":
-  version: 0.4.3
-  resolution: "voxel-engine@npm:0.4.3"
-  dependencies:
-    aabb-3d: "npm:0.0.0"
-    collide-3d-tilemap: "npm:0.0.1"
-    inherits: "npm:1.0.0"
-    interact: "npm:0.0.2"
-    player-physics: "npm:0.1.0"
-    raf: "npm:0.0.1"
-    spatial-events: "npm:0.0.1"
-    spatial-trigger: "npm:0.0.0"
-    three: "npm:0.54.0"
-    toolbar: "npm:0.0.2"
-    voxel: "npm:0.1.3"
-    voxel-chunks: "npm:0.0.2"
-    voxel-mesh: "npm:0.1.0"
-    voxel-region-change: "npm:0.0.2"
-    voxel-texture: "npm:0.2.2"
-  checksum: 00d7ffa35dfe4f9ea707a5ed0783cb55749f44c4c688db67a50d245be7965168c21117a35f23be7f30622c7587b9154615766957a581e0b1746f53d719748141
-  languageName: node
-  linkType: hard
-
-"voxel-engine@npm:0.5.3":
-  version: 0.5.3
-  resolution: "voxel-engine@npm:0.5.3"
-  dependencies:
-    aabb-3d: "npm:0.0.0"
-    collide-3d-tilemap: "npm:0.0.1"
-    inherits: "npm:1.0.0"
-    interact: "npm:0.0.2"
-    player-physics: "npm:0.1.0"
-    raf: "npm:0.0.1"
-    spatial-events: "npm:0.0.1"
-    spatial-trigger: "npm:0.0.0"
-    three: "npm:0.54.0"
-    toolbar: "npm:0.0.2"
-    voxel: "npm:0.1.4"
-    voxel-chunks: "npm:0.0.2"
-    voxel-mesh: "npm:0.1.1"
-    voxel-region-change: "npm:0.0.2"
-    voxel-texture: "npm:0.3.0"
-  checksum: fa8fd1b69a732cbffa880dc8d9e8c665dc7c8191076c7b6b3830bff8c4a9d492e8a52cbc849acc82a3417509b8e164d0ba1db3f056f8ab4298c554df23e68a5f
-  languageName: node
-  linkType: hard
-
-"voxel-engine@npm:^0.20.0, voxel-engine@npm:^0.20.1, voxel-engine@workspace:^, voxel-engine@workspace:packages/voxel-engine":
+"voxel-engine@workspace:^, voxel-engine@workspace:packages/voxel-engine":
   version: 0.0.0-use.local
   resolution: "voxel-engine@workspace:packages/voxel-engine"
   dependencies:
@@ -10124,55 +9963,16 @@ __metadata:
     tape: "npm:0.2.2"
     three: "npm:0.56.0"
     tic: "npm:0.2.1"
-    voxel: "npm:0.3.1"
+    voxel: "workspace:^"
     voxel-control: "npm:0.0.7"
-    voxel-mesh: "npm:0.2.1"
-    voxel-physical: "npm:0.0.10"
-    voxel-raycast: "npm:0.2.1"
+    voxel-mesh: "workspace:^"
+    voxel-physical: "workspace:^"
+    voxel-raycast: "workspace:^"
     voxel-region-change: "npm:0.1.0"
     voxel-texture: "npm:0.5.6"
-    voxel-view: "npm:0.0.6"
+    voxel-view: "workspace:^"
   languageName: unknown
   linkType: soft
-
-"voxel-engine@npm:~0.1.8, voxel-engine@npm:~0.1.9":
-  version: 0.1.9
-  resolution: "voxel-engine@npm:0.1.9"
-  dependencies:
-    inherits: "npm:1.0.0"
-    interact: "npm:0.0.2"
-    raf: "npm:0.0.1"
-    three: "npm:0.54.5-dev"
-    toolbar: "npm:0.0.2"
-    voxel: "npm:0.0.9"
-    voxel-mesh: "npm:0.0.8"
-  checksum: 033296a8403274f5dedf148ac334f50644cf3bbceea34f6c1d5e7219b77952dae1e140adc47f5be6d4e65dbc71cac08738311d8ab091d6ba8bd52352e6366fe0
-  languageName: node
-  linkType: hard
-
-"voxel-engine@npm:~0.5.7":
-  version: 0.5.8
-  resolution: "voxel-engine@npm:0.5.8"
-  dependencies:
-    aabb-3d: "npm:0.0.0"
-    collide-3d-tilemap: "npm:0.0.1"
-    inherits: "npm:1.0.0"
-    interact: "npm:0.0.2"
-    kb-controls: "npm:0.0.1"
-    raf: "npm:0.0.1"
-    spatial-events: "npm:0.0.1"
-    spatial-trigger: "npm:0.0.0"
-    three: "npm:0.54.0"
-    voxel: "npm:0.1.5"
-    voxel-chunks: "npm:0.0.2"
-    voxel-control: "npm:0.0.6"
-    voxel-mesh: "npm:0.1.1"
-    voxel-physical: "npm:0.0.2"
-    voxel-region-change: "npm:0.0.2"
-    voxel-texture: "npm:0.3.1"
-  checksum: b78a5cb405bb5f37e2cb670ae1b36a6e99b2404765661eb09f673c81bc2504804a84db0c51cb7775db1487f64467eef68393166b6578306b28c081d16614c58b
-  languageName: node
-  linkType: hard
 
 "voxel-fakeao@npm:~0.1.1":
   version: 0.1.1
@@ -10189,7 +9989,7 @@ __metadata:
     vkey: "npm:0.0.2"
     voxel-hello-world: "npm:^0.6.0"
   peerDependencies:
-    voxel-engine: ^0.20.1
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10199,7 +9999,7 @@ __metadata:
   dependencies:
     ecstatic: "npm:~0.3.0"
     voxel-debris: "npm:~0.0.2"
-    voxel-engine: "npm:~0.1.8"
+    voxel-engine: "workspace:^"
     voxel-perlin-terrain: "npm:~0.0.2"
   languageName: unknown
   linkType: soft
@@ -10229,48 +10029,11 @@ __metadata:
     inherits: "npm:1.0.0"
     underscore: "npm:1.4.4"
   peerDependencies:
-    voxel-engine: ">=0.14.0"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
-"voxel-mesh@npm:0.0.8":
-  version: 0.0.8
-  resolution: "voxel-mesh@npm:0.0.8"
-  dependencies:
-    three: "npm:0.54.5-dev"
-    voxel: "npm:0.0.3"
-  checksum: d4e4b7f8c9ecd350eba870e4aee34a26fc9ee9d1d825f6a821040bd2bf75d8f42be3987f29d33570b78cc09d1769e46abed0a0ed3cc05bc899a7cee0b8c05575
-  languageName: node
-  linkType: hard
-
-"voxel-mesh@npm:0.1.0":
-  version: 0.1.0
-  resolution: "voxel-mesh@npm:0.1.0"
-  dependencies:
-    three: "npm:0.54.0"
-  checksum: c69bf96509d4f095a5b7ae783995c67f8d1e70acd50d775520173b34bc6e2211b28adbe670c733e443bde051e45bbdafc8679c0d75127d1cd214a83addf501f7
-  languageName: node
-  linkType: hard
-
-"voxel-mesh@npm:0.1.1, voxel-mesh@npm:~0.1.0":
-  version: 0.1.1
-  resolution: "voxel-mesh@npm:0.1.1"
-  dependencies:
-    three: "npm:0.54.0"
-  checksum: 9e3d7715e5e72f3fa249fb6545a5e44aa1efd195991653b73e7e7af315d0dd65bd37d8b8bae1b54c3a544e4419bef4a3e75b48f3f420943d3fad5d7f0220c8cf
-  languageName: node
-  linkType: hard
-
-"voxel-mesh@npm:0.2.1":
-  version: 0.2.1
-  resolution: "voxel-mesh@npm:0.2.1"
-  peerDependencies:
-    three: "*"
-  checksum: a436d1c8f5c93272f0d95ed0f6f42d7461295eaff6a94f711ab7683faf461fd5fd0323ad34366d5e8a32edaceaaac728469255ff27ab30ea879683ba72ebabc6
-  languageName: node
-  linkType: hard
-
-"voxel-mesh@workspace:packages/voxel-mesh":
+"voxel-mesh@workspace:^, voxel-mesh@workspace:packages/voxel-mesh":
   version: 0.0.0-use.local
   resolution: "voxel-mesh@workspace:packages/voxel-mesh"
   peerDependencies:
@@ -10288,27 +10051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel-physical@npm:0.0.10":
-  version: 0.0.10
-  resolution: "voxel-physical@npm:0.0.10"
-  dependencies:
-    aabb-3d: "npm:0.0.X"
-    three: "npm:0.X.X"
-  checksum: 8e279ee91d6ee01b9842e58e84f12dee835c158697a1616081e10fc7b0e0316adff381ffdfca45411382ec2025d178d16121c456db4cd2a78d3e811e14f07bbc
-  languageName: node
-  linkType: hard
-
-"voxel-physical@npm:0.0.2":
-  version: 0.0.2
-  resolution: "voxel-physical@npm:0.0.2"
-  dependencies:
-    aabb-3d: "npm:0.0.X"
-    three: "npm:0.X.X"
-  checksum: 55564a95378bfc48170ad2010656e4f2f6c2a75ccf671252247a649d30e75ae61b1809602df7187864dbfcdb73e6517d4690f8492dd2f93ba508747cbb2bb777
-  languageName: node
-  linkType: hard
-
-"voxel-physical@workspace:packages/voxel-physical":
+"voxel-physical@workspace:^, voxel-physical@workspace:packages/voxel-physical":
   version: 0.0.0-use.local
   resolution: "voxel-physical@workspace:packages/voxel-physical"
   dependencies:
@@ -10323,8 +10066,8 @@ __metadata:
   dependencies:
     ecstatic: "npm:~0.3.0"
     minecraft-skin: "npm:~0.0.3"
-    voxel: "npm:~0.1.3"
-    voxel-engine: "npm:~0.5.7"
+    voxel: "workspace:^"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10337,22 +10080,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"voxel-raycast@npm:0.2.1, voxel-raycast@workspace:packages/voxel-raycast":
+"voxel-raycast@workspace:^, voxel-raycast@workspace:packages/voxel-raycast":
   version: 0.0.0-use.local
   resolution: "voxel-raycast@workspace:packages/voxel-raycast"
   dependencies:
     tap: "npm:*"
   languageName: unknown
   linkType: soft
-
-"voxel-region-change@npm:0.0.2":
-  version: 0.0.2
-  resolution: "voxel-region-change@npm:0.0.2"
-  dependencies:
-    aabb-3d: "npm:0.0.0"
-  checksum: 8d15348ea911c41e9f6280488b94308bdf52e6ce119221c4ff198e919599a4c1f6be2d8028fd6bf870c1c7cf80abe58d044ff67b18811411db4a22aefba38d93
-  languageName: node
-  linkType: hard
 
 "voxel-region-change@npm:0.1.0, voxel-region-change@workspace:packages/voxel-region-change":
   version: 0.0.0-use.local
@@ -10361,7 +10095,7 @@ __metadata:
     aabb-3d: "npm:0.0.0"
     browservefy: "npm:0.0.1"
     painterly-textures: "npm:0.0.3"
-    voxel-engine: "npm:0.4.3"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10373,7 +10107,7 @@ __metadata:
     inherits: "npm:1.0.0"
     painterly-textures: "git://github.com/maxogden/painterly-textures.git#relative"
     underscore: "npm:1.4.3"
-    voxel-engine: "npm:0.3.6"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10384,40 +10118,11 @@ __metadata:
     duplex-emitter: "npm:^2.1.2"
     extend: "npm:^1.2.1"
     hat: "npm:^0.0.3"
-    voxel: "npm:^0.3.1"
+    voxel: "workspace:^"
     voxel-crunch: "npm:^0.2.1"
-    voxel-engine: "npm:^0.20.0"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
-
-"voxel-texture@npm:0.2.2":
-  version: 0.2.2
-  resolution: "voxel-texture@npm:0.2.2"
-  dependencies:
-    three: "npm:~0.55.0"
-  checksum: f05853bf2c2639b0e62da502916ec67d5e53f840a30674fd97005ebfa81c6293ca52ae5c0af0978360560b9cc438d66325917d76dee7834e5fc5fc2527e8be33
-  languageName: node
-  linkType: hard
-
-"voxel-texture@npm:0.3.0":
-  version: 0.3.0
-  resolution: "voxel-texture@npm:0.3.0"
-  dependencies:
-    opaque: "npm:0.0.1"
-    three: "npm:0.54.0"
-  checksum: d19fd46686afebc1c6b34a77319f48eaa14d10c325f26bdde0c88f487838698f346ca09428560f6edc1428ec87f330e4667b7a4806fdb88f3514e01d1baff419
-  languageName: node
-  linkType: hard
-
-"voxel-texture@npm:0.3.1":
-  version: 0.3.1
-  resolution: "voxel-texture@npm:0.3.1"
-  dependencies:
-    opaque: "npm:0.0.1"
-    three: "npm:0.54.0"
-  checksum: 0ae074a53ff84028ace565edc358cacb25670382d5de720bd16a9e903eb8161172d388f81e081b3a61a12d05153aac7b0f1c64c315cf3cc64b29ec26b80efac8
-  languageName: node
-  linkType: hard
 
 "voxel-texture@npm:0.5.6":
   version: 0.5.6
@@ -10437,20 +10142,13 @@ __metadata:
     opaque: "npm:0.0.1"
     tic: "npm:~0.2.1"
     voxel-debris: "npm:~0.0.4"
-    voxel-engine: "npm:^0.20.1"
+    voxel-engine: "workspace:^"
     voxel-fakeao: "npm:~0.1.1"
     voxel-player: "npm:0.0.0"
   languageName: unknown
   linkType: soft
 
-"voxel-view@npm:0.0.6":
-  version: 0.0.6
-  resolution: "voxel-view@npm:0.0.6"
-  checksum: 150ccd0da9364380f26410128cc57910c36b2584157a40007fc808f23666759f8865d7b05e17d292bf0964368678a9778adf52ab65754568356096e54d68ddb7
-  languageName: node
-  linkType: hard
-
-"voxel-view@workspace:packages/voxel-view":
+"voxel-view@workspace:^, voxel-view@workspace:packages/voxel-view":
   version: 0.0.0-use.local
   resolution: "voxel-view@workspace:packages/voxel-view"
   languageName: unknown
@@ -10462,18 +10160,11 @@ __metadata:
   dependencies:
     minecraft-skin: "npm:~0.1.2"
     painterly-textures: "npm:0.0.3"
-    voxel: "npm:~0.1.5"
+    voxel: "workspace:^"
     voxel-debris: "npm:0.0.4"
-    voxel-engine: "npm:0.5.3"
+    voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
-
-"voxel@npm:0.0.3":
-  version: 0.0.3
-  resolution: "voxel@npm:0.0.3"
-  checksum: 4b18c731bf756958a81e0fa0f65e5b499f675324a38437b3dd62a6b41a937be970a7d3c9014e3e9613e3b33f249f60964ad2f4061a5eff1fa39cd2ea18718a02
-  languageName: node
-  linkType: hard
 
 "voxel@npm:0.0.9":
   version: 0.0.9
@@ -10481,53 +10172,6 @@ __metadata:
   dependencies:
     inherits: "npm:1.0.0"
   checksum: 13b10c252b8838a4a2a8b8c493af74cada13e9ec82a69026b22d88b3aff3a5c00e5198cbd2a26b46201211ed0847b0f99b714c30b3471982b536d4a9d022c32c
-  languageName: node
-  linkType: hard
-
-"voxel@npm:0.1.1":
-  version: 0.1.1
-  resolution: "voxel@npm:0.1.1"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: 607db223f5c549edaefe7c06604d95f648c3500dcb6d4d9781dd2bdadd2b380d7db9543a1794411d53c56065cd663be03833b160980e8d281788b5fddb46099b
-  languageName: node
-  linkType: hard
-
-"voxel@npm:0.1.3":
-  version: 0.1.3
-  resolution: "voxel@npm:0.1.3"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: 01b52776ec48841dc2d0cf7128c8730e01c2721b0d74a5baeebb87589abab64ce1407d45c37e600c8ed3282ef5e13505ad23e35c957c7a266c99e50ab556b5c4
-  languageName: node
-  linkType: hard
-
-"voxel@npm:0.1.4":
-  version: 0.1.4
-  resolution: "voxel@npm:0.1.4"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: 8c6ce85a3d7793511533761ec1929038673c9bf7aae156d45e2593324a5eda45ea8e43c08dd86bcff44e8c003e9c760b432489376325ee75bcbdec4836c34bbb
-  languageName: node
-  linkType: hard
-
-"voxel@npm:0.1.5, voxel@npm:~0.1.1, voxel@npm:~0.1.3, voxel@npm:~0.1.5":
-  version: 0.1.5
-  resolution: "voxel@npm:0.1.5"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: 1b74b3a134a30f8c822c53a875cf1b241a0fd93ef68b15f5db4e120e8352d83bf98e464ce429ea006654e5ea76bdb0fd284d6fdb72beb0d0fbe982db1f4c4f8b
-  languageName: node
-  linkType: hard
-
-"voxel@npm:0.3.1, voxel@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "voxel@npm:0.3.1"
-  dependencies:
-    inherits: "npm:1.0.0"
-  peerDependencies:
-    voxel-engine: ">=0.9.0"
-  checksum: 0ad42f66064d4d2d497f24c6973b37d3d6861c82ced68aee608a6a0db74145ce0ff4c5b6f4715a7f1c5259f02dc25cb8650e4bfcf0061654635acdbf2953e097
   languageName: node
   linkType: hard
 

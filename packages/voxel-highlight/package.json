@@ -11,6 +11,6 @@
     "underscore": "1.4.4"
   },
   "peerDependencies": {
-    "voxel-engine": ">=0.14.0"
+    "voxel-engine": "workspace:^"
   }
 }
