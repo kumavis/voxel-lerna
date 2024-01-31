@@ -119,7 +119,10 @@ function Game(opts) {
   this.paused = true
   this.initializeRendering(opts)
  
-  this.showAllChunks()
+  // when not generating chunks we need to trigger rendering
+  if (!this.generateChunks) {
+    this.showAllChunks()
+  }
 
   setTimeout(function() {
     self.asyncChunkGeneration = 'asyncChunkGeneration' in opts ? opts.asyncChunkGeneration : true
@@ -560,22 +563,23 @@ Game.prototype.showChunk = function(chunk) {
   var chunkIndex = chunk.position.join('|')
   var bounds = this.voxels.getBounds.apply(this.voxels, chunk.position)
   var scale = new THREE.Vector3(1, 1, 1)
-  var mesh = voxelMesh(chunk, this.mesher, scale, this.THREE)
+  var newChunkMesh = voxelMesh(chunk, this.mesher, scale, this.THREE)
   this.voxels.chunks[chunkIndex] = chunk
-  if (this.voxels.meshes[chunkIndex]) {
-    if (this.voxels.meshes[chunkIndex].surfaceMesh) this.scene.remove(this.voxels.meshes[chunkIndex].surfaceMesh)
-    if (this.voxels.meshes[chunkIndex].wireMesh) this.scene.remove(this.voxels.meshes[chunkIndex].wireMesh)
+  const oldChunkMesh = this.voxels.meshes[chunkIndex]
+  if (oldChunkMesh) {
+    if (oldChunkMesh.surfaceMesh) this.scene.remove(oldChunkMesh.surfaceMesh)
+    if (oldChunkMesh.wireMesh) this.scene.remove(oldChunkMesh.wireMesh)
   }
-  this.voxels.meshes[chunkIndex] = mesh
+  this.voxels.meshes[chunkIndex] = newChunkMesh
   if (this.isClient) {
-    if (this.meshType === 'wireMesh') mesh.createWireMesh()
-    else mesh.createSurfaceMesh(this.materials.material)
-    this.materials.paint(mesh)
+    if (this.meshType === 'wireMesh') newChunkMesh.createWireMesh()
+    else newChunkMesh.createSurfaceMesh(this.materials.material)
+    this.materials.paint(newChunkMesh)
   }
-  mesh.setPosition(bounds[0][0], bounds[0][1], bounds[0][2])
-  mesh.addToScene(this.scene)
+  newChunkMesh.setPosition(bounds[0][0], bounds[0][1], bounds[0][2])
+  newChunkMesh.addToScene(this.scene)
   this.emit('renderChunk', chunk)
-  return mesh
+  return newChunkMesh
 }
 
 // # Debugging methods

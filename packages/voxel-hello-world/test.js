@@ -2,7 +2,6 @@ require('./')(null, (game, avatar, defaultSetup) => {
   let miniMeshes = {}
   game.on('renderChunk', (chunk) => {
     const chunkIndex = chunk.position.join('|')
-    console.log('renderChunk', chunkIndex)
     // manage a cute "mini mesh" clone of each chunk
     if (miniMeshes[chunkIndex]) {
       game.scene.remove(miniMeshes[chunkIndex])
