@@ -37,7 +37,7 @@
   "devDependencies": {
     "voxel-debris": "~0.0.4",
     "voxel-engine": "workspace:^",
-    "voxel-player": "0.0.0"
+    "voxel-player": "workspace:^"
   },
   "keywords": [
     "voxel",

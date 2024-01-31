@@ -1,5 +1,4 @@
 var skin = require('minecraft-skin');
-
 module.exports = function (game) {
     var mountPoint;
     var possessed;
@@ -57,10 +56,8 @@ module.exports = function (game) {
         physics.possess = function () {
             if (possessed) possessed.remove(game.camera);
             var key = pov === 1 ? 'cameraInside' : 'cameraOutside';
-            if (player[key]) {
-              player[key].add(game.camera);
-              possessed = player[key];
-            }
+            player[key].add(game.camera);
+            possessed = player[key];
         };
         
         physics.position = physics.yaw.position;
@@ -68,7 +65,6 @@ module.exports = function (game) {
         return physics;
     }
 };
-
 function parseXYZ (x, y, z) {
     if (typeof x === 'object' && Array.isArray(x)) {
         return { x: x[0], y: x[1], z: x[2] };

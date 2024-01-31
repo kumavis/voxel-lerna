@@ -45,7 +45,7 @@ module.exports = function(opts, setup) {
   // game to use it as the main player
   var avatar = createPlayer(opts.playerSkin || 'player.png')
   avatar.possess()
-  avatar.yaw.position.set(2, 14, 4)
+  avatar.position.set(0, 20, 0)
 
   // for (var i = 0; i < 250; i++) {
   //   createTree(game, { bark: 2, leaves: 3 });

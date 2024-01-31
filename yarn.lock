@@ -6139,13 +6139,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minecraft-skin@npm:~0.0.3":
-  version: 0.0.4
-  resolution: "minecraft-skin@npm:0.0.4"
-  checksum: a04b6a3991252058deacf0fe1b8f46f20973c15c8b4faf71165178e9eeaf39d3e5c59b2e91fb65f0b907d601afa802a0fcd6fae1fd4695627f7cc2841546c763
-  languageName: node
-  linkType: hard
-
 "minimalistic-assert@npm:^1.0.0, minimalistic-assert@npm:^1.0.1":
   version: 1.0.1
   resolution: "minimalistic-assert@npm:1.0.1"
@@ -7300,7 +7293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"painterly-textures@npm:0.0.3":
+"painterly-textures@npm:0.0.3, painterly-textures@npm:~0.0.3":
   version: 0.0.3
   resolution: "painterly-textures@npm:0.0.3"
   checksum: 70b779e0bacef91c7d1a732c09de0768a95ed24fd23d7adf1af0b4bee261e64a02edb77e4218e30b01528ed99c928ea95ccb7c467cb61107130865b5eb33e492
@@ -9899,7 +9892,7 @@ __metadata:
     minecraft-skin: "npm:^0.1.2"
     voxel-crunch: "npm:^0.2.1"
     voxel-engine: "workspace:^"
-    voxel-player: "npm:^0.1.0"
+    voxel-player: "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -10016,7 +10009,7 @@ __metadata:
     voxel-fly: "workspace:^"
     voxel-forest: "workspace:^"
     voxel-highlight: "workspace:^"
-    voxel-player: "npm:^0.1.0"
+    voxel-player: "workspace:^"
     voxel-rescue: "npm:0.0.2"
     voxel-walk: "npm:0.0.5"
   languageName: unknown
@@ -10060,25 +10053,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-player@npm:0.0.0, voxel-player@workspace:packages/voxel-player":
+"voxel-player@workspace:^, voxel-player@workspace:packages/voxel-player":
   version: 0.0.0-use.local
   resolution: "voxel-player@workspace:packages/voxel-player"
   dependencies:
     ecstatic: "npm:~0.3.0"
-    minecraft-skin: "npm:~0.0.3"
+    minecraft-skin: "npm:~0.1.0"
+    painterly-textures: "npm:~0.0.3"
     voxel: "workspace:^"
     voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
-
-"voxel-player@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "voxel-player@npm:0.1.0"
-  dependencies:
-    minecraft-skin: "npm:~0.1.0"
-  checksum: 91e048f62f6b8599ce040f160a4e249f208f193d0c916f9935d4536b784c426fbdc25879755da01c0a7f03fa8e6ce0ec94b731234d671aa5d29ff98f4f2b7d7d
-  languageName: node
-  linkType: hard
 
 "voxel-raycast@workspace:^, voxel-raycast@workspace:packages/voxel-raycast":
   version: 0.0.0-use.local
@@ -10144,7 +10129,7 @@ __metadata:
     voxel-debris: "npm:~0.0.4"
     voxel-engine: "workspace:^"
     voxel-fakeao: "npm:~0.1.1"
-    voxel-player: "npm:0.0.0"
+    voxel-player: "workspace:^"
   languageName: unknown
   linkType: soft
 

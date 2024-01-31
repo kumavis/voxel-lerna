@@ -12,6 +12,6 @@
     "minecraft-skin": "^0.1.2",
     "voxel-crunch": "^0.2.1",
     "voxel-engine": "workspace:^",
-    "voxel-player": "^0.1.0"
+    "voxel-player": "workspace:^"
   }
 }
