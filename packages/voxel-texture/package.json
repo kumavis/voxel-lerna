@@ -35,7 +35,7 @@
     "voxel-fakeao": "~0.1.1"
   },
   "devDependencies": {
-    "voxel-debris": "~0.0.4",
+    "voxel-debris": "workspace:^",
     "voxel-engine": "workspace:^",
     "voxel-player": "workspace:^"
   },

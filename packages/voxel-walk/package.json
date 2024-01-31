@@ -6,7 +6,7 @@
     "minecraft-skin": "workspace:^",
     "painterly-textures": "0.0.3",
     "voxel": "workspace:^",
-    "voxel-debris": "0.0.4",
+    "voxel-debris": "workspace:^",
     "voxel-engine": "workspace:^"
   }
 }

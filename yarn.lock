@@ -1196,13 +1196,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"Base64@npm:~0.1.2":
-  version: 0.1.4
-  resolution: "Base64@npm:0.1.4"
-  checksum: e6db4f0583b44ed65b4a6c602a4750489363d7bde63b09c6cfc012b34b363402dfc9bdca33598458f1693ccdde7fb13af68a15240d66acb35f711611f75c1ff6
-  languageName: node
-  linkType: hard
-
 "JSONStream@npm:^1.0.3, JSONStream@npm:^1.3.5":
   version: 1.3.5
   resolution: "JSONStream@npm:1.3.5"
@@ -1656,13 +1649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:0.0.2":
-  version: 0.0.2
-  resolution: "base64-js@npm:0.0.2"
-  checksum: a6bcc66ac39cf0643c11fa1af0c22fc9b393fe89f0760977961d2ac05fcfa80f9bcb25d42bbaa2057ebe2c720bdf7fd2c009cda4c9c8c93d7e2a5af940e52c70
-  languageName: node
-  linkType: hard
-
 "base64-js@npm:^1.0.2, base64-js@npm:^1.3.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
@@ -1779,16 +1765,6 @@ __metadata:
   version: 5.2.1
   resolution: "bn.js@npm:5.2.1"
   checksum: bed3d8bd34ec89dbcf9f20f88bd7d4a49c160fda3b561c7bb227501f974d3e435a48fb9b61bc3de304acab9215a3bda0803f7017ffb4d0016a0c3a740a283caa
-  languageName: node
-  linkType: hard
-
-"bops@npm:0.0.6":
-  version: 0.0.6
-  resolution: "bops@npm:0.0.6"
-  dependencies:
-    base64-js: "npm:0.0.2"
-    to-utf8: "npm:0.0.1"
-  checksum: 859391dd66af627313273a1a6c00959ebe461ddfe62b84ae98cbd8792cd7b767e8b1ce2847d8c093f0077c848ac29c33d644710fd744e628564cb082f21dddab
   languageName: node
   linkType: hard
 
@@ -2012,29 +1988,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserify@npm:~1.17.1":
-  version: 1.17.3
-  resolution: "browserify@npm:1.17.3"
-  dependencies:
-    buffer-browserify: "npm:~0.0.1"
-    coffee-script: "npm:1.x.x"
-    commondir: "npm:~0.0.1"
-    console-browserify: "npm:~0.1.0"
-    crypto-browserify: "npm:~0"
-    deputy: "npm:~0.0.3"
-    detective: "npm:~0.2.0"
-    http-browserify: "npm:~0.1.1"
-    nub: "npm:~0.0.0"
-    optimist: "npm:~0.3.4"
-    resolve: "npm:~0.2.0"
-    syntax-error: "npm:~0.0.0"
-    vm-browserify: "npm:~0.0.0"
-  bin:
-    browserify: bin/cmd.js
-  checksum: ac168dacfe5b9f252af5a84f5e4a6b8c6806e53e28abfd4cee3c2c2bd9cf7fb82aa449126b17bd4a5d6d94576988fdfdf58f470208fc0ba6d4afcaab24b7e7e1
-  languageName: node
-  linkType: hard
-
 "browservefy@npm:0.0.1":
   version: 0.0.1
   resolution: "browservefy@npm:0.0.1"
@@ -2045,15 +1998,6 @@ __metadata:
   bin:
     browservefy: ./bin/browservefy
   checksum: d96f5b0b06242fdc0f83f8d5bb9ba48228a0ed59e10a4d11a712adcaa2a9c1cf003a030e4cd6a8ef0747793c5f845c21737ac8c8fcd12f49bba620b15e8ca84b
-  languageName: node
-  linkType: hard
-
-"buffer-browserify@npm:~0.0.1":
-  version: 0.0.5
-  resolution: "buffer-browserify@npm:0.0.5"
-  dependencies:
-    base64-js: "npm:0.0.2"
-  checksum: b3468c66d9753fa8ec546658e830ed65d49e3dd6507037bd1ad0f798c6c95eacca39abf9ed7fa7f1c22f2d43bdc41600908445b1b607840b23f8fe9295df9439
   languageName: node
   linkType: hard
 
@@ -2515,16 +2459,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coffee-script@npm:1.x.x":
-  version: 1.12.7
-  resolution: "coffee-script@npm:1.12.7"
-  bin:
-    cake: ./bin/cake
-    coffee: ./bin/coffee
-  checksum: e672cc9a269e52a4a96177ffe9b251f41289d33cb1ece920567120991d68b2f6dbff41674812c9329a3bf472225983c3e253f1ee3789e831020c6a5b9de0bf41
-  languageName: node
-  linkType: hard
-
 "collection-visit@npm:^1.0.0":
   version: 1.0.0
   resolution: "collection-visit@npm:1.0.0"
@@ -2614,13 +2548,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commondir@npm:~0.0.1":
-  version: 0.0.2
-  resolution: "commondir@npm:0.0.2"
-  checksum: 7ab3e3bd583df5394b09701f63e56bb97f982259768611d7104f342ac9254dfaef16b722aa002051091e896e5ebcd4c2e3207062b8d783328a25245b6835b9cf
-  languageName: node
-  linkType: hard
-
 "compare-func@npm:^2.0.0":
   version: 2.0.0
   resolution: "compare-func@npm:2.0.0"
@@ -2669,26 +2596,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concat-stream@npm:~1.0.0":
-  version: 1.0.1
-  resolution: "concat-stream@npm:1.0.1"
-  dependencies:
-    bops: "npm:0.0.6"
-  checksum: 8d73b5ce5a0c3914cfbd69cd5a00b750503334bd35f2043c6ecfd6e06a31b55933836810b3589886ac2bfbd299d69c3e3d1ac48ab897a99d3377ff014a02730e
-  languageName: node
-  linkType: hard
-
 "console-browserify@npm:^1.1.0":
   version: 1.2.0
   resolution: "console-browserify@npm:1.2.0"
   checksum: 89b99a53b7d6cee54e1e64fa6b1f7ac24b844b4019c5d39db298637e55c1f4ffa5c165457ad984864de1379df2c8e1886cbbdac85d9dbb6876a9f26c3106f226
-  languageName: node
-  linkType: hard
-
-"console-browserify@npm:~0.1.0":
-  version: 0.1.6
-  resolution: "console-browserify@npm:0.1.6"
-  checksum: 408c3720ffdd32449241dbb1277946e9222fe10581e3bf7471adc600b37d926d19f8a335762cd584560493b51bd1cdc04b48c8c75a1e5f91199889026faaa1ca
   languageName: node
   linkType: hard
 
@@ -2918,13 +2829,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-browserify@npm:~0":
-  version: 0.4.0
-  resolution: "crypto-browserify@npm:0.4.0"
-  checksum: a16d1228274a17ac1073b783c24660c915d72b3e6554517e43bc431ab883d0ffdf08d2b62d6e34b076ecff11ab4759efbc4c17ca3431e786caaff44cb5623e40
-  languageName: node
-  linkType: hard
-
 "cssauron@npm:^1.1.0":
   version: 1.4.0
   resolution: "cssauron@npm:1.4.0"
@@ -3136,16 +3040,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deputy@npm:~0.0.3":
-  version: 0.0.4
-  resolution: "deputy@npm:0.0.4"
-  dependencies:
-    detective: "npm:~0.2.0"
-    mkdirp: "npm:~0.3.3"
-  checksum: 02ba2e1e82e66b11f31e45d42b3692387bd916ae7023911ca695ccc7781abfa829e36e5af0370d70fc54e49db7c25f75e34fbf633c4b60f0886952f2e2059b72
-  languageName: node
-  linkType: hard
-
 "des.js@npm:^1.0.0":
   version: 1.1.0
   resolution: "des.js@npm:1.1.0"
@@ -3173,15 +3067,6 @@ __metadata:
   bin:
     detective: bin/detective.js
   checksum: 0d3bdfe49ef094165e7876d83ae1a9e0a07d037785ab0edc7b50df9e4390e0a050167670f3d2d506457c7b00b612471ba840898964422c425e50fe046a379e55
-  languageName: node
-  linkType: hard
-
-"detective@npm:~0.2.0":
-  version: 0.2.1
-  resolution: "detective@npm:0.2.1"
-  dependencies:
-    esprima: "npm:~0.9.9"
-  checksum: fadd2c2ae437d3bc5895cbc0968f59f03f56290e14ccf70fccd9e15c3a3c1f0172f84916b849c8ca14476bec10e73e02beb01aefc77786ea31d9f3826204487f
   languageName: node
   linkType: hard
 
@@ -3516,15 +3401,6 @@ __metadata:
     esparse: ./bin/esparse.js
     esvalidate: ./bin/esvalidate.js
   checksum: ad4bab9ead0808cf56501750fd9d3fb276f6b105f987707d059005d57e182d18a7c9ec7f3a01794ebddcca676773e42ca48a32d67a250c9d35e009ca613caba3
-  languageName: node
-  linkType: hard
-
-"esprima@npm:~0.9.9":
-  version: 0.9.9
-  resolution: "esprima@npm:0.9.9"
-  bin:
-    esparse: ./bin/esparse.js
-  checksum: 306c52abcbd2633a3af6d8ed8bed509546dd4f98b8b6cb958e5ef7e765f71e0af0f2d349f48bd3f711ea0a980efdcec5cd9c672dcbdf1b3c0e104f2e56007ad5
   languageName: node
   linkType: hard
 
@@ -4590,16 +4466,6 @@ __metadata:
   version: 1.1.1
   resolution: "htmlescape@npm:1.1.1"
   checksum: 06294e4ac84a07982b273da1e99d7f124bb13b1fa10f428ed8073e4d7f6f4783da3a788e6461234180a795b630b077fa41466e7c7bd91cfa212369dfca537453
-  languageName: node
-  linkType: hard
-
-"http-browserify@npm:~0.1.1":
-  version: 0.1.14
-  resolution: "http-browserify@npm:0.1.14"
-  dependencies:
-    Base64: "npm:~0.1.2"
-    concat-stream: "npm:~1.0.0"
-  checksum: bb0d2490cf29a48821e66557824543a2c0d289e86d352f52c29b499db614f5caacb8211f81a6585a38be308eee7dcb8e81b5f031d5d325cfc37483276db1b922
   languageName: node
   linkType: hard
 
@@ -6406,13 +6272,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:~0.3.3":
-  version: 0.3.5
-  resolution: "mkdirp@npm:0.3.5"
-  checksum: 73b9ea9e94ef3cb465d9846289131ed202a2a6402b62dc9a9425609514e5a1819ac1990406c58c55fc8fa73890d7bfdf4e3540f3b6aa2b9d32702374be7f4387
-  languageName: node
-  linkType: hard
-
 "modify-values@npm:^1.0.1":
   version: 1.0.1
   resolution: "modify-values@npm:1.0.1"
@@ -6862,13 +6721,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nub@npm:~0.0.0":
-  version: 0.0.0
-  resolution: "nub@npm:0.0.0"
-  checksum: 25f3c6612378d79a468b12b143325a4c25c331c2f26b3b4ef940950c016781687301956262709491d1d805d55e7b3e1cf82f5b18f475d0533266484c09db5c6c
-  languageName: node
-  linkType: hard
-
 "nx@npm:17.2.8, nx@npm:>=17.1.2 < 18":
   version: 17.2.8
   resolution: "nx@npm:17.2.8"
@@ -7088,7 +6940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"optimist@npm:~0.3.4, optimist@npm:~0.3.5":
+"optimist@npm:~0.3.5":
   version: 0.3.7
   resolution: "optimist@npm:0.3.7"
   dependencies:
@@ -7495,10 +7347,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"perlin@npm:0.0.2":
-  version: 0.0.2
-  resolution: "perlin@npm:0.0.2"
-  checksum: 9830064487a36b52044287de14ea3e5ffab3ebe26b17fefe9bf93fef6af26ce94c59cd377656dffc24a8730d0903570a39d4390c746ffddeaebcf46210d0342a
+"perlin@npm:1.0.0":
+  version: 1.0.0
+  resolution: "perlin@npm:1.0.0"
+  checksum: 9c13a3e3ff8c7462e29e15f46fca11bd2c5f84d77262a36a5265aae784b57678337e3d7583f611fb353dabbf728f4d91e13af94344cfe1c499934f57a1df43f8
   languageName: node
   linkType: hard
 
@@ -8141,13 +7993,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:~0.2.0":
-  version: 0.2.8
-  resolution: "resolve@npm:0.2.8"
-  checksum: bb01ed634dee6a0c41de808c53fc53a70bc1b6797986f3bb1d2205a4924fd0149c621b0764fd0c4dacf47382283c670de2bae68e353e8b4e8ec7a767b9ff6213
-  languageName: node
-  linkType: hard
-
 "resolve@patch:resolve@npm%3A^0.6.1#optional!builtin<compat/resolve>":
   version: 0.6.3
   resolution: "resolve@patch:resolve@npm%3A0.6.3#optional!builtin<compat/resolve>::version=0.6.3&hash=3bafbf"
@@ -8165,13 +8010,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: 0446f024439cd2e50c6c8fa8ba77eaa8370b4180f401a96abf3d1ebc770ac51c1955e12764cde449fde3fff480a61f84388e3505ecdbab778f4bef5f8212c729
-  languageName: node
-  linkType: hard
-
-"resolve@patch:resolve@npm%3A~0.2.0#optional!builtin<compat/resolve>":
-  version: 0.2.8
-  resolution: "resolve@patch:resolve@npm%3A0.2.8#optional!builtin<compat/resolve>::version=0.2.8&hash=3bafbf"
-  checksum: c3c33e9f9a3708513c574f971df65a84757f3f69b6d597b89d724142e41b12f0a836c168b838f65f10ca011b8571af120297f8fe394e5c627d0a805332638a02
   languageName: node
   linkType: hard
 
@@ -9081,15 +8919,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"syntax-error@npm:~0.0.0":
-  version: 0.0.1
-  resolution: "syntax-error@npm:0.0.1"
-  dependencies:
-    esprima: "npm:~0.9.9"
-  checksum: cfe64d83bc7d5581b4cda05b8bfe9a0310e704e22263eb4d3d7597a357dee39a93e427c88ca8ce344e76f934a207ed680b8b9d2b5fde8f657bcb980937f0ff70
-  languageName: node
-  linkType: hard
-
 "tap-parser@npm:15.3.1":
   version: 15.3.1
   resolution: "tap-parser@npm:15.3.1"
@@ -9401,13 +9230,6 @@ __metadata:
     regex-not: "npm:^1.0.2"
     safe-regex: "npm:^1.1.0"
   checksum: 99d0b8ef397b3f7abed4bac757b0f0bb9f52bfd39167eb7105b144becfaa9a03756892352d01ac6a911f0c1ceef9f81db68c46899521a3eed054082042796120
-  languageName: node
-  linkType: hard
-
-"to-utf8@npm:0.0.1":
-  version: 0.0.1
-  resolution: "to-utf8@npm:0.0.1"
-  checksum: f04e6fa701ad56f103c575d20d4a6a5b65ea52449b7c0846382c4219b8017541fecbec8c49bf4563fb10700d9a23cb03d4857d8de91de00baabb0b4d4b8f9c46
   languageName: node
   linkType: hard
 
@@ -9877,15 +9699,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vm-browserify@npm:~0.0.0":
-  version: 0.0.4
-  resolution: "vm-browserify@npm:0.0.4"
-  dependencies:
-    indexof: "npm:0.0.1"
-  checksum: 70a58e620cfa3074c8b14ba9f15df491812fd362ff41d313ee9290653156ea32e52a31b5aa47b7fc5d85a60da4165cb47befb80dee702203ac3d04735886cece
-  languageName: node
-  linkType: hard
-
 "voxel-client@workspace:packages/voxel-client":
   version: 0.0.0-use.local
   resolution: "voxel-client@workspace:packages/voxel-client"
@@ -9893,7 +9706,7 @@ __metadata:
     duplex-emitter: "npm:^2.1.2"
     extend: "npm:^1.1.3"
     minecraft-skin: "workspace:^"
-    voxel-crunch: "npm:^0.2.1"
+    voxel-crunch: "workspace:^"
     voxel-engine: "workspace:^"
     voxel-player: "workspace:^"
   languageName: unknown
@@ -9905,7 +9718,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-crunch@npm:^0.2.1, voxel-crunch@workspace:packages/voxel-crunch":
+"voxel-crunch@workspace:^, voxel-crunch@workspace:packages/voxel-crunch":
   version: 0.0.0-use.local
   resolution: "voxel-crunch@workspace:packages/voxel-crunch"
   dependencies:
@@ -9916,20 +9729,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-debris@npm:0.0.4, voxel-debris@npm:~0.0.2, voxel-debris@npm:~0.0.4":
-  version: 0.0.4
-  resolution: "voxel-debris@npm:0.0.4"
-  dependencies:
-    funstance: "npm:~0.0.2"
-  checksum: 7fe6ffe37963965ab8205ffe82f28d2bcf3e0c9efb0f86abf44ab2a0db351ad8b191f217624d55f78815aaba6b2dcfff8f9cae3840395dc15a5f9617bf6387ae
-  languageName: node
-  linkType: hard
-
-"voxel-debris@workspace:packages/voxel-debris":
+"voxel-debris@workspace:^, voxel-debris@workspace:packages/voxel-debris":
   version: 0.0.0-use.local
   resolution: "voxel-debris@workspace:packages/voxel-debris"
   dependencies:
-    browserify: "npm:~1.17.1"
+    browserify: "npm:^17.0.0"
     funstance: "npm:~0.0.2"
     voxel-engine: "workspace:^"
   languageName: unknown
@@ -9976,7 +9780,7 @@ __metadata:
   dependencies:
     ever: "npm:0.0.3"
     vkey: "npm:0.0.2"
-    voxel-hello-world: "npm:^0.6.0"
+    voxel-hello-world: "workspace:^"
   peerDependencies:
     voxel-engine: "workspace:^"
   languageName: unknown
@@ -9987,13 +9791,13 @@ __metadata:
   resolution: "voxel-forest@workspace:packages/voxel-forest"
   dependencies:
     ecstatic: "npm:~0.3.0"
-    voxel-debris: "npm:~0.0.2"
+    voxel-debris: "workspace:^"
     voxel-engine: "workspace:^"
-    voxel-perlin-terrain: "npm:~0.0.2"
+    voxel-perlin-terrain: "workspace:^"
   languageName: unknown
   linkType: soft
 
-"voxel-hello-world@npm:^0.6.0, voxel-hello-world@workspace:packages/voxel-hello-world":
+"voxel-hello-world@workspace:^, voxel-hello-world@workspace:packages/voxel-hello-world":
   version: 0.0.0-use.local
   resolution: "voxel-hello-world@workspace:packages/voxel-hello-world"
   dependencies:
@@ -10030,15 +9834,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"voxel-perlin-terrain@npm:~0.0.2":
-  version: 0.0.5
-  resolution: "voxel-perlin-terrain@npm:0.0.5"
+"voxel-perlin-terrain@workspace:^, voxel-perlin-terrain@workspace:packages/voxel-perlin-terrain":
+  version: 0.0.0-use.local
+  resolution: "voxel-perlin-terrain@workspace:packages/voxel-perlin-terrain"
   dependencies:
-    perlin: "npm:0.0.2"
-    voxel: "npm:0.0.9"
-  checksum: 1f41104516b370bf4fc0de119cca14961f97807d5662fc6fa6a07dfde023d16c953f5fcf10907f55ca57ef99e3bf4e29684b7a367dcdbf48cdaebdd341ebcbf8
-  languageName: node
-  linkType: hard
+    beefy: "npm:^2.1.8"
+    browserify: "npm:^17.0.0"
+    perlin: "npm:1.0.0"
+    voxel-hello-world: "workspace:^"
+  languageName: unknown
+  linkType: soft
 
 "voxel-physical@workspace:^, voxel-physical@workspace:packages/voxel-physical":
   version: 0.0.0-use.local
@@ -10100,7 +9905,7 @@ __metadata:
     extend: "npm:^1.2.1"
     hat: "npm:^0.0.3"
     voxel: "workspace:^"
-    voxel-crunch: "npm:^0.2.1"
+    voxel-crunch: "workspace:^"
     voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -10112,7 +9917,7 @@ __metadata:
     atlaspack: "npm:~0.2.5"
     opaque: "npm:0.0.1"
     tic: "npm:~0.2.1"
-    voxel-debris: "npm:~0.0.4"
+    voxel-debris: "workspace:^"
     voxel-engine: "workspace:^"
     voxel-fakeao: "npm:~0.1.1"
     voxel-player: "workspace:^"
@@ -10132,19 +9937,10 @@ __metadata:
     minecraft-skin: "workspace:^"
     painterly-textures: "npm:0.0.3"
     voxel: "workspace:^"
-    voxel-debris: "npm:0.0.4"
+    voxel-debris: "workspace:^"
     voxel-engine: "workspace:^"
   languageName: unknown
   linkType: soft
-
-"voxel@npm:0.0.9":
-  version: 0.0.9
-  resolution: "voxel@npm:0.0.9"
-  dependencies:
-    inherits: "npm:1.0.0"
-  checksum: 13b10c252b8838a4a2a8b8c493af74cada13e9ec82a69026b22d88b3aff3a5c00e5198cbd2a26b46201211ed0847b0f99b714c30b3471982b536d4a9d022c32c
-  languageName: node
-  linkType: hard
 
 "voxel@workspace:^, voxel@workspace:packages/voxel":
   version: 0.0.0-use.local

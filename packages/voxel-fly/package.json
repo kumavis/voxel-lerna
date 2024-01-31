@@ -12,7 +12,7 @@
     "voxel-engine": "workspace:^"
   },
   "devDependencies": {
-    "voxel-hello-world": "^0.6.0"
+    "voxel-hello-world": "workspace:^"
   },
   "scripts": {
     "start": "beefy test.js"

@@ -10,7 +10,7 @@
     "duplex-emitter": "^2.1.2",
     "extend": "^1.1.3",
     "minecraft-skin": "workspace:^",
-    "voxel-crunch": "^0.2.1",
+    "voxel-crunch": "workspace:^",
     "voxel-engine": "workspace:^",
     "voxel-player": "workspace:^"
   }

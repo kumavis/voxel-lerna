@@ -5,9 +5,9 @@
     "main": "index.js",
     "devDependencies": {
         "ecstatic": "~0.3.0",
-        "voxel-debris": "~0.0.2",
+        "voxel-debris": "workspace:^",
         "voxel-engine": "workspace:^",
-        "voxel-perlin-terrain": "~0.0.2"
+        "voxel-perlin-terrain": "workspace:^"
     },
     "repository": {
         "type": "git",
