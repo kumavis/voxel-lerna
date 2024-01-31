@@ -4,7 +4,7 @@
     "description": "create a skinnable player with physics enabled",
     "main": "index.js",
     "dependencies": {
-        "minecraft-skin": "~0.1.0"
+        "minecraft-skin": "workspace:^"
     },
     "devDependencies": {
         "ecstatic": "~0.3.0",

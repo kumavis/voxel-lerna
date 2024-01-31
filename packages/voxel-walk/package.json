@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "description": "A simple walk animation for minecraft-skin characters.",
   "dependencies": {
-    "minecraft-skin": "~0.1.2",
+    "minecraft-skin": "workspace:^",
     "painterly-textures": "0.0.3",
     "voxel": "workspace:^",
     "voxel-debris": "0.0.4",
