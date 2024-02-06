@@ -3493,6 +3493,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"experiment@workspace:packages/experiment":
+  version: 0.0.0-use.local
+  resolution: "experiment@workspace:packages/experiment"
+  dependencies:
+    beefy: "npm:^2.1.8"
+    browserify: "npm:^17.0.0"
+    voxel-view: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "exponential-backoff@npm:^3.1.1":
   version: 3.1.1
   resolution: "exponential-backoff@npm:3.1.1"

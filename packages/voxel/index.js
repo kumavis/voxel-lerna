@@ -21,6 +21,7 @@ module.exports.geometry = {}
 module.exports.generator = {}
 module.exports.generate = generate
 
+// low inclusive, high exclusive
 function generate(lo, hi, fn, game) {
   // To fix the display gaps, we need to pad the bounds
   // lo[0]--

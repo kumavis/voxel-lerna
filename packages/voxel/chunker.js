@@ -70,6 +70,7 @@ Chunker.prototype.generateChunk = function(x, y, z) {
   return chunk
 }
 
+// returns the chunk position for the given coordinates
 Chunker.prototype.chunkAtCoordinates = function(x, y, z) {
   var bits = this.chunkBits;
   var cx = x >> bits;
@@ -77,6 +78,15 @@ Chunker.prototype.chunkAtCoordinates = function(x, y, z) {
   var cz = z >> bits;
   var chunkPos = [cx, cy, cz];
   return chunkPos;
+}
+
+Chunker.prototype.getChunkAtCoordinates = function(x, y, z) {
+  var chunkPos = this.chunkAtCoordinates(x, y, z)
+  return this.chunks[chunkPos.join('|')]
+}
+
+Chunker.prototype.chunkKeyForCoordinates = function(x, y, z) {
+  return this.chunkAtCoordinates(x, y, z).join('|')
 }
 
 Chunker.prototype.chunkAtPosition = function(position) {
