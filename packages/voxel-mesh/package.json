@@ -12,8 +12,16 @@
     "email": "max@maxogden.com"
   },
   "license": "MIT",
+  "scripts": {
+    "start": "beefy demo.js --live"
+  },
   "peerDependencies": {
-    "three": "*"
+    "three": "^0.161.0"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.8",
+    "browserify": "^17.0.0",
+    "three": "^0.161.0"
   },
   "engine": {
     "node": ">=0.6.0"

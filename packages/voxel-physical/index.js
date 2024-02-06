@@ -61,6 +61,11 @@ function applyTo(which) {
 }
 
 proto.tick = function(dt) {
+  if (dt === 0) {
+    console.warn('tick called with zero delta time')
+    return
+  }
+
   var forces = this.forces
     , acceleration = this.acceleration
     , velocity = this.velocity
@@ -91,7 +96,7 @@ proto.tick = function(dt) {
 
     TOTAL_FORCES.addSelf(DIRECTION)
   }
-  
+
   if(!this.resting.x) {
     acceleration.x /= 8 * dt
     acceleration.x += TOTAL_FORCES.x * dt

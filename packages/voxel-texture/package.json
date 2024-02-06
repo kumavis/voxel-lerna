@@ -25,7 +25,7 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "start": "cd example && ../node_modules/.bin/browservefy world.js 8080 -- -d",
+    "start": "cd example && beefy world.js -- -d",
     "gh-pages": "cp -R ./example/* ./ && browserify world.js -o world.js"
   },
   "dependencies": {
@@ -35,6 +35,8 @@
     "voxel-fakeao": "~0.1.1"
   },
   "devDependencies": {
+    "beefy": "^2.1.8",
+    "browserify": "^17.0.0",
     "voxel-debris": "workspace:^",
     "voxel-engine": "workspace:^",
     "voxel-player": "workspace:^"

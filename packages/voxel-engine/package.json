@@ -22,7 +22,7 @@
     "raf": "0.0.1",
     "spatial-events": "0.0.1",
     "spatial-trigger": "0.0.0",
-    "three": "0.56.0",
+    "three": "^0.161.0",
     "tic": "0.2.1",
     "voxel": "workspace:^",
     "voxel-control": "workspace:^",

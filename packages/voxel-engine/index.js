@@ -572,9 +572,13 @@ Game.prototype.showChunk = function(chunk) {
   }
   this.voxels.meshes[chunkIndex] = newChunkMesh
   if (this.isClient) {
-    if (this.meshType === 'wireMesh') newChunkMesh.createWireMesh()
-    else newChunkMesh.createSurfaceMesh(this.materials.material)
-    this.materials.paint(newChunkMesh)
+    if (this.meshType === 'wireMesh') {
+      newChunkMesh.createWireMesh()
+    } else {
+      // newChunkMesh.createSurfaceMesh(this.materials.material)
+      newChunkMesh.createSurfaceMesh()
+    }
+    // this.materials.paint(newChunkMesh)
   }
   newChunkMesh.setPosition(bounds[0][0], bounds[0][1], bounds[0][2])
   newChunkMesh.addToScene(this.scene)
@@ -593,7 +597,7 @@ Game.prototype.addMarker = function(position) {
 }
 
 Game.prototype.addAABBMarker = function(aabb, color) {
-  var geometry = new THREE.CubeGeometry(aabb.width(), aabb.height(), aabb.depth())
+  var geometry = new THREE.BoxGeometry(aabb.width(), aabb.height(), aabb.depth())
   var material = new THREE.MeshBasicMaterial({ color: color || 0xffffff, wireframe: true, transparent: true, opacity: 0.5, side: THREE.DoubleSide })
   var mesh = new THREE.Mesh(geometry, material)
   mesh.position.set(aabb.x0() + aabb.width() / 2, aabb.y0() + aabb.height() / 2, aabb.z0() + aabb.depth() / 2)

@@ -289,7 +289,7 @@ You can specify hex colors to use as materials, just pass these options when cre
 ```js
 // create a mesh and use the internal game material (texture atlas)
 var mesh = new game.THREE.Mesh(
-  new game.THREE.CubeGeometry(1, 3, 1), // width, height, depth
+  new game.THREE.BoxGeometry(1, 3, 1), // width, height, depth
   game.materials.material
 )
 

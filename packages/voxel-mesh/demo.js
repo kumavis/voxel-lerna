@@ -1,11 +1,13 @@
+var Mesh = require('.')
+var voxelUtil = require('voxel')
 const THREE = require('three')
-var skin = require('./')
-var walk = require('voxel-walk')
 
-var cw = 250, ch = 500;
+var cw = 700, ch = 500;
 var camera = new THREE.PerspectiveCamera(55, cw / ch, 1, 1000);
 var scene = new THREE.Scene();
 scene.add(camera)
+globalThis.scene = scene
+
 var renderer = new THREE.WebGLRenderer({
   antialias: true
 })
@@ -32,50 +34,33 @@ var plane = new THREE.Mesh(
 )
 plane.rotation.x = - Math.PI / 2
 scene.add( plane )
-window.plane = plane
 
-globalThis.THREE = THREE
-globalThis.scene = scene
+const chunk = voxelUtil.generate([0,0,0], [3,3,3], () => Math.random() > 0.5 ? 1 : 0)
+// Schema patch for voxel-mesh which expects (voxel@^0.3.0)
+if (chunk.data && chunk.shape) {
+  chunk.voxels = chunk.data
+  chunk.dims = chunk.shape
+}
 
-var pngURL = window.location.hash
-if (pngURL === '' || pngURL === '#') pngURL = 'debug-skin.png'
-else pngURL = pngURL.substr(1, pngURL.length - 1)
-window.viking = skin(THREE, pngURL)
-scene.add(viking.mesh)
-
-let isActivated = false
-let time = 0;
-let lastTime = Date.now();
-var rad = 0;
+var scale = new THREE.Vector3(1, 1, 1)
+var mesh = new Mesh(chunk, voxelUtil.meshers.culled, scale, THREE)
+scene.add(mesh.createSurfaceMesh())
+scene.add(mesh.createWireMesh())
+mesh.setPosition(0, 0, 0)
+globalThis.mesh = mesh
 
 var render = function () {
   window.requestAnimationFrame(render, renderer.domElement);
-  
-  // animate
-  if (isActivated) {    
-    const now = Date.now()
-    time += (now - lastTime) /1000;
-    lastTime = now
 
-    walk.render(viking, time)
-    rad += 2;
-  }
-  
+  const rad = 8 * Date.now() / 1000
   const angle = rad / (cw / 2) + (2 * Math.PI * 0.75)
   camera.position.x = -Math.cos(angle);
   camera.position.z = -Math.sin(angle);
   camera.position.y = (0.1/(ch/2))*1.5+0.2;
-  camera.position.setLength(70);
+  camera.position.setLength(7);
   camera.lookAt(new THREE.Vector3(0, 1.5, 0));
-  
+
   renderer.render(scene, camera);
 };
 
 render()
-
-document.querySelector('canvas').addEventListener('click', () => {
-  isActivated = !isActivated
-  if (isActivated) {
-    lastTime = Date.now()    
-  }
-})

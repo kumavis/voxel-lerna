@@ -33,6 +33,7 @@ shama.possess();
 var explode = require('voxel-debris')(game, { power : 1.5 });
 game.on('fire', function(pos) {
   var pos = game.raycast(game.cameraPosition(), game.cameraVector(), 100).voxel;
+  if (!pos) return;
   if (erase) explode(pos);
   else game.createBlock(pos, 1);
 });
@@ -55,7 +56,7 @@ function createCube(i, materials) {
   // create a mesh
   var obj = new game.THREE.Object3D();
   var mesh = new game.THREE.Mesh(
-    new game.THREE.CubeGeometry(game.cubeSize, game.cubeSize, game.cubeSize),
+    new game.THREE.BoxGeometry(game.cubeSize, game.cubeSize, game.cubeSize),
     game.materials.material
   );
   mesh.translateY(game.cubeSize/2);
@@ -130,8 +131,8 @@ materialEngine.load(materials, function() {
     var torchMat = materialEngine.animate(torch.children[0], [
       'terrain_96_192', 'terrain_96_224'
     ], 500);
-    torch.children[0].mat = new game.THREE.MeshFaceMaterial([
-      torchMat, torchMat, blank, blank, torchMat, torchMat
-    ]);
+    // torch.children[0].mat = new game.THREE.MeshFaceMaterial([
+    //   torchMat, torchMat, blank, blank, torchMat, torchMat
+    // ]);
   });
 });

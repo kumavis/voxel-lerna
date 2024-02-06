@@ -56,7 +56,7 @@ module.exports = function (game, opts) {
 
 function createDebris (game, pos, value) {
     var mesh = new game.THREE.Mesh(
-        new game.THREE.CubeGeometry(4, 4, 4),
+        new game.THREE.BoxGeometry(4, 4, 4),
         game.material
     );
     mesh.geometry.faces.forEach(function (face) {

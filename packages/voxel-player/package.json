@@ -6,8 +6,12 @@
     "dependencies": {
         "minecraft-skin": "workspace:^"
     },
+    "scripts": {
+        "start": "(cd example && beefy main.js:bundle.js --live)"
+    },
     "devDependencies": {
-        "ecstatic": "~0.3.0",
+        "beefy": "^2.1.8",
+        "browserify": "^17.0.0",
         "painterly-textures": "~0.0.3",
         "voxel": "workspace:^",
         "voxel-engine": "workspace:^"

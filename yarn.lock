@@ -6004,7 +6004,10 @@ __metadata:
   dependencies:
     beefy: "npm:^2.1.8"
     browserify: "npm:^17.0.0"
+    three: "npm:^0.161.0"
     voxel-walk: "workspace:^"
+  peerDependencies:
+    three: ^0.161.0
   languageName: unknown
   linkType: soft
 
@@ -9077,17 +9080,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three@npm:0.56.0":
-  version: 0.56.0
-  resolution: "three@npm:0.56.0"
-  checksum: ade6b6dc6e408122e63f5f8644b3d59ce26588e646229575efba87b972883ea00ed4f728adad14b6a4a47cb4e271566aa841a0e45f266d5f984f62a64f7b8b53
-  languageName: node
-  linkType: hard
-
-"three@npm:0.X.X":
-  version: 0.160.1
-  resolution: "three@npm:0.160.1"
-  checksum: b14b54a8b0799bc337ea2a841a1f01322dc50198d8a438ff4fbdf83ad95a15bd405ba43bd398c05b1ffc2e40a7685b73481a048c288389acb949cea5510269ea
+"three@npm:^0.161.0":
+  version: 0.161.0
+  resolution: "three@npm:0.161.0"
+  checksum: 0314e0b11c717042cc6cec983d6e2832ed416e4ab996b1340ff25335bbf71c529415856ae2de42952faeae284202368e7f1c6e3fd5a7c73d2b68108e5fb3c057
   languageName: node
   linkType: hard
 
@@ -9754,7 +9750,7 @@ __metadata:
     spatial-events: "npm:0.0.1"
     spatial-trigger: "npm:0.0.0"
     tape: "npm:0.2.2"
-    three: "npm:0.56.0"
+    three: "npm:^0.161.0"
     tic: "npm:0.2.1"
     voxel: "workspace:^"
     voxel-control: "workspace:^"
@@ -9829,8 +9825,12 @@ __metadata:
 "voxel-mesh@workspace:^, voxel-mesh@workspace:packages/voxel-mesh":
   version: 0.0.0-use.local
   resolution: "voxel-mesh@workspace:packages/voxel-mesh"
+  dependencies:
+    beefy: "npm:^2.1.8"
+    browserify: "npm:^17.0.0"
+    three: "npm:^0.161.0"
   peerDependencies:
-    three: "*"
+    three: ^0.161.0
   languageName: unknown
   linkType: soft
 
@@ -9850,7 +9850,7 @@ __metadata:
   resolution: "voxel-physical@workspace:packages/voxel-physical"
   dependencies:
     aabb-3d: "npm:0.0.X"
-    three: "npm:0.X.X"
+    three: "npm:^0.161.0"
   languageName: unknown
   linkType: soft
 
@@ -9858,7 +9858,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "voxel-player@workspace:packages/voxel-player"
   dependencies:
-    ecstatic: "npm:~0.3.0"
+    beefy: "npm:^2.1.8"
+    browserify: "npm:^17.0.0"
     minecraft-skin: "workspace:^"
     painterly-textures: "npm:~0.0.3"
     voxel: "workspace:^"
@@ -9915,6 +9916,8 @@ __metadata:
   resolution: "voxel-texture@workspace:packages/voxel-texture"
   dependencies:
     atlaspack: "npm:~0.2.5"
+    beefy: "npm:^2.1.8"
+    browserify: "npm:^17.0.0"
     opaque: "npm:0.0.1"
     tic: "npm:~0.2.1"
     voxel-debris: "workspace:^"

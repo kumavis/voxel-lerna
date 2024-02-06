@@ -24,7 +24,7 @@ var textureEngine = require('voxel-texture')({
 textureEngine.load(['grass', 'dirt', 'grass_dirt'], function(textures) {
   // create a new mesh
   var cube = new game.THREE.Mesh(
-    new game.THREE.CubeGeometry(game.cubeSize, game.cubeSize, game.cubeSize),
+    new game.THREE.BoxGeometry(game.cubeSize, game.cubeSize, game.cubeSize),
     // use the texture engine atlas material
     textureEngine.material
   );

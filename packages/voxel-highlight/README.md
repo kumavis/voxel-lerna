@@ -34,7 +34,7 @@ options can be:
 {
   frequency: how often in milliseconds to highlight, default is 100
   distance: how far in game distance things should be highlighted, default is 10
-  geometry: threejs geometry to use for the highlight, default is a cubegeometry
+  geometry: threejs geometry to use for the highlight, default is a BoxGeometry
   material: material to use with the geometry, default is a wireframe
   wireframeLinewidth: if using default material wireframe, default is 3
   wireframeOpacity: if using default material wireframe, default is 0.5

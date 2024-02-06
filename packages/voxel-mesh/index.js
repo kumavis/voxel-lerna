@@ -9,44 +9,81 @@ module.exports.Mesh = Mesh
 function Mesh(data, mesher, scaleFactor, three) {
   this.THREE = three || THREE
   this.data = data
-  var geometry = this.geometry = new this.THREE.Geometry()
+  var geometry = this.geometry = new this.THREE.BufferGeometry()
   this.scale = scaleFactor || new this.THREE.Vector3(10, 10, 10)
   
   var result = mesher( data.voxels, data.dims )
   this.meshed = result
 
-  geometry.vertices.length = 0
-  geometry.faces.length = 0
+  // geometry.vertices.length = 0
+  // geometry.faces.length = 0
 
-  for (var i = 0; i < result.vertices.length; ++i) {
-    var q = result.vertices[i]
-    geometry.vertices.push(new this.THREE.Vector3(q[0], q[1], q[2]))
-  } 
-  
-  for (var i = 0; i < result.faces.length; ++i) {
-    geometry.faceVertexUvs[0].push(this.faceVertexUv(i))
-    
-    var q = result.faces[i]
-    if (q.length === 5) {
-      var f = new this.THREE.Face4(q[0], q[1], q[2], q[3])
-      f.color = new this.THREE.Color(q[4])
-      geometry.faces.push(f)
-    } else if (q.length == 4) {
-      var f = new this.THREE.Face3(q[0], q[1], q[2])
-      f.color = new this.THREE.Color(q[3])
-      geometry.faces.push(f)
+  // for (var i = 0; i < result.vertices.length; ++i) {
+  //   var q = result.vertices[i]
+  //   geometry.vertices.push(new this.THREE.Vector3(q[0], q[1], q[2]))
+  // } 
+
+  // Assuming result.vertices is a flat array [x1, y1, z1, x2, y2, z2, ...]
+  var vertices = new Float32Array(result.vertices.length * 3);
+  for (let i = 0; i < result.vertices.length; i++) {
+    vertices[i*3+0] = result.vertices[i][0];
+    vertices[i*3+1] = result.vertices[i][1];
+    vertices[i*3+2] = result.vertices[i][2];
+  }
+  geometry.setAttribute('position', new this.THREE.BufferAttribute(vertices, 3));
+
+  // Assuming result.faces is an array of indices [a, b, c, d, ...]
+  // For simplicity, let's assume all faces are triangles
+  geometry.faceColors = [];
+  if (result.faces.length > 0) {
+    var indices = [];
+    let uvArray = [];
+    for (var i = 0; i < result.faces.length; i++) {
+      var q = result.faces[i];
+      let color;
+      // Handle Quad
+      if (q.length === 5) {
+        // For quads or higher polygons, you would need to triangulate them first
+        indices.push(q[0], q[1], q[2]); // Triangle 1
+        indices.push(q[0], q[2], q[3]); // Triangle 2
+        color = q[4];
+        let uvs = this.faceVertexUv(i);
+        // triangle 1
+        uvArray.push(uvs[0].x, uvs[0].y);
+        uvArray.push(uvs[1].x, uvs[1].y);
+        uvArray.push(uvs[2].x, uvs[2].y);
+        // triangle 2
+        uvArray.push(uvs[0].x, uvs[0].y);
+        uvArray.push(uvs[2].x, uvs[2].y);
+        uvArray.push(uvs[3].x, uvs[3].y);
+      // Handle Triangle
+      } else if (q.length === 4) {
+        indices.push(q[0], q[1], q[2]);
+        color = q[3];
+        let uvs = this.faceVertexUv(i);
+        uvs.forEach(uv => {
+          uvArray.push(uv.x, uv.y);
+        });
+      } else {
+        console.error('Invalid face', q);
+      }
+      geometry.faceColors.push(color);
     }
+    var indexArray = new Uint16Array(indices);
+    geometry.setIndex(new this.THREE.BufferAttribute(indexArray, 1));
+    geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvArray), 2));
+    geometry.attributes.uv.needsUpdate = true;
   }
   
-  geometry.computeFaceNormals()
+  // geometry.computeFaceNormals()
+  geometry.computeVertexNormals();
 
-  geometry.verticesNeedUpdate = true
-  geometry.elementsNeedUpdate = true
-  geometry.normalsNeedUpdate = true
+  // geometry.verticesNeedUpdate = true
+  // geometry.elementsNeedUpdate = true
+  // geometry.normalsNeedUpdate = true
 
   geometry.computeBoundingBox()
   geometry.computeBoundingSphere()
-
 }
 
 Mesh.prototype.createWireMesh = function(hexColor) {    

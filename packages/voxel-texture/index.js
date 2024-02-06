@@ -19,12 +19,12 @@ function Texture(opts) {
   this.options = defaults(opts || {}, {
     crossOrigin: 'Anonymous',
     materialParams: defaults(opts.materialParams || {}, {
-      ambient: 0xbbbbbb,
+      // ambient: 0xbbbbbb,
       transparent: false,
       side: this.THREE.DoubleSide,
     }),
     materialTransparentParams: defaults(opts.materialTransparentParams || {}, {
-      ambient: 0xbbbbbb,
+      // ambient: 0xbbbbbb,
       transparent: true,
       side: this.THREE.DoubleSide,
       //depthWrite: false,
@@ -63,10 +63,14 @@ function Texture(opts) {
     opaque.map = this.texture;
     var transparent = new this.options.materialType(this.options.materialTransparentParams);
     transparent.map = this.texture;
-    this.material = new this.THREE.MeshFaceMaterial([
+    // this.material = new this.THREE.MeshFaceMaterial([
+    //   opaque,
+    //   transparent
+    // ]);
+    this.material = [
       opaque,
       transparent
-    ]);
+    ];
   }
 
   // a place for meshes to wait while textures are loading
@@ -221,52 +225,54 @@ Texture.prototype.paint = function(mesh, materials) {
   var isVoxelMesh = (materials) ? false : true;
   if (!isVoxelMesh) materials = self._expandName(materials);
 
-  mesh.geometry.faces.forEach(function(face, i) {
-    if (mesh.geometry.faceVertexUvs[0].length < 1) return;
+  // mesh.geometry.faceColors.forEach(function(faceColor, i) {
+  //   // if (mesh.geometry.faceVertexUvs[0].length < 1) return;
+  //   if (!mesh.geometry.attributes.uv) return;
 
-    if (isVoxelMesh) {
-      var index = Math.floor(face.color.b*255 + face.color.g*255*255 + face.color.r*255*255*255);
-      materials = self.materials[index - 1];
-      if (!materials) materials = self.materials[0];
-    }
+  //   if (isVoxelMesh) {
+  //     const color = THREE.Color(faceColor);
+  //     var index = Math.floor(color.b*255 + color.g*255*255 + color.r*255*255*255);
+  //     materials = self.materials[index - 1];
+  //     if (!materials) materials = self.materials[0];
+  //   }
 
-    // BACK, FRONT, TOP, BOTTOM, LEFT, RIGHT
-    var name = materials[0] || '';
-    if      (face.normal.z === 1)  name = materials[1] || '';
-    else if (face.normal.y === 1)  name = materials[2] || '';
-    else if (face.normal.y === -1) name = materials[3] || '';
-    else if (face.normal.x === -1) name = materials[4] || '';
-    else if (face.normal.x === 1)  name = materials[5] || '';
+  //   // BACK, FRONT, TOP, BOTTOM, LEFT, RIGHT
+  //   var name = materials[0] || '';
+  //   if      (face.normal.z === 1)  name = materials[1] || '';
+  //   else if (face.normal.y === 1)  name = materials[2] || '';
+  //   else if (face.normal.y === -1) name = materials[3] || '';
+  //   else if (face.normal.x === -1) name = materials[4] || '';
+  //   else if (face.normal.x === 1)  name = materials[5] || '';
 
-    // if just a simple color
-    if (name.slice(0, 1) === '#') {
-      self.ao(face, name);
-      return;
-    }
+  //   // if just a simple color
+  //   if (name.slice(0, 1) === '#') {
+  //     self.ao(face, name);
+  //     return;
+  //   }
 
-    var atlasuv = self._atlasuv[name];
-    if (!atlasuv) return;
+  //   var atlasuv = self._atlasuv[name];
+  //   if (!atlasuv) return;
 
-    // If a transparent texture use transparent material
-    face.materialIndex = (self.transparents.indexOf(name) !== -1) ? 1 : 0;
+  //   // If a transparent texture use transparent material
+  //   face.materialIndex = (self.transparents.indexOf(name) !== -1) ? 1 : 0;
 
-    // 0 -- 1
-    // |    |
-    // 3 -- 2
-    // faces on these meshes are flipped vertically, so we map in reverse
-    // TODO: tops need rotate
-    if (isVoxelMesh) {
-      if (face.normal.z === -1 || face.normal.x === 1) {
-        atlasuv = uvrot(atlasuv, 90);
-      }
-      atlasuv = uvinvert(atlasuv);
-    } else {
-      atlasuv = uvrot(atlasuv, -90);
-    }
-    for (var j = 0; j < mesh.geometry.faceVertexUvs[0][i].length; j++) {
-      mesh.geometry.faceVertexUvs[0][i][j].set(atlasuv[j][0], 1 - atlasuv[j][1]);
-    }
-  });
+  //   // 0 -- 1
+  //   // |    |
+  //   // 3 -- 2
+  //   // faces on these meshes are flipped vertically, so we map in reverse
+  //   // TODO: tops need rotate
+  //   if (isVoxelMesh) {
+  //     if (face.normal.z === -1 || face.normal.x === 1) {
+  //       atlasuv = uvrot(atlasuv, 90);
+  //     }
+  //     atlasuv = uvinvert(atlasuv);
+  //   } else {
+  //     atlasuv = uvrot(atlasuv, -90);
+  //   }
+  //   for (var j = 0; j < mesh.geometry.faceVertexUvs[0][i].length; j++) {
+  //     mesh.geometry.faceVertexUvs[0][i][j].set(atlasuv[j][0], 1 - atlasuv[j][1]);
+  //   }
+  // });
 
   mesh.geometry.uvsNeedUpdate = true;
 };

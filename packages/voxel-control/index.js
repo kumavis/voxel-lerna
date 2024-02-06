@@ -76,6 +76,7 @@ proto.tick = function(dt) {
   if(!this._target) {
     return
   }
+
   var state = this.state
     , target = this._target
     , speed = this.speed

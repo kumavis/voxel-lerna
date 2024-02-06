@@ -9,7 +9,7 @@ function Highlighter(game, opts) {
   this.game = game
   opts = opts || {}
   this.enabled = opts.enabled || function () { return true }
-  var geometry = this.geometry = opts.geometry || new game.THREE.CubeGeometry(1, 1, 1)
+  var geometry = this.geometry = opts.geometry || new game.THREE.BoxGeometry(1, 1, 1)
   var material = opts.material || new game.THREE.MeshBasicMaterial({
     color: opts.color || 0x000000,
     wireframe: true,
