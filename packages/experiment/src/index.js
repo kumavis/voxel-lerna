@@ -2,9 +2,9 @@
 
 const THREE = require('three')
 const makeView = require('voxel-view')
-const voxelUtil = require('voxel')
-const Mesh = require('voxel-mesh')
-const raycast = require('voxel-raycast')
+const ndarray = require('ndarray')
+const makeChunkerController = require('./chunk-controller')
+const makeChunkView = require('./chunk-view')
 
 document.body.parentElement.style.height = '100%'
 document.body.style.margin = 0
@@ -23,41 +23,56 @@ const view = makeView(THREE)
 view.bindToScene(scene)
 view.appendTo(container)
 onWindowResize()
-view.camera.position.z = 5
+const camera = view.camera
+globalThis.camera = camera
+
+const raycaster = new THREE.Raycaster();
 
 const chunkSize = 4
-const chunker = new voxelUtil.Chunker({
-  chunkSize,
-  // cubeSize is weird
-  cubeSize: 1,
-  generateVoxelChunk: (low, high) => makeRandomChunk(low, high, 0.5)
-})
-globalThis.chunker = chunker
+const chunkController = makeChunkerController({ chunkSize })
+globalThis.chunkController = chunkController
 
-const chunkMeshes = {}
+const chunkView = makeChunkView({ chunkController })
+globalThis.chunkView = chunkView
+scene.add(chunkView.chunkContainer)
 
-showChunk(0, 0, 0)
-showChunk(1, 0, 0)
-showChunk(0, 1, 0)
-showChunk(0, 0, 1)
+loadChunk([0, 0, 0])
+loadChunk([1, 0, 0])
+loadChunk([0, 1, 0])
+loadChunk([0, 0, 1])
+loadChunk([-1, 0, 0])
+loadChunk([0, -1, 0])
+loadChunk([0, 0, -1])
+
+
+
+chunkController.setVoxelAtPosition([1, 0, 0], 0)
+// console.log('getVoxelAtPosition', chunkController.getVoxelAtPosition([1, 0, 0]))
+// console.log('chunk.get', chunkController.getChunkAtLocation([0, 0, 0]).get(1, 0, 0))
+
+showMarker([0,0,0], 0x00ff00)
+showMarker([1,0,0], 0x0000ff)
 
 window.addEventListener('resize', onWindowResize, false)
+
+window.addEventListener('click', raycastFromMouse, false)
+// setInterval(raycastFromCamera, 100)
+
 
 let paused = false
 
 render()
 
-setInterval(raycastFromCamera, 100)
 
 function render () {
   window.requestAnimationFrame(render)
   
   if (!paused) {
     // voxelMeshWrapper.rotation.y += 0.02
-    view.camera.position.y = Math.sin(Date.now() * 0.0003) * 15
-    view.camera.position.x = Math.sin(Date.now() * 0.001) * 15
-    view.camera.position.z = Math.cos(Date.now() * 0.001) * 15
-    view.camera.lookAt(scene.position)
+    camera.position.y = Math.sin(Date.now() * 0.0003) * 15
+    camera.position.x = Math.sin(Date.now() * 0.0003) * 15
+    camera.position.z = Math.cos(Date.now() * 0.0003) * 15
+    camera.lookAt(scene.position)
   }
   
   view.render(scene)
@@ -69,82 +84,96 @@ function onWindowResize () {
   view.resizeWindow(width, height)
 }
 
-function showChunk (x, y, z) {
-  const chunkId = `${x}|${y}|${z}`
-  let chunk = chunker.chunks[chunkId]
+function loadChunk (chunkLocation) {
+  const chunk = chunkController.getChunkAtLocation(chunkLocation)
   if (!chunk) {
-    console.log('generating chunk', x, y, z)
-    chunk = chunker.generateChunk(x, y, z)
+    // console.log('generating chunk', chunkLocation)
+    populateChunk(chunkLocation)
   }
-  if (chunkMeshes[chunkId]) {
-    console.log('removing chunk', chunkId)
-    scene.remove(chunkMeshes[chunkId])
-  }
-  const chunkMesh = makeVoxelMesh(chunk)
-  chunkMeshes[chunkId] = chunkMesh
-  const bounds = chunker.getBounds(...chunk.position)
-  chunkMesh.position.set(bounds[0][0], bounds[0][1], bounds[0][2])
-  scene.add(chunkMesh)
+}
+
+function populateChunk (chunkLocation) {
+  const chunk = makeRandomChunk([0, 0, 0], [chunkSize, chunkSize, chunkSize], 1)
+  chunkController.setChunkAtLocation(chunkLocation, chunk)
+  return chunk
 }
 
 function makeRandomChunk (low, high, probability = 0.5) {
-  const chunk = voxelUtil.generate(
+  const chunk = generateChunkByVoxel(
     low,
     high,
     () => Math.random() > probability ? 0 : 1
   )
-  // Schema patch for voxel-mesh which expects (voxel@^0.3.0)
-  if (chunk.data && chunk.shape) {
-    chunk.voxels = chunk.data
-    chunk.dims = chunk.shape
-  }
+  // // Schema patch for voxel-mesh which expects (voxel@^0.3.0)
+  // if (chunk.data && chunk.shape) {
+  //   chunk.voxels = chunk.data
+  //   chunk.dims = chunk.shape
+  // }
   return chunk
 }
 
-function makeVoxelMesh (chunk) {
-  var scale = new THREE.Vector3(1, 1, 1)
-  var mesh = new Mesh(chunk, voxelUtil.meshers.culled, scale, THREE)
-  const newChunkMesh = mesh.createSurfaceMesh()
-  // const bounds = chunker.getBounds(...chunk.position)
-  // newChunkMesh.position.set(bounds[0][0], bounds[0][1], bounds[0][2])
-  return newChunkMesh
+function raycastFromCamera () {
+  const cameraPos = view.cameraPosition()
+  const cameraVec = view.cameraVector()
+  const hitStats = chunkController.raycastVoxel(cameraPos, cameraVec, 200)
+  if (hitStats === undefined) {
+    return
+  }
+  // console.log('hit', hitStats)
+
+  const hitPosition = hitStats.position
+  chunkController.setVoxelAtPosition(hitPosition, 0)
+  // create sphere at hitPosition
+  const geometry = new THREE.SphereGeometry(0.1, 32, 32)
+  const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+  const sphere = new THREE.Mesh(geometry, material)
+  sphere.position.set(...hitPosition)
+  scene.add(sphere)
+  // paused = true
 }
 
-function raycastFromCamera () {
-  const epilson = 1e-8
-  const hitNormal = [0, 0, 0]
-  const hitPosition = [0, 0, 0]
-  const cp = view.cameraPosition()
-  const cv = view.cameraVector()
-  const getBlock = (x, y, z) => {
-    // console.log('getBlock', x, y, z)
-    return chunker.voxelAtPosition([x,y,z])
+function raycastFromMouse (mouseEvent) {
+  const mouse = new THREE.Vector2();
+  mouse.x = (mouseEvent.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = - (mouseEvent.clientY / window.innerHeight) * 2 + 1;
+  
+  const cameraPos = view.cameraPosition()
+  raycaster.setFromCamera(mouse, camera);
+  const clickdirection = raycaster.ray.direction
+  const clickVector = [clickdirection.x, clickdirection.y, clickdirection.z]
+  // console.log('direction', vector, view.cameraVector())
+
+  const hitStats = chunkController.raycastVoxel(cameraPos, clickVector, 200)
+  if (hitStats === undefined) {
+    return
   }
-  // console.log('raycast', cp, cv)
-  const distance = 200.0
-  const hitBlock = raycast({ getBlock }, cp, cv, distance, hitPosition, hitNormal, epilson)
-  console.log('hitBlock', hitBlock)
-  if (hitBlock) {
-    console.log('hitPosition', hitPosition)
-    console.log('hitNormal', hitNormal)
-    
-    var positionA = new THREE.Vector3();
-    view.camera.getWorldPosition(positionA)
-    const distance = positionA.distanceTo(new THREE.Vector3(...hitPosition))
-    console.log('distance', distance)
-    
-    // this sets the value
-    chunker.voxelAtPosition(hitPosition, 0)
-    const chunkPos = chunker.chunkAtPosition(hitPosition)
-    const chunk = chunker.chunks[chunkPos.join('|')]
-    console.log('chunk', chunk)
-    showChunk(...chunkPos)
-    // create sphere at hitPosition
-    const geometry = new THREE.SphereGeometry(0.1, 32, 32)
-    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-    const sphere = new THREE.Mesh(geometry, material)
-    sphere.position.set(...hitPosition)
-    scene.add(sphere)
-    // paused = true
-  }
+  // console.log('hit', hitStats)
+
+  const hitPosition = hitStats.position
+  chunkController.setVoxelAtPosition(hitPosition, 0)
+  // create sphere at hitPosition
+  showMarker(hitPosition)
+}
+
+// low inclusive, high exclusive
+function generateChunkByVoxel(low, high, getVoxelValueForPos) {
+  const [lowX, lowY, lowZ] = low
+  const [highX, highY, highZ] = high
+  const dims = [highX-lowX, highY-lowY, highZ-lowZ]
+  const elementCount = dims[0] * dims[1] * dims[2]
+  const data = ndarray(new Uint16Array(elementCount), dims)
+  for (let z = lowZ; z < highZ; z++)
+    for (let y = lowY; y < highY; y++)
+      for(let x = lowX; x < highX; x++) {
+        data.set(x-lowX, y-lowY, z-lowZ, getVoxelValueForPos(x, y, z))
+      }
+  return data
+}
+
+function showMarker (position, color = 0xff0000) {
+  const geometry = new THREE.SphereGeometry(0.1, 32, 32)
+  const material = new THREE.MeshBasicMaterial({ color })
+  const sphere = new THREE.Mesh(geometry, material)
+  sphere.position.set(...position)
+  scene.add(sphere)
 }

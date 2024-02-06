@@ -6,13 +6,13 @@ module.exports = function(data, mesher, scaleFactor, three) {
 
 module.exports.Mesh = Mesh
 
-function Mesh(data, mesher, scaleFactor, three) {
+function Mesh(chunk, mesher, scaleFactor, three) {
   this.THREE = three || THREE
-  this.data = data
+  this.data = chunk
   var geometry = this.geometry = new this.THREE.BufferGeometry()
   this.scale = scaleFactor || new this.THREE.Vector3(10, 10, 10)
   
-  var result = mesher( data.voxels, data.dims )
+  var result = mesher( chunk.data, chunk.shape, chunk )
   this.meshed = result
 
   // geometry.vertices.length = 0
