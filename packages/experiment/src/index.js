@@ -5,6 +5,7 @@ const makeView = require('voxel-view')
 const ndarray = require('ndarray')
 const makeChunkerController = require('./chunk-controller')
 const makeChunkView = require('./chunk-view')
+const makeTerrainGenerator = require('./terrain')
 
 document.body.parentElement.style.height = '100%'
 document.body.style.margin = 0
@@ -25,10 +26,14 @@ view.appendTo(container)
 onWindowResize()
 const camera = view.camera
 globalThis.camera = camera
+camera.position.y = 15
+camera.position.x = 0 * 15
+camera.position.z = 1 * 15
+camera.lookAt(scene.position)
 
 const raycaster = new THREE.Raycaster();
 
-const chunkSize = 4
+const chunkSize = 32
 const chunkController = makeChunkerController({ chunkSize })
 globalThis.chunkController = chunkController
 
@@ -36,28 +41,14 @@ const chunkView = makeChunkView({ chunkController })
 globalThis.chunkView = chunkView
 scene.add(chunkView.chunkContainer)
 
-loadChunk([0, 0, 0])
-loadChunk([1, 0, 0])
-loadChunk([0, 1, 0])
-loadChunk([0, 0, 1])
-loadChunk([-1, 0, 0])
-loadChunk([0, -1, 0])
-loadChunk([0, 0, -1])
+const chunkGenerator = makeTerrainGenerator('foo', chunkSize, 0, 5)
 
-
-
-chunkController.setVoxelAtPosition([1, 0, 0], 0)
-// console.log('getVoxelAtPosition', chunkController.getVoxelAtPosition([1, 0, 0]))
-// console.log('chunk.get', chunkController.getChunkAtLocation([0, 0, 0]).get(1, 0, 0))
-
-showMarker([0,0,0], 0x00ff00)
-showMarker([1,0,0], 0x0000ff)
+for (let location of pointsInside3D([-1, 0, -1], [1, 0, 1])) {
+  loadChunk(location)
+}
 
 window.addEventListener('resize', onWindowResize, false)
-
 window.addEventListener('click', raycastFromMouse, false)
-// setInterval(raycastFromCamera, 100)
-
 
 let paused = false
 
@@ -69,9 +60,9 @@ function render () {
   
   if (!paused) {
     // voxelMeshWrapper.rotation.y += 0.02
-    camera.position.y = Math.sin(Date.now() * 0.0003) * 15
-    camera.position.x = Math.sin(Date.now() * 0.0003) * 15
-    camera.position.z = Math.cos(Date.now() * 0.0003) * 15
+    // camera.position.y = Math.sin(Date.now() * 0.0003) * 15
+    // camera.position.x = Math.sin(Date.now() * 0.0003) * 15
+    // camera.position.z = Math.cos(Date.now() * 0.0003) * 15
     camera.lookAt(scene.position)
   }
   
@@ -93,22 +84,8 @@ function loadChunk (chunkLocation) {
 }
 
 function populateChunk (chunkLocation) {
-  const chunk = makeRandomChunk([0, 0, 0], [chunkSize, chunkSize, chunkSize], 1)
+  const chunk = chunkGenerator(chunkLocation)
   chunkController.setChunkAtLocation(chunkLocation, chunk)
-  return chunk
-}
-
-function makeRandomChunk (low, high, probability = 0.5) {
-  const chunk = generateChunkByVoxel(
-    low,
-    high,
-    () => Math.random() > probability ? 0 : 1
-  )
-  // // Schema patch for voxel-mesh which expects (voxel@^0.3.0)
-  // if (chunk.data && chunk.shape) {
-  //   chunk.voxels = chunk.data
-  //   chunk.dims = chunk.shape
-  // }
   return chunk
 }
 
@@ -176,4 +153,19 @@ function showMarker (position, color = 0xff0000) {
   const sphere = new THREE.Mesh(geometry, material)
   sphere.position.set(...position)
   scene.add(sphere)
+}
+
+// low and high inclusive
+function* pointsInside3D(low, high) {
+  const [lowX, lowY, lowZ] = low
+  const highX = high[0] + 1
+  const highY = high[1] + 1
+  const highZ = high[2] + 1
+  for (let z = lowZ; z < highZ; z++) {
+    for (let y = lowY; y < highY; y++) {
+      for (let x = lowX; x < highX; x++) {
+        yield [x, y, z]
+      }
+    }
+  }
 }
