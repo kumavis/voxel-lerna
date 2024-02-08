@@ -1,6 +1,6 @@
 // adapted from https://npmfs.com/package/skinview3d/3.0.1/libs/model.js
 
-const { BoxGeometry, DoubleSide, FrontSide, Group, Mesh, materialClass, Vector2, MeshStandardMaterial } = require('three');
+const { BoxGeometry, DoubleSide, FrontSide, Group, Mesh, materialClass, Vector2, MeshStandardMaterial, Object3D } = require('three');
 
 function setUVs(box, u, v, width, height, depth, textureWidth, textureHeight) {
     const toFaceVertices = (x1, y1, x2, y2) => [
@@ -174,7 +174,16 @@ const SkinObject = exports.SkinObject = class SkinObject extends Group {
         this.head.add(headMesh, head2Mesh);
         headMesh.position.y = 4;
         head2Mesh.position.y = 4;
-        this.add(this.head);
+        
+        // max-mapper remapping
+        this.rotatedHead = new Group();
+        this.add(this.rotatedHead);
+
+        this.headGroup = new Group();
+        this.headGroup.add(this.head);
+        this.rotatedHead.add(this.headGroup);
+
+        
         // Body
         const bodyBox = new BoxGeometry(8, 12, 4);
         setSkinUVs(bodyBox, 16, 16, 8, 12, 4);

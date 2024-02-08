@@ -13,6 +13,28 @@ viking.mesh.position.y = 50
 scene.add(viking.mesh)
 ```
 
+object hierarchy and part reference
+```
+playerGroup <-- skin.mesh (opts.scale applied here)
+  playerRotation
+    playerModel <-- skin.playerModel
+      rotatedHead
+        headgroup <-- playerGroup.head
+          unrotatedHeadMesh
+            headmesh  <-- skin.head
+          helmet
+          ears
+          playerGroup.cameraInside
+            playerGroup.cameraOutside
+      leftLeg <-- skin.leftLeg
+      rightleg <-- skin.rightLeg
+      upperbody <-- skin.upperbody
+        bodymesh <-- skin.body
+        leftarm <-- skin.leftArm
+        rightarm <-- skin.rightArm
+```
+
+
 designed for use with [browserify](http://browserify.org)
 
 # license

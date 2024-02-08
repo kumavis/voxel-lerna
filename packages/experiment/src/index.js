@@ -8,6 +8,7 @@ const makeControls = require('voxel-control')
 const makePhysical = require('voxel-physical')
 const collisions = require('collide-3d-tilemap')
 const walk = require('voxel-walk');
+const interact = require('interact')
 const makeChunkerController = require('./chunk-controller')
 const makeChunkView = require('./chunk-view')
 const makeTerrainGenerator = require('./terrain')
@@ -29,6 +30,7 @@ const scene = new THREE.Scene()
 globalThis.scene = scene
 
 const view = makeView(THREE)
+globalThis.view = view
 view.bindToScene(scene)
 view.appendTo(container)
 onWindowResize()
@@ -75,7 +77,7 @@ const avatarStartPos = findFloor(
 )
 console.log('avatarStartPos', avatarStartPos)
 avatar.mesh.position.set(...avatarStartPos)
-
+// avatar.mesh.visible = false
 /*
 [voxel-player]
 var player = playerSkin.mesh;
@@ -164,7 +166,7 @@ let avatarPhysics
     { x: vel[0], y: vel[1], z: vel[2] },
   )
   physics.yaw = player;
-  physics.pitch = player.head;
+  physics.pitch = avatar.headGroup;
   physics.subjectTo([0, -0.0000036, 0]);
   physics.blocksCreation = true;
 
@@ -183,7 +185,7 @@ let avatarPhysics
     physics.yaw.position.y = xyz.y;
     physics.yaw.position.z = xyz.z;
   }
-  physics.position = physics.yaw.position;
+  // physics.position = physics.yaw.position;
 
   avatarPhysics = physics
   globalThis.avatarPhysics = avatarPhysics
@@ -194,8 +196,46 @@ let avatarPhysics
 //
 controls.target(avatarPhysics)
 
+//
+// player.possess
+//
+avatar.mesh.cameraInside.add(camera)
+// avatar.mesh.cameraOutside.add(camera)
+camera.position.set(0, 0, 0)
+camera.rotation.set(0, 0, 0)
+
+const markerScale = 1/avatar.scale
+console.log('markerScale', markerScale)
+const markerInside = showMarker([0, 0, 0], 0x00ff00)
+markerInside.scale.set(markerScale, markerScale, markerScale)
+avatar.mesh.cameraInside.add(markerInside)
+const markerOutside = showMarker([0, 0, 0], 0x0000ff)
+markerOutside.scale.set(markerScale, markerScale, markerScale)
+avatar.mesh.cameraOutside.add(markerOutside)
+
+// from voxel-engine
+const onControlChange = (gained, controlStream) => {
+  console.log('onControlChange <-----')
+
+  paused = false
+
+  if (!gained) {
+    buttons.disable()
+    return
+  }
+
+  buttons.enable()
+  console.log('buttons enable')
+  controlStream.pipe(controls.createWriteRotationStream())
+}
+// from voxel-engine
+interact(view.element)
+    .on('attain', controlStream => onControlChange(true, controlStream))
+    .on('release', controlStream => onControlChange(false, controlStream))
+
 window.addEventListener('resize', onWindowResize, false)
-window.addEventListener('click', raycastFromMouse, false)
+// window.addEventListener('click', raycastFromMouse, false)
+window.addEventListener('click', raycastFromCamera, false)
 
 let paused = false
 let lastTime = Date.now()
@@ -319,10 +359,11 @@ function raycastFromMouse (mouseEvent) {
   showMarker(hitPosition)
 }
 
-function showMarker (position, color = 0xff0000) {
+function showMarker (position = [0,0,0], color = 0xff0000) {
   const geometry = new THREE.SphereGeometry(0.1, 32, 32)
   const material = new THREE.MeshBasicMaterial({ color })
   const sphere = new THREE.Mesh(geometry, material)
   sphere.position.set(...position)
   scene.add(sphere)
+  return sphere
 }

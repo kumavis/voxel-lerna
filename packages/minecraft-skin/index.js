@@ -23,37 +23,51 @@ function Skin(three, image, opts) {
 
   this.skinTexture = null;
 
-  this.playerObject = new PlayerObject(opts);
-  this.playerObject.name = "player";
-  this.playerObject.skin.visible = false;
-  this.playerObject.cape.visible = false;
-  const scale = 1.5/38.25
-  this.playerObject.scale.set(scale, scale, scale)
-  this.playerObject.translateY(16.25 * scale)
-  this.playerWrapper = new Group();
-  this.playerWrapper.add(this.playerObject);
-  this.playerWrapper.name = "playerWrapper";
+  this.playerGroup = new Group();
+  this.playerGroup.name = "playerGroup";
+  // old dude was like 32 units tall
+  // new dude is 38.25 units tall
+  // default scale brings us to minecraft size 1.5
+  this.scale = opts.scale || 1.5/38.25
+  this.playerGroup.scale.set(this.scale, this.scale, this.scale)
+  
+  this.playerRotation = new Object3D();
+  this.playerRotation.name = "playerRotation";
+  this.playerRotation.position.setY(18)
+  this.playerRotation.rotateY(Math.PI)
+  this.playerGroup.add(this.playerRotation);
+  
+  this.playerModel = new PlayerObject(opts);
+  this.playerModel.name = "player";
+  this.playerModel.skin.visible = false;
+  this.playerModel.cape.visible = false;
+  this.playerRotation.add(this.playerModel);
 
-  // backwards compat
-  this.mesh = this.playerWrapper;
-  this.head = this.playerObject.skin.head;
-  this.leftArm = this.playerObject.skin.leftArm;
-  this.rightArm = this.playerObject.skin.rightArm;
-  this.leftLeg = this.playerObject.skin.leftLeg;
-  this.rightLeg = this.playerObject.skin.rightLeg;
+  // named parts
+  this.mesh = this.playerGroup;
+  this.head = this.playerModel.skin.head;
+  this.headGroup = this.playerModel.skin.headGroup;
+  this.mesh.head = this.playerModel.skin.headGroup;
+  this.leftArm = this.playerModel.skin.leftArm;
+  this.rightArm = this.playerModel.skin.rightArm;
+  this.leftLeg = this.playerModel.skin.leftLeg;
+  this.rightLeg = this.playerModel.skin.rightLeg;
+  // this.body = this.playerModel.skin.body;
+  // this.upperbody = 
 
   // camera attach points
-  this.playerWrapper.cameraInside = new Object3D()
-  this.playerWrapper.cameraOutside = new Object3D()
+  this.playerGroup.cameraInside = new Object3D()
+  this.playerGroup.cameraOutside = new Object3D()
+  this.playerGroup.add(this.playerGroup.cameraInside)
+  this.playerGroup.add(this.playerGroup.cameraOutside)
 
-  this.playerWrapper.cameraInside.position.x = 0;
-  this.playerWrapper.cameraInside.position.y = 2;
-  this.playerWrapper.cameraInside.position.z = 0; 
-
-  this.head.add(this.playerWrapper.cameraInside)
-  this.playerWrapper.cameraInside.add(this.playerWrapper.cameraOutside)
-
-  this.playerWrapper.cameraOutside.position.z = 100
+  this.playerGroup.cameraInside.position.set(0,3,6)
+  this.playerGroup.cameraInside.rotation.set(0, Math.PI, 0)
+  this.playerGroup.cameraOutside.position.set(0,30,-60)
+  this.playerGroup.cameraOutside.rotation.set(Math.PI/8, Math.PI, 0)
+  
+  this.headGroup.add(this.playerGroup.cameraInside)
+  this.headGroup.add(this.playerGroup.cameraOutside)
 
   if (opts.image) {
     loadImage(opts.image).then((image) => {
@@ -68,20 +82,20 @@ Skin.prototype.setImage = function(image, options = {}) {
   this.recreateSkinTexture();
 
   if (options.model === undefined || options.model === "auto-detect") {
-    this.playerObject.skin.modelType = inferModelType(this.skinCanvas);
+    this.playerModel.skin.modelType = inferModelType(this.skinCanvas);
   } else {
-    this.playerObject.skin.modelType = options.model;
+    this.playerModel.skin.modelType = options.model;
   }
 
   if (options.makeVisible !== false) {
-    this.playerObject.skin.visible = true;
+    this.playerModel.skin.visible = true;
   }
 
   if (options.ears === true || options.ears == "load-only") {
     loadEarsToCanvasFromSkin(this.earsCanvas, image);
     this.recreateEarsTexture();
     if (options.ears === true) {
-      this.playerObject.ears.visible = true;
+      this.playerModel.ears.visible = true;
     }
   }
 }
@@ -93,5 +107,5 @@ Skin.prototype.recreateSkinTexture = function() {
   this.skinTexture = new CanvasTexture(this.skinCanvas);
   this.skinTexture.magFilter = NearestFilter;
   this.skinTexture.minFilter = NearestFilter;
-  this.playerObject.skin.map = this.skinTexture;
+  this.playerModel.skin.map = this.skinTexture;
 }
