@@ -246,12 +246,8 @@ const fixedTimeStep = 1000 / 60
 requestAnimationFrame(mainLoop)
 
 function tick(deltaTime) {
-  // spin camera
-  // // camera.position.y = Math.sin(Date.now() * 0.0003) * 15
-  // camera.position.x = Math.sin(Date.now() * 0.0003) * 15
-  // camera.position.z = Math.cos(Date.now() * 0.0003) * 15
-  // camera.lookAt(scene.position)
-  
+  chunkView.update()
+
   // normally handled via game.items.push
   controls.tick(deltaTime)
   // normally handled via game.addItem

@@ -21,6 +21,9 @@ function makeChunkerController (opts = {}) {
   const getChunkIdFromLocation = ([x, y, z]) => {
     return `${x}|${y}|${z}`
   }
+  const getLocationFromChunkId = (chunkId) => {
+    return chunkId.split('|').map(n => parseInt(n))
+  }
   
   const getChunkAtLocation = (location) => {
     const chunkId = getChunkIdFromLocation(location)
@@ -106,6 +109,7 @@ function makeChunkerController (opts = {}) {
     getChunkById,
     getChunkIdFromLocation,
     getChunkIdFromPosition,
+    getLocationFromChunkId,
 
     getChunkAtLocation,
     setChunkAtLocation,

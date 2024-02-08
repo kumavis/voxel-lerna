@@ -13,6 +13,8 @@ function makeChunkView(opts = {}) {
   const chunkContainer = new THREE.Group()
   chunkContainer.name = 'voxel chunk group'
   const chunkMeshes = new Map()
+  // chunks pending re-meshing
+  const pendingChunks = new Set()
 
   const updateChunkMesh = (location, chunk) => {
     const chunkId = chunkController.getChunkIdFromLocation(location)
@@ -30,14 +32,23 @@ function makeChunkView(opts = {}) {
   }
 
   chunkController.events.on('chunkUpdated', (location, chunk) => {
-    // const start = performance.now()
-    updateChunkMesh(location, chunk)
-    // const end = performance.now()
-    // console.log('chunk updated in', end - start, 'ms')
+    const chunkId = chunkController.getChunkIdFromLocation(location)
+    pendingChunks.add(chunkId)
   })
+
+  const update = () => {
+    if (pendingChunks.size === 0) return
+    for (const chunkId of pendingChunks) {
+      const location = chunkController.getLocationFromChunkId(chunkId)
+      const chunk = chunkController.getChunkAtLocation(location)
+      updateChunkMesh(location, chunk)
+    }
+    pendingChunks.clear()
+  }
 
   return {
     chunkContainer,
+    update,
   }
 }
 
