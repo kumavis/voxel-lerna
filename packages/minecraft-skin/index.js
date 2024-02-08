@@ -23,11 +23,13 @@ function Skin(three, image, opts) {
 
   this.skinTexture = null;
 
-  this.playerObject = new PlayerObject();
+  this.playerObject = new PlayerObject(opts);
   this.playerObject.name = "player";
   this.playerObject.skin.visible = false;
   this.playerObject.cape.visible = false;
-  this.playerObject.translateY(15)
+  const scale = 1.5/38.25
+  this.playerObject.scale.set(scale, scale, scale)
+  this.playerObject.translateY(16.25 * scale)
   this.playerWrapper = new Group();
   this.playerWrapper.add(this.playerObject);
   this.playerWrapper.name = "playerWrapper";

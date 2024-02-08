@@ -2,10 +2,16 @@
 
 const THREE = require('three')
 const makeView = require('voxel-view')
-const ndarray = require('ndarray')
+const skin = require('minecraft-skin')
+const kb = require('kb-controls')
+const makeControls = require('voxel-control')
+const makePhysical = require('voxel-physical')
+const collisions = require('collide-3d-tilemap')
+const walk = require('voxel-walk');
 const makeChunkerController = require('./chunk-controller')
 const makeChunkView = require('./chunk-view')
 const makeTerrainGenerator = require('./terrain')
+const { pointsInside3D, findFloor } = require('./voxel-util')
 
 document.body.parentElement.style.height = '100%'
 document.body.style.margin = 0
@@ -16,6 +22,8 @@ const container = document.createElement('div')
 container.style.width = '100%'
 container.style.height = '100%'
 document.body.appendChild(container)
+
+globalThis.THREE = THREE
 
 const scene = new THREE.Scene()
 globalThis.scene = scene
@@ -30,6 +38,11 @@ camera.position.y = 15
 camera.position.x = 0 * 15
 camera.position.z = 1 * 15
 camera.lookAt(scene.position)
+
+// const ambientLight = new THREE.AmbientLight(0xffffff)
+// scene.add(ambientLight)
+// const directionalLight  = new THREE.DirectionalLight( 0xffffff )
+// scene.add(directionalLight)
 
 const raycaster = new THREE.Raycaster();
 
@@ -47,25 +60,199 @@ for (let location of pointsInside3D([-1, 0, -1], [1, 0, 1])) {
   loadChunk(location)
 }
 
+chunkController.setVoxelAtPosition([0, 3, 0], 1)
+
+const avatar = skin(null, 'assets/debug-skin.png', {
+  // ignore lighting
+  materialClass: THREE.MeshBasicMaterial,
+})
+globalThis.avatar = avatar
+scene.add(avatar.mesh)
+const avatarStartPos = findFloor(
+  [0,0,0],
+  (pos) => chunkController.getVoxelAtPosition(pos),
+  2
+)
+console.log('avatarStartPos', avatarStartPos)
+avatar.mesh.position.set(...avatarStartPos)
+
+/*
+[voxel-player]
+var player = playerSkin.mesh;
+var physics = game.makePhysical(player);
+  var obj = physical(target, ...)
+    this.yaw =
+    this.pitch =
+    this.roll = avatar
+game.scene.add(player);
+game.addItem(physics);
+  // calls tick() on physics
+  // no mesh on physics
+physics.yaw = player;
+physics.pitch = player.head;
+physics.subjectTo(game.gravity);
+physics.blocksCreation = true;
+game.control(physics); 
+  this.controls.target(target) [voxel-control]
+      this._target = target
+      this._yaw_target = target.yaw || target
+      this._pitch_target = target.pitch || target
+      this._roll_target = target.roll || target
+physics.move = function (x, y, z) {
+physics.moveTo = function (x, y, z) {
+*/
+
+const buttons = kb(document.body, {
+  'W': 'forward'
+, 'A': 'left'
+, 'S': 'backward'
+, 'D': 'right'
+, '<up>': 'forward'
+, '<left>': 'left'
+, '<down>': 'backward'
+, '<right>': 'right'
+, '<mouse 1>': 'fire'
+, '<mouse 3>': 'firealt'
+, '<space>': 'jump'
+, '<shift>': 'crouch'
+, '<control>': 'alt'
+})
+const controls = makeControls(buttons, {})
+
+const getBlock = function (x, y, z) {
+  return chunkController.getVoxelAtPosition([x,y,z])
+}
+// from game
+const collideVoxels = collisions(
+  getBlock,
+  1,
+  [Infinity, Infinity, Infinity],
+  [-Infinity, -Infinity, -Infinity]
+)
+const collideTerrain = function(other, bbox, vec, resting) {
+  const friction = 0.3
+  var axes = ['x', 'y', 'z']
+  var vec3 = [vec.x, vec.y, vec.z]
+  collideVoxels(bbox, vec3, function hit(axis, tile, coords, dir, edge) {
+    if (!tile) return
+    if (Math.abs(vec3[axis]) < Math.abs(edge)) return
+    vec3[axis] = vec[axes[axis]] = edge
+    other.acceleration[axes[axis]] = 0
+    resting[axes[axis]] = dir
+    other.friction[axes[(axis + 1) % 3]] = other.friction[axes[(axis + 2) % 3]] = axis === 1 ? friction  : 1
+    return true
+  })
+}
+
+//
+// make physical
+//
+let avatarPhysics
+{
+  const player = avatar.mesh
+  // const potentialCollisionSet = []
+  const potentialCollisionSet = [
+    { collide: collideTerrain }
+  ]
+  // terminalVelocity
+  const vel = [0.9, 0.1, 0.9]
+  const envelope = [2/3, 1.5, 2/3]
+  const physics = makePhysical(
+    player,
+    potentialCollisionSet,
+    envelope,
+    { x: vel[0], y: vel[1], z: vel[2] },
+  )
+  physics.yaw = player;
+  physics.pitch = player.head;
+  physics.subjectTo([0, -0.0000036, 0]);
+  physics.blocksCreation = true;
+
+  // from control, used by voxel-rescue
+  physics.move = function (x, y, z) {
+    debugger
+    const xyz = parseXYZ(x, y, z);
+    physics.yaw.position.x += xyz.x;
+    physics.yaw.position.y += xyz.y;
+    physics.yaw.position.z += xyz.z;
+  };
+  physics.moveTo = function (x, y, z) {
+    debugger
+    const xyz = parseXYZ(x, y, z);
+    physics.yaw.position.x = xyz.x;
+    physics.yaw.position.y = xyz.y;
+    physics.yaw.position.z = xyz.z;
+  }
+  physics.position = physics.yaw.position;
+
+  avatarPhysics = physics
+  globalThis.avatarPhysics = avatarPhysics
+}
+
+//
+// game.control
+//
+controls.target(avatarPhysics)
+
 window.addEventListener('resize', onWindowResize, false)
 window.addEventListener('click', raycastFromMouse, false)
 
 let paused = false
+let lastTime = Date.now()
 
-render()
+let timeAccumulator = 0
+const fixedTimeStep = 1000 / 60
 
+requestAnimationFrame(mainLoop)
+
+function tick(deltaTime) {
+  // spin camera
+  // // camera.position.y = Math.sin(Date.now() * 0.0003) * 15
+  // camera.position.x = Math.sin(Date.now() * 0.0003) * 15
+  // camera.position.z = Math.cos(Date.now() * 0.0003) * 15
+  // camera.lookAt(scene.position)
+  
+  // normally handled via game.items.push
+  controls.tick(deltaTime)
+  // normally handled via game.addItem
+  avatarPhysics.tick(deltaTime)
+
+  // walk animation
+  walk.render(avatar, deltaTime)
+  var vx = Math.abs(avatarPhysics.velocity.x)
+  var vz = Math.abs(avatarPhysics.velocity.z)
+  if (vx > 0.001 || vz > 0.001) walk.stopWalking()
+  else walk.startWalking()
+}
+
+function update () {
+  const previousTime = lastTime
+  lastTime = Date.now()
+  // exit if paused
+  if (paused) {
+    timeAccumulator = 0
+    return
+  }
+  // add time passed to accumulator
+  const dt = lastTime - previousTime
+  timeAccumulator += dt
+  // not enough time has passed to update
+  if (timeAccumulator < fixedTimeStep) {
+    return
+  }
+  const simulationDelta = timeAccumulator
+  timeAccumulator = 0
+  tick(simulationDelta)
+}
+
+
+function mainLoop () {
+  update()
+  render()
+  requestAnimationFrame(mainLoop)
+}
 
 function render () {
-  window.requestAnimationFrame(render)
-  
-  if (!paused) {
-    // voxelMeshWrapper.rotation.y += 0.02
-    // camera.position.y = Math.sin(Date.now() * 0.0003) * 15
-    // camera.position.x = Math.sin(Date.now() * 0.0003) * 15
-    // camera.position.z = Math.cos(Date.now() * 0.0003) * 15
-    camera.lookAt(scene.position)
-  }
-  
   view.render(scene)
 }
 
@@ -132,40 +319,10 @@ function raycastFromMouse (mouseEvent) {
   showMarker(hitPosition)
 }
 
-// low inclusive, high exclusive
-function generateChunkByVoxel(low, high, getVoxelValueForPos) {
-  const [lowX, lowY, lowZ] = low
-  const [highX, highY, highZ] = high
-  const dims = [highX-lowX, highY-lowY, highZ-lowZ]
-  const elementCount = dims[0] * dims[1] * dims[2]
-  const data = ndarray(new Uint16Array(elementCount), dims)
-  for (let z = lowZ; z < highZ; z++)
-    for (let y = lowY; y < highY; y++)
-      for(let x = lowX; x < highX; x++) {
-        data.set(x-lowX, y-lowY, z-lowZ, getVoxelValueForPos(x, y, z))
-      }
-  return data
-}
-
 function showMarker (position, color = 0xff0000) {
   const geometry = new THREE.SphereGeometry(0.1, 32, 32)
   const material = new THREE.MeshBasicMaterial({ color })
   const sphere = new THREE.Mesh(geometry, material)
   sphere.position.set(...position)
   scene.add(sphere)
-}
-
-// low and high inclusive
-function* pointsInside3D(low, high) {
-  const [lowX, lowY, lowZ] = low
-  const highX = high[0] + 1
-  const highY = high[1] + 1
-  const highZ = high[2] + 1
-  for (let z = lowZ; z < highZ; z++) {
-    for (let y = lowY; y < highY; y++) {
-      for (let x = lowX; x < highX; x++) {
-        yield [x, y, z]
-      }
-    }
-  }
 }

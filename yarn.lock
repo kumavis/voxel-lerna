@@ -3499,6 +3499,8 @@ __metadata:
   dependencies:
     beefy: "npm:^2.1.8"
     browserify: "npm:^17.0.0"
+    minecraft-skin: "workspace:^"
+    ndarray: "npm:^1.0.5"
     voxel-view: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -6400,7 +6402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ndarray@npm:~1.0.5":
+"ndarray@npm:^1.0.5, ndarray@npm:~1.0.5":
   version: 1.0.19
   resolution: "ndarray@npm:1.0.19"
   dependencies:

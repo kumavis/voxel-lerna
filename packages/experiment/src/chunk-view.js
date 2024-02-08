@@ -30,7 +30,10 @@ function makeChunkView(opts = {}) {
   }
 
   chunkController.events.on('chunkUpdated', (location, chunk) => {
+    // const start = performance.now()
     updateChunkMesh(location, chunk)
+    // const end = performance.now()
+    // console.log('chunk updated in', end - start, 'ms')
   })
 
   return {

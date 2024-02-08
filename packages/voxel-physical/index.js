@@ -1,3 +1,5 @@
+"use strict"
+
 module.exports = physical
 
 var aabb = require('aabb-3d')

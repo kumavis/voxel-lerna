@@ -1,6 +1,6 @@
 // adapted from https://npmfs.com/package/skinview3d/3.0.1/libs/model.js
 
-const { BoxGeometry, DoubleSide, FrontSide, Group, Mesh, MeshStandardMaterial, Vector2 } = require('three');
+const { BoxGeometry, DoubleSide, FrontSide, Group, Mesh, materialClass, Vector2, MeshStandardMaterial } = require('three');
 
 function setUVs(box, u, v, width, height, depth, textureWidth, textureHeight) {
     const toFaceVertices = (x1, y1, x2, y2) => [
@@ -63,7 +63,9 @@ const BodyPart = exports.BodyPart = class BodyPart extends Group {
     }
 }
 const SkinObject = exports.SkinObject = class SkinObject extends Group {
-    constructor() {
+    constructor({
+        materialClass = MeshStandardMaterial,
+    }) {
         super();
         // body parts
         Object.defineProperty(this, "head", {
@@ -144,10 +146,10 @@ const SkinObject = exports.SkinObject = class SkinObject extends Group {
             writable: true,
             value: void 0
         });
-        this.layer1Material = new MeshStandardMaterial({
+        this.layer1Material = new materialClass({
             side: FrontSide,
         });
-        this.layer2Material = new MeshStandardMaterial({
+        this.layer2Material = new materialClass({
             side: DoubleSide,
             transparent: true,
             alphaTest: 1e-5,
@@ -318,7 +320,9 @@ const SkinObject = exports.SkinObject = class SkinObject extends Group {
     }
 }
 const CapeObject = exports.CapeObject = class CapeObject extends Group {
-    constructor() {
+    constructor({
+        materialClass = MeshStandardMaterial,
+    }) {
         super();
         Object.defineProperty(this, "cape", {
             enumerable: true,
@@ -332,7 +336,7 @@ const CapeObject = exports.CapeObject = class CapeObject extends Group {
             writable: true,
             value: void 0
         });
-        this.material = new MeshStandardMaterial({
+        this.material = new materialClass({
             side: DoubleSide,
             transparent: true,
             alphaTest: 1e-5,
@@ -355,7 +359,9 @@ const CapeObject = exports.CapeObject = class CapeObject extends Group {
     }
 }
 const ElytraObject = exports.ElytraObject = class ElytraObject extends Group {
-    constructor() {
+    constructor({
+        materialClass = MeshStandardMaterial,
+    }) {
         super();
         Object.defineProperty(this, "leftWing", {
             enumerable: true,
@@ -375,7 +381,7 @@ const ElytraObject = exports.ElytraObject = class ElytraObject extends Group {
             writable: true,
             value: void 0
         });
-        this.material = new MeshStandardMaterial({
+        this.material = new materialClass({
             side: DoubleSide,
             transparent: true,
             alphaTest: 1e-5,
@@ -428,7 +434,9 @@ const ElytraObject = exports.ElytraObject = class ElytraObject extends Group {
     }
 }
 const EarsObject = exports.EarsObject = class EarsObject extends Group {
-    constructor() {
+    constructor({
+        materialClass = MeshStandardMaterial,
+    }) {
         super();
         Object.defineProperty(this, "rightEar", {
             enumerable: true,
@@ -448,7 +456,7 @@ const EarsObject = exports.EarsObject = class EarsObject extends Group {
             writable: true,
             value: void 0
         });
-        this.material = new MeshStandardMaterial({
+        this.material = new materialClass({
             side: FrontSide,
         });
         const earBox = new BoxGeometry(8, 8, 4 / 3);
@@ -473,7 +481,7 @@ const EarsObject = exports.EarsObject = class EarsObject extends Group {
 const CapeDefaultAngle = (10.8 * Math.PI) / 180;
 
 const PlayerObject = exports.PlayerObject = class PlayerObject extends Group {
-    constructor() {
+    constructor(opts = {}) {
         super();
         Object.defineProperty(this, "skin", {
             enumerable: true,
@@ -499,24 +507,24 @@ const PlayerObject = exports.PlayerObject = class PlayerObject extends Group {
             writable: true,
             value: void 0
         });
-        this.skin = new SkinObject();
+        this.skin = new SkinObject(opts);
         this.skin.name = "skin";
         this.skin.position.y = 8;
         this.add(this.skin);
-        this.cape = new CapeObject();
+        this.cape = new CapeObject(opts);
         this.cape.name = "cape";
         this.cape.position.y = 8;
         this.cape.position.z = -2;
         this.cape.rotation.x = CapeDefaultAngle;
         this.cape.rotation.y = Math.PI;
         this.add(this.cape);
-        this.elytra = new ElytraObject();
+        this.elytra = new ElytraObject(opts);
         this.elytra.name = "elytra";
         this.elytra.position.y = 8;
         this.elytra.position.z = -2;
         this.elytra.visible = false;
         this.add(this.elytra);
-        this.ears = new EarsObject();
+        this.ears = new EarsObject(opts);
         this.ears.name = "ears";
         this.ears.position.y = 10;
         this.ears.position.z = 2 / 3;
