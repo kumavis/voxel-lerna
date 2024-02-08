@@ -86,10 +86,11 @@ function Mesh(chunk, mesher, scaleFactor, three) {
   geometry.computeBoundingSphere()
 }
 
-Mesh.prototype.createWireMesh = function(hexColor) {    
+Mesh.prototype.createWireMesh = function(hexColor, materialOpts) {
   var wireMaterial = new this.THREE.MeshBasicMaterial({
     color : hexColor || 0xffffff,
-    wireframe : true
+    wireframe : true,
+    ...materialOpts,
   })
   wireMesh = new this.THREE.Mesh(this.geometry, wireMaterial)
   wireMesh.scale = this.scale

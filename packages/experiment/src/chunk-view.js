@@ -55,6 +55,13 @@ function makeChunkView(opts = {}) {
 function makeVoxelMesh (chunk) {
   var scale = new THREE.Vector3(1, 1, 1)
   var mesh = new Mesh(chunk, mesher, scale, THREE)
+  const chunkMeshContainer = new THREE.Group()
   const chunkMesh = mesh.createSurfaceMesh()
-  return chunkMesh
+  const chunkWireframe = mesh.createWireMesh(0x112233, {
+    transparent: true,
+    opacity: 0.1,
+  })
+  chunkMeshContainer.add(chunkMesh)
+  chunkMeshContainer.add(chunkWireframe)
+  return chunkMeshContainer
 }
